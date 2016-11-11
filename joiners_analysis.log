@@ -1,0 +1,93 @@
+--------------------------------------------------------------------------------------------------
+      name:  Analysis
+       log:  C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\joiners_analysis.log
+  log type:  text
+ opened on:  11 Nov 2016, 18:36:46
+
+.                                                         
+. use "C:\Users\u0091183\Desktop\Phd\Datasets\SESTAT\2003\nscg2003.dta"
+
+. 
+. merge 1:1 refid using sestat06.dta, keepus(wage06)
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                       104,154
+        from master                    49,746  (_merge==1)
+        from using                     54,408  (_merge==2)
+
+    matched                            50,656  (_merge==3)
+    -----------------------------------------
+
+. 
+end of do-file
+
+. browse refid refyr wage* salary
+
+. do "C:\Users\u0091183\AppData\Local\Temp\STD03000000.tmp"
+
+. drop if refyr == .
+(54,408 observations deleted)
+
+. drop _merge
+
+. merge 1:1 refid using sestat08.dta, keepus(wage08)
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                       111,017
+        from master                    55,553  (_merge==1)
+        from using                     55,464  (_merge==2)
+
+    matched                            44,849  (_merge==3)
+    -----------------------------------------
+
+. 
+end of do-file
+
+. browse refid refyr wage* salary
+
+. do "C:\Users\u0091183\AppData\Local\Temp\STD03000000.tmp"
+
+. drop if refyr == .
+(55,464 observations deleted)
+
+. drop _merge
+
+. merge 1:1 refid using sestat10.dta, keepus(wage10)
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                       165,005
+        from master                    78,535  (_merge==1)
+        from using                     86,470  (_merge==2)
+
+    matched                            21,867  (_merge==3)
+    -----------------------------------------
+
+. drop if refyr == .
+(86,470 observations deleted)
+
+. drop _merge
+
+. merge 1:1 refid using sestat13.dta, keepus(wage13)
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                       215,554
+        from master                   100,402  (_merge==1)
+        from using                    115,152  (_merge==2)
+
+    matched                                 0  (_merge==3)
+    -----------------------------------------
+
+. drop if refyr == .
+(115,152 observations deleted)
+
+. drop _merge
+
+. 
+end of do-file
+
+. browse refid refyr salary wage*
+

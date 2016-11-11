@@ -1,0 +1,48 @@
+--------------------------------------------------------------------------------------------------
+      name:  SESTAT_2003_2013_Joiners
+       log:  C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\joiners.log
+  log type:  text
+ opened on:  11 Nov 2016, 18:11:43
+
+. 
+. use "C:\Users\u0091183\Desktop\Phd\Datasets\SESTAT\2003\nscg2003.dta"
+
+. 
+. append using "C:\Users\u0091183\Desktop\Phd\Datasets\SESTAT\sestat06.dta", keep(refid refyr sala
+> rp)
+
+. append using "C:\Users\u0091183\Desktop\Phd\Datasets\SESTAT\sestat08.dta", keep(refid refyr sala
+> rp)
+
+. append using "C:\Users\u0091183\Desktop\Phd\Datasets\SESTAT\sestat10.dta", keep(refid refyr sala
+> rp)
+
+. append using "C:\Users\u0091183\Desktop\Phd\Datasets\SESTAT\sestat13.dta", keep(refid refyr sala
+> rp)
+
+. 
+. sort refid refyr
+
+. 
+. 
+. 
+end of do-file
+
+. browse
+
+. do "C:\Users\u0091183\AppData\Local\Temp\STD04000000.tmp"
+
+.                                         *SESTAT 2003 - 2013*
+. 
+. cd "C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\"
+C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners
+
+.                           
+. clear all 
+
+. log close _all
+      name:  SESTAT_2003_2013_Joiners
+       log:  C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\joiners.log
+  log type:  text
+ closed on:  11 Nov 2016, 18:22:48
+--------------------------------------------------------------------------------------------------
