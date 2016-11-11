@@ -20,6 +20,24 @@ use "C:\Users\u0091183\Desktop\Phd\Datasets\SESTAT\sestat10.dta"
 rename salarp wage10
 save sestat10, replace
 
+clear all 
+
+use "C:\Users\u0091183\Desktop\Phd\Datasets\SESTAT\2003\nscg2003.dta"
+
+rename salary wage03
+
+merge 1:1 refid using sestat06.dta, keepus(wage06)
+drop if refyr == .
+drop _merge
+merge 1:1 refid using sestat08.dta, keepus(wage08)
+drop if refyr == .
+drop _merge
+merge 1:1 refid using sestat10.dta, keepus(wage10)
+drop if refyr == .
+drop _merge
+
+save joiners.dta, replace
+
 
 
 
