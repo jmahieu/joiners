@@ -1,0 +1,137 @@
+--------------------------------------------------------------------------------------------------
+      name:  Cleaning
+       log:  C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\joiners_cleaning.log
+  log type:  text
+ opened on:  12 Nov 2016, 00:34:49
+
+. 
+. use joiners.dta
+
+.                                                         
+. 
+. /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+> 
+>                                                 CLEANING AND LABELING
+>                         
+> ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+. 
+. //generate dummy for newbus
+. gen nb = 0
+
+. replace nb = 1 if newbus == "Y"
+(5,625 real changes made)
+
+. drop newbus
+
+. rename nb newbus
+
+. label var newbus "Young Firm"
+
+. 
+. //make numeric vars
+. foreach i in emsize emtp dgrdg ndgmemg ndgmeng emsmi emrg emsecdt facadv facben facchal facind f
+> acloc facresp facsal facsoc nedtp nocpr nocprng nocprmg indcode waprsm wascsm wapri wasec jobsat
+> is{
+  2.  gen `i'_n = real(`i')
+  3.  drop `i'
+  4.  rename `i'_n `i'
+  5. }
+(17,378 missing values generated)
+(17,378 missing values generated)
+(22,379 missing values generated)
+(17,383 missing values generated)
+(17,378 missing values generated)
+(181 missing values generated)
+(181 missing values generated)
+(181 missing values generated)
+(181 missing values generated)
+(181 missing values generated)
+(181 missing values generated)
+(181 missing values generated)
+(181 missing values generated)
+(17,378 missing values generated)
+(17,378 missing values generated)
+(17,378 missing values generated)
+(17,378 missing values generated)
+(17,378 missing values generated)
+(17,378 missing values generated)
+
+. 
+. *emsize = employer size 
+. label var emsize "Employer Size"
+
+. *nedtp = Employer type [not taking into account if it was an educational institution]
+. *emtp = Employer type [taking into account educational institutions]
+. *dgrdg = Highest degree type
+. *emsmi = Employment status [same job/employer?], current and previous reference weeks
+. *emrg = Region code for employer
+. *emsecdt = Employer sector [detailed codes]
+. *facadv = Importance of job"s opportunities for advancement
+. *facben = Importance of job"s benefits
+. *facchal = Importance of job"s intellectual challenge
+. *facind = Importance of job"s degree of independence
+. *facloc = Importance of job"s location
+. *facresp = Importance of job"s level of responsibility
+. *facsal = Importance of job's salary
+. *facsoc = Importance of job's contribution to society
+. *indcode = Census industry code for employer
+. *nocpr = Job code for principal job - best code
+. *waprsm = Summarized primary work activity
+. *wascsm = Summarized secondary work activity
+. *wapri = work activity spent most hours on
+. *wasec = work activity spent second most hours on
+. 
+. //create variable employer type: 1= startup, 2 = small established firm, 3 = large established f
+> irms
+. gen emplr = .
+(100,402 missing values generated)
+
+. replace emplr = 1 if nedtp > 2 & newbus == 1 & emsize < 4
+(1,741 real changes made)
+
+. replace emplr = 2 if nedtp > 2 & newbus == 0 & emsize < 4
+(11,187 real changes made)
+
+. replace emplr = 3 if nedtp > 2 & newbus == 0 & emsize >= 4
+(72,708 real changes made)
+
+. 
+. label var emplr "Employer Type"
+
+. label define emplr 1 "Startup" 2 "Small Established" 3 "Large Established"
+
+. 
+. // put incorrect wages to missing
+. foreach i in wage03 wage06 wage08 wage10 {
+  2.         replace `i' = . if `i' >= 999998
+  3. }
+(17,378 real changes made, 17,378 to missing)
+(7,802 real changes made, 7,802 to missing)
+(7,937 real changes made, 7,937 to missing)
+(4,607 real changes made, 4,607 to missing)
+
+. 
+. save joinersc.dta, replace
+(note: file joinersc.dta not found)
+file joinersc.dta saved
+
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+end of do-file
+
+. tab emplr
+
+   Employer |
+       Type |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |      1,741        2.03        2.03
+          2 |     11,187       13.06       15.10
+          3 |     72,708       84.90      100.00
+------------+-----------------------------------
+      Total |     85,636      100.00
+
