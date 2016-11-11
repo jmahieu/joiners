@@ -10,6 +10,8 @@ log using "joiners_analysis.log", replace text name(Analysis)
 							
 use "C:\Users\u0091183\Desktop\Phd\Datasets\SESTAT\2003\nscg2003.dta"
 
+rename salary wage03
+
 merge 1:1 refid using sestat06.dta, keepus(wage06)
 drop if refyr == .
 drop _merge
@@ -20,11 +22,12 @@ merge 1:1 refid using sestat10.dta, keepus(wage10)
 drop if refyr == .
 drop _merge
 
+// put incorrect wages to missing
+
+foreach i in wage03 wage06 wage08 wage10 {
+	replace `i' = . if `i' >= 999998
+}
 
 
-append using "C:\Users\u0091183\Desktop\Phd\Datasets\SESTAT\sestat06.dta", keep(refid refyr salarp)
-append using "C:\Users\u0091183\Desktop\Phd\Datasets\SESTAT\sestat08.dta", keep(refid refyr salarp)
-append using "C:\Users\u0091183\Desktop\Phd\Datasets\SESTAT\sestat10.dta", keep(refid refyr salarp)
-append using "C:\Users\u0091183\Desktop\Phd\Datasets\SESTAT\sestat13.dta", keep(refid refyr salarp)
 
-sort refid refyr
+
