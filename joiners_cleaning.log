@@ -135,3 +135,10 @@ end of do-file
 ------------+-----------------------------------
       Total |     85,636      100.00
 
+. des hrswk
+
+              storage   display    value
+variable name   type    format     label      variable label
+--------------------------------------------------------------------------------------------------
+hrswk           double  %10.0g                B_PRINCIPAL_JOB_WKLY_HRS
+

@@ -60,6 +60,39 @@ label var nocprmg "Occupation Major Group"
 *wapri = work activity spent most hours on
 *wasec = work activity spent second most hours on
 
+//generate dummies for work activities
+foreach i in waacc waaprsh wabrsh wacom wadev wadsn waemrl wamgmt waot waprod waqm wasale wasvc watea {
+gen `i'_dum = 1
+replace `i'_dum = 0 if `i' == "N"
+drop `i'
+rename `i'_dum `i'
+}
+
+//commercial work activities (cf. Elfenbein et al 2010)
+*waacc = accounting, finance, contracts
+label var waacc "Accounting, Finance, Contracts"
+*waemrl = employee relations
+label var emrl "Employee Relations"
+*wamgmt = managing or supervising people/projects
+label var wamgmt "Managing or Supervising"
+*waprod = production, operations, maintenance
+label var waprod "Production, Operations, Maintenance"
+
+//research activities (cf. Elfenbein et al. 2010)
+*waaprsh = applied research
+label var waaprsh "Applied Research"
+*wabrsh = basich research
+label var wabrsh "Basic Research"
+*wacom = computer applications
+label var wacom "Computer Applications"
+*wadev = development
+label var wadev "Development"
+*wadsn = design
+label var wadsn "Design"
+
+*waot = Other
+label var waot = "Other"
+
 //create variable employer type: 1= startup, 2 = small established firm, 3 = large established firms
 gen emplr = .
 replace emplr = 1 if nedtp > 2 & newbus == 1 & emsize < 4
