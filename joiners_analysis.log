@@ -91,3 +91,20 @@ end of do-file
 
 . browse refid refyr salary wage*
 
+. do "C:\Users\u0091183\AppData\Local\Temp\STD03000000.tmp"
+
+.                                                 *SESTAT 2003-2013*
+.                                                         *ANALYSIS*
+.                                                         
+. cd "C:\Users\u0091183\Desktop\"
+C:\Users\u0091183\Desktop
+
+.                           
+. clear all 
+
+. log close _all
+      name:  Analysis
+       log:  C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\joiners_analysis.log
+  log type:  text
+ closed on:  11 Nov 2016, 18:48:48
+--------------------------------------------------------------------------------------------------
