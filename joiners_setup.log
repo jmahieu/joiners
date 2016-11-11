@@ -2,7 +2,7 @@
       name:  SESTAT_2003_2013_Joiners_setup
        log:  C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\joiners_setup.log
   log type:  text
- opened on:  11 Nov 2016, 18:27:21
+ opened on:  11 Nov 2016, 20:28:55
 
 . 
 . use "C:\Users\u0091183\Desktop\Phd\Datasets\SESTAT\sestat06.dta"
@@ -10,6 +10,7 @@
 . rename salarp wage06
 
 . save sestat06, replace
+(note: file sestat06.dta not found)
 file sestat06.dta saved
 
 . 
@@ -18,6 +19,7 @@ file sestat06.dta saved
 . rename salarp wage08
 
 . save sestat08, replace
+(note: file sestat08.dta not found)
 file sestat08.dta saved
 
 . 
@@ -26,15 +28,71 @@ file sestat08.dta saved
 . rename salarp wage10
 
 . save sestat10, replace
+(note: file sestat10.dta not found)
 file sestat10.dta saved
 
 . 
-. use "C:\Users\u0091183\Desktop\Phd\Datasets\SESTAT\sestat13.dta"
+. clear all 
 
-. rename salarp wage13
+. 
+. use "C:\Users\u0091183\Desktop\Phd\Datasets\SESTAT\2003\nscg2003.dta"
 
-. save sestat13, replace
-file sestat13.dta saved
+. 
+. rename salary wage03
+
+. 
+. merge 1:1 refid using sestat06.dta, keepus(wage06)
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                       104,154
+        from master                    49,746  (_merge==1)
+        from using                     54,408  (_merge==2)
+
+    matched                            50,656  (_merge==3)
+    -----------------------------------------
+
+. drop if refyr == .
+(54,408 observations deleted)
+
+. drop _merge
+
+. merge 1:1 refid using sestat08.dta, keepus(wage08)
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                       111,017
+        from master                    55,553  (_merge==1)
+        from using                     55,464  (_merge==2)
+
+    matched                            44,849  (_merge==3)
+    -----------------------------------------
+
+. drop if refyr == .
+(55,464 observations deleted)
+
+. drop _merge
+
+. merge 1:1 refid using sestat10.dta, keepus(wage10)
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                       165,005
+        from master                    78,535  (_merge==1)
+        from using                     86,470  (_merge==2)
+
+    matched                            21,867  (_merge==3)
+    -----------------------------------------
+
+. drop if refyr == .
+(86,470 observations deleted)
+
+. drop _merge
+
+. 
+. save joiners.dta, replace
+(note: file joiners.dta not found)
+file joiners.dta saved
 
 . 
 . 
@@ -43,4 +101,3 @@ file sestat13.dta saved
 . 
 end of do-file
 
-. exit, clear

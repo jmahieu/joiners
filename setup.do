@@ -1,7 +1,7 @@
 					*SESTAT 2003 - 2010*
 						*SETUP*
 
-cd "C:\Users\u0091183\Desktop\"
+cd "C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\"
 			  
 clear all 
 log close _all
