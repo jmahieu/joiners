@@ -115,6 +115,16 @@ label values emsize emsize
 *emrg = Region code for employer
 label var emrg "Employer Region"
 *emsecdt = Employer sector [detailed codes]
+label var emsecdt "Employer Sector"
+label define emsecdt 11 "4-yr coll/univ; med schl; univ. res. inst.", add
+label define emsecdt 12 "2-yr coll/pre-college institutions", add
+label define emsecdt 21 "Bus/Ind, for-profit", add
+label define emsecdt 22 "Bus/ind, self-employd, not-incorporated", add
+label define emsecdt 23 "Bus/Ind, non-profit", add
+label define emsecdt 31 "Federal government", add
+label define emsecdt 32 "State/Local government", add
+label define values emsecdt emsecdt
+
 *facadv = Importance of job"s opportunities for advancement
 *facben = Importance of job"s benefits
 *facchal = Importance of job"s intellectual challenge
@@ -125,11 +135,12 @@ label var emrg "Employer Region"
 *facsoc = Importance of job's contribution to society
 *indcode = Census industry code for employer
 label var indcode "Industry"
+
 *nocpr = Job code for principal job - best code
 label var nocpr "Principal Job"
+
 *nocprmg = Occupation Major Group
 label var nocprmg "Occupation Major Group"
-
 label define nocprmg 1 "Computer and mathematical scientists", add
 label define nocprmg 2 "Biological, agricultural and other life scientists", add
 label define nocprmg 3 "Physical and related scientists", add
@@ -208,9 +219,17 @@ label var emplr "Employer Type"
 label define emplr 1 "Startup" 2 "Small Established" 3 "Large Established"
 label values emplr emplr
 
+/* SALARY */
+
 // put incorrect wages to missing
 foreach i in wage03 wage06 wage08 wage10 {
 	replace `i' = . if `i' >= 999998
+}
+
+//generate lnwage
+foreach i in wage03 wage06 wage08 wage10 {
+	gen ln`i' = log(`i') if `i' > 0
+	replace ln`i' = 0 if `i' == 0
 }
 
 save joinersc.dta, replace
