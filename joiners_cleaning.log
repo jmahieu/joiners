@@ -302,3 +302,4 @@ r(111);
 
 . browse refid refyr wage* emplr
 
+. exit, clear

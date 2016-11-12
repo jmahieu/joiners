@@ -101,3 +101,4 @@ file joiners.dta saved
 . 
 end of do-file
 
+. exit, clear
