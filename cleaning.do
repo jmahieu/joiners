@@ -17,6 +17,46 @@ use joiners.dta
 			
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
+/*	DEMOGRAPHIC VARIABLES */
+
+//age
+label var age "Age"
+
+gen sqrdage = age^2
+label var sqrdage "Age²"
+
+//generate dummy for male
+gen male = 0 if gender == "F"
+replace male = 1 if gender == "M"
+label var male "Male"
+
+//generate dummy for married
+gen mar = 0 if marind == "N"
+replace mar = 1 if marind == "Y"
+label var mar "Married"
+
+//gen categorical variable for race
+gen race = real(racem)
+label var race "Race"
+label define race 1 "Asian" 2 "American Indian/Alaska Native" 3 "Black" 4 "White" 5 "Native Hawaiian/Other Pacific Islander" 6 "Multiple"
+
+/*	EDUCATION */
+
+//Highest degree type
+gen degree = real(dgrdg)
+label var degree "Highest degree"
+
+//Carnegie Classification of Institution granting highest degree
+gen hdclas = real(hdcarn)
+label var hdclas "Carnegie Classification"
+
+
+/* EMPLOYMENT */
+
+//gen tenure var
+gen tenure = refyr - strtyr
+label var tenure "Tenure"
+
 //generate dummy for newbus
 gen nb = 0
 replace nb = 1 if newbus == "Y"
@@ -25,7 +65,7 @@ rename nb newbus
 label var newbus "Young Firm"
 
 //make numeric vars
-foreach i in emsize emtp dgrdg ndgmemg ndgmeng emsmi emrg emsecdt facadv facben facchal facind facloc facresp facsal facsoc nedtp nocpr nocprng nocprmg indcode waprsm wascsm wapri wasec jobsatis{
+foreach i in emsize emtp ndgmemg ndgmeng emsmi emrg emsecdt facadv facben facchal facind facloc facresp facsal facsoc nedtp nocpr nocprng nocprmg indcode waprsm wascsm wapri wasec jobsatis{
  gen `i'_n = real(`i')
  drop `i'
  rename `i'_n `i'
@@ -35,8 +75,6 @@ foreach i in emsize emtp dgrdg ndgmemg ndgmeng emsmi emrg emsecdt facadv facben 
 label var emsize "Employer Size"
 *nedtp = Employer type [not taking into account if it was an educational institution]
 *emtp = Employer type [taking into account educational institutions]
-*dgrdg = Highest degree type
-label var dgrdg "Highest degree"
 *emsmi = Employment status [same job/employer?], current and previous reference weeks
 *emrg = Region code for employer
 label var emrg "Employer Region"
@@ -72,11 +110,17 @@ rename `i'_dum `i'
 *waacc = accounting, finance, contracts
 label var waacc "Accounting, Finance, Contracts"
 *waemrl = employee relations
-label var emrl "Employee Relations"
+label var waemrl "Employee Relations"
 *wamgmt = managing or supervising people/projects
 label var wamgmt "Managing or Supervising"
 *waprod = production, operations, maintenance
 label var waprod "Production, Operations, Maintenance"
+*waqm = quality or productivity management
+label var waqm "Quality or Productivity Management"
+*wasale = sales, purchasing, marketing
+label var wasale "Sales, Purchasing, Marketing"
+*wasvc = professional services
+label var wasvc "Professional Services"
 
 //research activities (cf. Elfenbein et al. 2010)
 *waaprsh = applied research
@@ -91,7 +135,22 @@ label var wadev "Development"
 label var wadsn "Design"
 
 *waot = Other
-label var waot = "Other"
+label var waot "Other"
+*watea = Teaching
+label var watea "Teaching"
+
+//generate count of all work activities
+gen wan = waacc + waaprsh + wabrsh + wacom + wadev + wadsn + waemrl + wamgmt + waot + waprod + waqm + wasale + wasvc + watea
+label var wan "Number of Work Activities"
+
+//gen count of commercial activities (cf. Elfenbein)  
+gen cmrcn = waacc + waemrl + wamgmt + waprod + waqm + wasale + wasvc
+label var cmrcn "Number of Commercial Activities"
+
+//gen count of research activities (cf. Elfenbein)
+gen resn = waaprsh + wabrsh + wacom + wadev + wadsn
+label var resn "Number of Research Activities"
+
 
 //create variable employer type: 1= startup, 2 = small established firm, 3 = large established firms
 gen emplr = .

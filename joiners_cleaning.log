@@ -2,7 +2,7 @@
       name:  Cleaning
        log:  C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\joiners_cleaning.log
   log type:  text
- opened on:  12 Nov 2016, 00:34:49
+ opened on:  12 Nov 2016, 01:30:06
 
 . 
 . use joiners.dta
@@ -14,6 +14,70 @@
 >                                                 CLEANING AND LABELING
 >                         
 > ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+. 
+. /*      DEMOGRAPHIC VARIABLES */
+. 
+. //age
+. label var age "Age"
+
+. 
+. gen sqrdage = age^2
+
+. label var sqrdage "Age²"
+
+. 
+. //generate dummy for male
+. gen male = 0 if gender == "F"
+(57,217 missing values generated)
+
+. replace male = 1 if gender == "M"
+(57,217 real changes made)
+
+. label var male "Male"
+
+. 
+. //generate dummy for married
+. gen mar = 0 if marind == "N"
+(74,943 missing values generated)
+
+. replace mar = 1 if marind == "Y"
+(74,943 real changes made)
+
+. label var mar "Married"
+
+. 
+. //gen categorical variable for race
+. gen race = real(racem)
+
+. label var race "Race"
+
+. label define race 1 "Asian" 2 "American Indian/Alaska Native" 3 "Black" 4 "White" 5 "Native Hawa
+> iian/Other Pacific Islander" 6 "Multiple"
+
+. 
+. /*      EDUCATION */
+. 
+. //Highest degree type
+. gen degree = real(dgrdg)
+
+. label var degree "Highest degree"
+
+. 
+. //Carnegie Classification of Institution granting highest degree
+. gen hdclas = real(hdcarn)
+(11,391 missing values generated)
+
+. label var hdclas "Carnegie Classification"
+
+. 
+. 
+. /* EMPLOYMENT */
+. 
+. //gen tenure var
+. gen tenure = refyr - strtyr
+
+. label var tenure "Tenure"
+
 . 
 . //generate dummy for newbus
 . gen nb = 0
@@ -29,9 +93,8 @@
 
 . 
 . //make numeric vars
-. foreach i in emsize emtp dgrdg ndgmemg ndgmeng emsmi emrg emsecdt facadv facben facchal facind f
-> acloc facresp facsal facsoc nedtp nocpr nocprng nocprmg indcode waprsm wascsm wapri wasec jobsat
-> is{
+. foreach i in emsize emtp ndgmemg ndgmeng emsmi emrg emsecdt facadv facben facchal facind facloc 
+> facresp facsal facsoc nedtp nocpr nocprng nocprmg indcode waprsm wascsm wapri wasec jobsatis{
   2.  gen `i'_n = real(`i')
   3.  drop `i'
   4.  rename `i'_n `i'
@@ -62,9 +125,10 @@
 
 . *nedtp = Employer type [not taking into account if it was an educational institution]
 . *emtp = Employer type [taking into account educational institutions]
-. *dgrdg = Highest degree type
 . *emsmi = Employment status [same job/employer?], current and previous reference weeks
 . *emrg = Region code for employer
+. label var emrg "Employer Region"
+
 . *emsecdt = Employer sector [detailed codes]
 . *facadv = Importance of job"s opportunities for advancement
 . *facben = Importance of job"s benefits
@@ -75,11 +139,109 @@
 . *facsal = Importance of job's salary
 . *facsoc = Importance of job's contribution to society
 . *indcode = Census industry code for employer
+. label var indcode "Industry"
+
 . *nocpr = Job code for principal job - best code
+. label var nocpr "Principal Job"
+
+. *nocprmg = Occupation Major Group
+. label var nocprmg "Occupation Major Group"
+
 . *waprsm = Summarized primary work activity
 . *wascsm = Summarized secondary work activity
 . *wapri = work activity spent most hours on
 . *wasec = work activity spent second most hours on
+. 
+. //generate dummies for work activities
+. foreach i in waacc waaprsh wabrsh wacom wadev wadsn waemrl wamgmt waot waprod waqm wasale wasvc 
+> watea {
+  2. gen `i'_dum = 1
+  3. replace `i'_dum = 0 if `i' == "N"
+  4. drop `i'
+  5. rename `i'_dum `i'
+  6. }
+(57,573 real changes made)
+(58,176 real changes made)
+(65,808 real changes made)
+(52,634 real changes made)
+(58,590 real changes made)
+(61,540 real changes made)
+(54,588 real changes made)
+(34,426 real changes made)
+(77,578 real changes made)
+(70,651 real changes made)
+(62,975 real changes made)
+(57,242 real changes made)
+(57,835 real changes made)
+(56,127 real changes made)
+
+. 
+. //commercial work activities (cf. Elfenbein et al 2010)
+. *waacc = accounting, finance, contracts
+. label var waacc "Accounting, Finance, Contracts"
+
+. *waemrl = employee relations
+. label var waemrl "Employee Relations"
+
+. *wamgmt = managing or supervising people/projects
+. label var wamgmt "Managing or Supervising"
+
+. *waprod = production, operations, maintenance
+. label var waprod "Production, Operations, Maintenance"
+
+. *waqm = quality or productivity management
+. label var waqm "Quality or Productivity Management"
+
+. *wasale = sales, purchasing, marketing
+. label var wasale "Sales, Purchasing, Marketing"
+
+. *wasvc = professional services
+. label var wasvc "Professional Services"
+
+. 
+. //research activities (cf. Elfenbein et al. 2010)
+. *waaprsh = applied research
+. label var waaprsh "Applied Research"
+
+. *wabrsh = basich research
+. label var wabrsh "Basic Research"
+
+. *wacom = computer applications
+. label var wacom "Computer Applications"
+
+. *wadev = development
+. label var wadev "Development"
+
+. *wadsn = design
+. label var wadsn "Design"
+
+. 
+. *waot = Other
+. label var waot "Other"
+
+. *watea = Teaching
+. label var watea "Teaching"
+
+. 
+. //generate count of all work activities
+. gen wan = waacc + waaprsh + wabrsh + wacom + wadev + wadsn + waemrl + wamgmt + waot + waprod + w
+> aqm + wasale + wasvc + watea
+
+. label var wan "Number of Work Activities"
+
+. 
+. //gen count of commercial activities (cf. Elfenbein)  
+. gen cmrcn = waacc + waemrl + wamgmt + waprod + waqm + wasale + wasvc
+
+. label var cmrcn "Number of Commercial Activities"
+
+. 
+. //gen count of research activities (cf. Elfenbein)
+. gen resn = waaprsh + wabrsh + wacom + wadev + wadsn
+
+. label var resn "Number of Research Activities"
+
+. 
 . 
 . //create variable employer type: 1= startup, 2 = small established firm, 3 = large established f
 > irms
@@ -112,7 +274,6 @@
 
 . 
 . save joinersc.dta, replace
-(note: file joinersc.dta not found)
 file joinersc.dta saved
 
 . 
@@ -123,6 +284,10 @@ file joinersc.dta saved
 . 
 . 
 end of do-file
+
+. tab degree startup
+variable startup not found
+r(111);
 
 . tab emplr
 
@@ -135,10 +300,5 @@ end of do-file
 ------------+-----------------------------------
       Total |     85,636      100.00
 
-. des hrswk
-
-              storage   display    value
-variable name   type    format     label      variable label
---------------------------------------------------------------------------------------------------
-hrswk           double  %10.0g                B_PRINCIPAL_JOB_WKLY_HRS
+. browse refid refyr wage* emplr
 
