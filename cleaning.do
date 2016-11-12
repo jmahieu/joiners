@@ -1,4 +1,4 @@
-						*SESTAT 2003-2013*
+						*SESTAT 2003-2010*
 							*CLEANING*
 							
 cd "C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\"
@@ -39,12 +39,20 @@ label var mar "Married"
 gen race = real(racem)
 label var race "Race"
 label define race 1 "Asian" 2 "American Indian/Alaska Native" 3 "Black" 4 "White" 5 "Native Hawaiian/Other Pacific Islander" 6 "Multiple"
+label values race race
 
 /*	EDUCATION */
 
 //Highest degree type
 gen degree = real(dgrdg)
 label var degree "Highest degree"
+label define degree 1 "Bachelor's" 2 "Master's" 3 "Doctorate" 4 "Professional"
+label values degree degree
+
+//Field of Major for highest degree
+gen major = real(nhdmedx)
+label var major "Field of Major"
+
 
 //Carnegie Classification of Institution granting highest degree
 gen hdclas = real(hdcarn)
@@ -73,6 +81,9 @@ foreach i in emsize emtp ndgmemg ndgmeng emsmi emrg emsecdt facadv facben faccha
 
 *emsize = employer size 
 label var emsize "Employer Size"
+label define emsize 1 "<10" 2 "10-24" 3 "25 - 99" 4 "100 - 499" 5 "500 - 999" 5 "500 - 999" 6 "1000 - 4999" 7 "5000 - 24999" 8 ">25000"
+label values emsize emsize
+
 *nedtp = Employer type [not taking into account if it was an educational institution]
 *emtp = Employer type [taking into account educational institutions]
 *emsmi = Employment status [same job/employer?], current and previous reference weeks
@@ -93,6 +104,16 @@ label var indcode "Industry"
 label var nocpr "Principal Job"
 *nocprmg = Occupation Major Group
 label var nocprmg "Occupation Major Group"
+
+label define nocprmg 1 "Computer and mathematical scientists", add
+label define nocprmg 2 "Biological, agricultural and other life scientists", add
+label define nocprmg 3 "Physical and related scientists", add
+label define nocprmg 4 "Social and related scientists", add
+label define nocprmg 5 "Engineers", add
+label define nocprmg 6 "S and E related occupations", add
+label define nocprmg 7 "Non-S and E Occupations", add
+label values nocprmg nocprmg
+
 *waprsm = Summarized primary work activity
 *wascsm = Summarized secondary work activity
 *wapri = work activity spent most hours on
@@ -160,6 +181,7 @@ replace emplr = 3 if nedtp > 2 & newbus == 0 & emsize >= 4
 
 label var emplr "Employer Type"
 label define emplr 1 "Startup" 2 "Small Established" 3 "Large Established"
+label values emplr emplr
 
 // put incorrect wages to missing
 foreach i in wage03 wage06 wage08 wage10 {
