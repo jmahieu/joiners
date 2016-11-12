@@ -2,7 +2,7 @@
       name:  Cleaning
        log:  C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\joiners_cleaning.log
   log type:  text
- opened on:  12 Nov 2016, 01:30:06
+ opened on:  12 Nov 2016, 18:18:24
 
 . 
 . use joiners.dta
@@ -54,6 +54,8 @@
 . label define race 1 "Asian" 2 "American Indian/Alaska Native" 3 "Black" 4 "White" 5 "Native Hawa
 > iian/Other Pacific Islander" 6 "Multiple"
 
+. label values race race
+
 . 
 . /*      EDUCATION */
 . 
@@ -62,12 +64,74 @@
 
 . label var degree "Highest degree"
 
+. label define degree 1 "Bachelor's" 2 "Master's" 3 "Doctorate" 4 "Professional"
+
+. label values degree degree
+
+. 
+. //Major Field for highest degree
+. gen major = real(ndgmemg)
+
+. label var major "Major Field"
+
+. label define major 1 "Computer and mathematical sciences", add
+
+. label define major 2 "Life and related sciences", add
+
+. label define major 3 "Physical and related sciences", add
+
+. label define major 4 "Social and related sciences", add
+
+. label define major 5 "Engineering", add
+
+. label define major 6 "S and E-Related Fields", add
+
+. label define major 7 "Non-S and E Fields", add
+
+. label values major major 
+
 . 
 . //Carnegie Classification of Institution granting highest degree
 . gen hdclas = real(hdcarn)
 (11,391 missing values generated)
 
 . label var hdclas "Carnegie Classification"
+
+. label define hdclas 11 "Research University I", add
+
+. label define hdclas 12 "Research University II", add
+
+. label define hdclas 13 "Doctorate Granting I", add
+
+. label define hdclas 14 "Doctorate Granting II", add
+
+. label define hdclas 21 "Comprehensive I", add
+
+. label define hdclas 22 "Comprehensive II", add
+
+. label define hdclas 31 "Liberal Arts I", add
+
+. label define hdclas 32 "Liberal Arts II", add
+
+. label define hdclas 40 "Two-year institutions", add
+
+. label define hdclas 51 "Theological seminaries, bible colleges", add
+
+. label define hdclas 52 "Medical schools and medical centers", add
+
+. label define hdclas 53 "Other separate health professional schools", add
+
+. label define hdclas 54 "Schools of engineering and technology", add
+
+. label define hdclas 56 "Schools of art, music, and design", add
+
+. label define hdclas 57 "Schools of law", add
+
+. label define hdclas 59 "Other specialized institutions", add
+
+. label define hdclas 60 "Indian Tribal Institutions", add
+
+. label values hdclas hdclas
 
 . 
 . 
@@ -123,6 +187,12 @@
 . *emsize = employer size 
 . label var emsize "Employer Size"
 
+. label define emsize 1 "<10" 2 "10-24" 3 "25 - 99" 4 "100 - 499" 5 "500 - 999" 5 "500 - 999" 6 "1
+> 000 - 4999" 7 "5000 - 24999" 8 ">25000"
+
+. label values emsize emsize
+
+. 
 . *nedtp = Employer type [not taking into account if it was an educational institution]
 . *emtp = Employer type [taking into account educational institutions]
 . *emsmi = Employment status [same job/employer?], current and previous reference weeks
@@ -130,6 +200,25 @@
 . label var emrg "Employer Region"
 
 . *emsecdt = Employer sector [detailed codes]
+. label var emsecdt "Employer Sector"
+
+. label define emsecdt 11 "4-yr coll/univ; med schl; univ. res. inst.", add
+
+. label define emsecdt 12 "2-yr coll/pre-college institutions", add
+
+. label define emsecdt 21 "Bus/Ind, for-profit", add
+
+. label define emsecdt 22 "Bus/ind, self-employd, not-incorporated", add
+
+. label define emsecdt 23 "Bus/Ind, non-profit", add
+
+. label define emsecdt 31 "Federal government", add
+
+. label define emsecdt 32 "State/Local government", add
+
+. label values emsecdt emsecdt
+
+. 
 . *facadv = Importance of job"s opportunities for advancement
 . *facben = Importance of job"s benefits
 . *facchal = Importance of job"s intellectual challenge
@@ -141,12 +230,31 @@
 . *indcode = Census industry code for employer
 . label var indcode "Industry"
 
+. 
 . *nocpr = Job code for principal job - best code
 . label var nocpr "Principal Job"
 
+. 
 . *nocprmg = Occupation Major Group
 . label var nocprmg "Occupation Major Group"
 
+. label define nocprmg 1 "Computer and mathematical scientists", add
+
+. label define nocprmg 2 "Biological, agricultural and other life scientists", add
+
+. label define nocprmg 3 "Physical and related scientists", add
+
+. label define nocprmg 4 "Social and related scientists", add
+
+. label define nocprmg 5 "Engineers", add
+
+. label define nocprmg 6 "S and E related occupations", add
+
+. label define nocprmg 7 "Non-S and E Occupations", add
+
+. label values nocprmg nocprmg
+
+. 
 . *waprsm = Summarized primary work activity
 . *wascsm = Summarized secondary work activity
 . *wapri = work activity spent most hours on
@@ -262,6 +370,10 @@
 
 . label define emplr 1 "Startup" 2 "Small Established" 3 "Large Established"
 
+. label values emplr emplr
+
+. 
+. /* SALARY */
 . 
 . // put incorrect wages to missing
 . foreach i in wage03 wage06 wage08 wage10 {
@@ -271,6 +383,21 @@
 (7,802 real changes made, 7,802 to missing)
 (7,937 real changes made, 7,937 to missing)
 (4,607 real changes made, 4,607 to missing)
+
+. 
+. //generate lnwage
+. foreach i in wage03 wage06 wage08 wage10 {
+  2.         gen ln`i' = log(`i') if `i' > 0
+  3.         replace ln`i' = 0 if `i' == 0
+  4. }
+(18,095 missing values generated)
+(717 real changes made)
+(57,725 missing values generated)
+(177 real changes made)
+(63,662 missing values generated)
+(172 real changes made)
+(83,276 missing values generated)
+(134 real changes made)
 
 . 
 . save joinersc.dta, replace
@@ -285,21 +412,175 @@ file joinersc.dta saved
 . 
 end of do-file
 
-. tab degree startup
-variable startup not found
-r(111);
+. kdensity wage03
 
-. tab emplr
+. kdensity lnwage03
 
-   Employer |
-       Type |      Freq.     Percent        Cum.
+. tab wage03
+
+H_JOB_SALAR |
+  Y_ANN_PUB |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |      1,741        2.03        2.03
-          2 |     11,187       13.06       15.10
-          3 |     72,708       84.90      100.00
+          0 |        717        0.86        0.86
+       1000 |        479        0.58        1.44
+       2000 |        373        0.45        1.89
+       3000 |        332        0.40        2.29
+       4000 |        293        0.35        2.64
+       5000 |        392        0.47        3.11
+       6000 |        357        0.43        3.54
+       7000 |        206        0.25        3.79
+       8000 |        354        0.43        4.22
+       9000 |        247        0.30        4.52
+      10000 |        645        0.78        5.29
+      11000 |        172        0.21        5.50
+      12000 |        560        0.67        6.18
+      13000 |        245        0.30        6.47
+      14000 |        272        0.33        6.80
+      15000 |        542        0.65        7.45
+      16000 |        262        0.32        7.77
+      17000 |        219        0.26        8.03
+      18000 |        465        0.56        8.59
+      19000 |        239        0.29        8.88
+      20000 |        901        1.09        9.96
+      21000 |        278        0.33       10.30
+      22000 |        376        0.45       10.75
+      23000 |        310        0.37       11.12
+      24000 |        585        0.70       11.83
+      25000 |        944        1.14       12.97
+      26000 |        434        0.52       13.49
+      27000 |        350        0.42       13.91
+      28000 |        551        0.66       14.57
+      29000 |        371        0.45       15.02
+      30000 |      1,655        1.99       17.01
+      31000 |        447        0.54       17.55
+      32000 |        833        1.00       18.56
+      33000 |        544        0.66       19.21
+      34000 |        529        0.64       19.85
+      35000 |      1,392        1.68       21.53
+      36000 |        977        1.18       22.70
+      37000 |        586        0.71       23.41
+      38000 |        858        1.03       24.44
+      39000 |        633        0.76       25.20
+      40000 |      2,557        3.08       28.28
+      41000 |        566        0.68       28.97
+      42000 |      1,180        1.42       30.39
+      43000 |        797        0.96       31.35
+      44000 |        637        0.77       32.11
+      45000 |      1,700        2.05       34.16
+      46000 |        566        0.68       34.84
+      47000 |        601        0.72       35.57
+      48000 |      1,124        1.35       36.92
+      49000 |        506        0.61       37.53
+      50000 |      2,926        3.52       41.05
+      51000 |        515        0.62       41.67
+      52000 |      1,151        1.39       43.06
+      53000 |        671        0.81       43.87
+      54000 |        653        0.79       44.66
+      55000 |      1,422        1.71       46.37
+      56000 |        700        0.84       47.21
+      57000 |        529        0.64       47.85
+      58000 |        697        0.84       48.69
+      59000 |        439        0.53       49.22
+      60000 |      2,974        3.58       52.80
+      61000 |        364        0.44       53.24
+      62000 |        847        1.02       54.26
+      63000 |        636        0.77       55.02
+      64000 |        512        0.62       55.64
+      65000 |      1,879        2.26       57.90
+      66000 |        467        0.56       58.47
+      67000 |        502        0.60       59.07
+      68000 |        697        0.84       59.91
+      69000 |        417        0.50       60.41
+      70000 |      2,306        2.78       63.19
+      71000 |        333        0.40       63.59
+      72000 |        924        1.11       64.70
+      73000 |        501        0.60       65.31
+      74000 |        405        0.49       65.80
+      75000 |      1,705        2.05       67.85
+      76000 |        396        0.48       68.33
+      77000 |        351        0.42       68.75
+      78000 |        626        0.75       69.50
+      79000 |        288        0.35       69.85
+      80000 |      2,256        2.72       72.57
+      81000 |        303        0.36       72.93
+      82000 |        515        0.62       73.55
+      83000 |        389        0.47       74.02
+      84000 |        444        0.53       74.56
+      85000 |      1,180        1.42       75.98
+      86000 |        377        0.45       76.43
+      87000 |        375        0.45       76.88
+      88000 |        381        0.46       77.34
+      89000 |        285        0.34       77.68
+      90000 |      1,547        1.86       79.55
+      91000 |        221        0.27       79.81
+      92000 |        424        0.51       80.32
+      93000 |        324        0.39       80.72
+      94000 |        263        0.32       81.03
+      95000 |        727        0.88       81.91
+      96000 |        330        0.40       82.31
+      97000 |        205        0.25       82.55
+      98000 |        370        0.45       83.00
+      99000 |        148        0.18       83.18
+     100000 |      2,225        2.68       85.86
+     101000 |        134        0.16       86.02
+     102000 |        217        0.26       86.28
+     103000 |        213        0.26       86.54
+     104000 |        207        0.25       86.78
+     105000 |        430        0.52       87.30
+     106000 |        175        0.21       87.51
+     107000 |        158        0.19       87.70
+     108000 |        221        0.27       87.97
+     109000 |        105        0.13       88.10
+     110000 |        806        0.97       89.07
+     111000 |         54        0.07       89.13
+     112000 |        132        0.16       89.29
+     113000 |         97        0.12       89.41
+     114000 |         85        0.10       89.51
+     115000 |        353        0.43       89.94
+     116000 |         58        0.07       90.01
+     117000 |         61        0.07       90.08
+     118000 |        102        0.12       90.20
+     119000 |         49        0.06       90.26
+     120000 |      1,060        1.28       91.54
+     121000 |         35        0.04       91.58
+     122000 |         63        0.08       91.66
+     123000 |         46        0.06       91.71
+     124000 |         56        0.07       91.78
+     125000 |        510        0.61       92.39
+     126000 |         69        0.08       92.48
+     127000 |         61        0.07       92.55
+     128000 |         55        0.07       92.62
+     129000 |         36        0.04       92.66
+     130000 |        454        0.55       93.21
+     131000 |         24        0.03       93.23
+     132000 |         58        0.07       93.30
+     133000 |         29        0.03       93.34
+     134000 |         24        0.03       93.37
+     135000 |        239        0.29       93.66
+     136000 |         29        0.03       93.69
+     137000 |         35        0.04       93.73
+     138000 |         34        0.04       93.77
+     139000 |         20        0.02       93.80
+     140000 |        364        0.44       94.24
+     141000 |         17        0.02       94.26
+     142000 |         32        0.04       94.30
+     143000 |         31        0.04       94.33
+     144000 |         48        0.06       94.39
+     145000 |        105        0.13       94.52
+     146000 |         26        0.03       94.55
+     147000 |         25        0.03       94.58
+     148000 |         36        0.04       94.62
+     149000 |         11        0.01       94.64
+     150000 |      4,454        5.36      100.00
 ------------+-----------------------------------
-      Total |     85,636      100.00
+      Total |     83,024      100.00
 
-. browse refid refyr wage* emplr
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. browse refid refyr wage*
 
-. exit, clear

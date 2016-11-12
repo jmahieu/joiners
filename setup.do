@@ -24,7 +24,7 @@ clear all
 
 use "C:\Users\u0091183\Desktop\Phd\Datasets\SESTAT\2003\nscg2003.dta"
 
-rename salary wage03
+rename salarp wage03
 
 merge 1:1 refid using sestat06.dta, keepus(wage06)
 drop if refyr == .
