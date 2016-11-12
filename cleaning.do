@@ -123,7 +123,7 @@ label define emsecdt 22 "Bus/ind, self-employd, not-incorporated", add
 label define emsecdt 23 "Bus/Ind, non-profit", add
 label define emsecdt 31 "Federal government", add
 label define emsecdt 32 "State/Local government", add
-label define values emsecdt emsecdt
+label values emsecdt emsecdt
 
 *facadv = Importance of job"s opportunities for advancement
 *facben = Importance of job"s benefits
@@ -231,6 +231,13 @@ foreach i in wage03 wage06 wage08 wage10 {
 	gen ln`i' = log(`i') if `i' > 0
 	replace ln`i' = 0 if `i' == 0
 }
+
+//gen log yearly wage growth
+
+gen dlnwage = (lnwage10 - lnwage03)/7 if wage10 != .
+replace dlnwage = (lnwage08 - lnwage03)/5 if dlnwage == . & wage08 != .
+replace dlnwage = (lnwage06 - lnwage03)/3 if dlnwage == . & wage06 != .
+
 
 save joinersc.dta, replace
 
