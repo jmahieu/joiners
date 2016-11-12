@@ -49,14 +49,39 @@ label var degree "Highest degree"
 label define degree 1 "Bachelor's" 2 "Master's" 3 "Doctorate" 4 "Professional"
 label values degree degree
 
-//Field of Major for highest degree
-gen major = real(nhdmedx)
-label var major "Field of Major"
-
+//Major Field for highest degree
+gen major = real(ndgmemg)
+label var major "Major Field"
+label define major 1 "Computer and mathematical sciences", add
+label define major 2 "Life and related sciences", add
+label define major 3 "Physical and related sciences", add
+label define major 4 "Social and related sciences", add
+label define major 5 "Engineering", add
+label define major 6 "S and E-Related Fields", add
+label define major 7 "Non-S and E Fields", add
+label values major major 
 
 //Carnegie Classification of Institution granting highest degree
 gen hdclas = real(hdcarn)
 label var hdclas "Carnegie Classification"
+label define hdclas 11 "Research University I", add
+label define hdclas 12 "Research University II", add
+label define hdclas 13 "Doctorate Granting I", add
+label define hdclas 14 "Doctorate Granting II", add
+label define hdclas 21 "Comprehensive I", add
+label define hdclas 22 "Comprehensive II", add
+label define hdclas 31 "Liberal Arts I", add
+label define hdclas 32 "Liberal Arts II", add
+label define hdclas 40 "Two-year institutions", add
+label define hdclas 51 "Theological seminaries, bible colleges", add
+label define hdclas 52 "Medical schools and medical centers", add
+label define hdclas 53 "Other separate health professional schools", add
+label define hdclas 54 "Schools of engineering and technology", add
+label define hdclas 56 "Schools of art, music, and design", add
+label define hdclas 57 "Schools of law", add
+label define hdclas 59 "Other specialized institutions", add
+label define hdclas 60 "Indian Tribal Institutions", add
+label values hdclas hdclas
 
 
 /* EMPLOYMENT */
