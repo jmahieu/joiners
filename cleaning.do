@@ -98,7 +98,7 @@ rename nb newbus
 label var newbus "Young Firm"
 
 //make numeric vars
-foreach i in emsize emtp ndgmemg ndgmeng emsmi emrg emsecdt facadv facben facchal facind facloc facresp facsal facsoc nedtp nocpr nocprng nocprmg indcode waprsm wascsm wapri wasec jobsatis{
+foreach i in emsize emtp ndgmemg ndgmeng emsmi emrg emsecdt facadv facben facchal facind facloc facresp facsal facsoc indcode lfstat nedtp nocpr nocprng nocprmg waprsm wascsm wapri wasec jobsatis{
  gen `i'_n = real(`i')
  drop `i'
  rename `i'_n `i'
@@ -126,15 +126,84 @@ label define emsecdt 32 "State/Local government", add
 label values emsecdt emsecdt
 
 *facadv = Importance of job"s opportunities for advancement
+label var facadv "Importance of job's opportunities for advancement"
 *facben = Importance of job"s benefits
+label var facben "Importance of job's benefits"
 *facchal = Importance of job"s intellectual challenge
+label var facchal "Importance of job's intellectual challenge"
 *facind = Importance of job"s degree of independence
+label var facind "Importance of job's degree of independence"
 *facloc = Importance of job"s location
+label var facloc "Importance of job's location"
 *facresp = Importance of job"s level of responsibility
+label var facresp "Importance of job's level of responsibility"
 *facsal = Importance of job's salary
+label var facsal "Importance of job's salary"
 *facsoc = Importance of job's contribution to society
+label var facsoc "Importance of job's contribution to society"
+
+foreach i in facadv facben facchal facind facloc facresp facsal facsoc {
+	label define `i' 1 "Very important" 2 "Somewhat important" 3 "Somewhat unimportant" 4 "Not important at all"
+	label values `i' `i'
+}
+
 *indcode = Census industry code for employer
-label var indcode "Industry"
+rename indcode industry
+label var industry "Industry"
+label define industry 170 "Crop production", add
+label define industry 180 "Animal production", add
+label define industry 190 "Forestry except logging", add
+label define industry 270 "Logging", add
+label define industry 280 "Fishing, hunting, and trapping", add
+label define industry 290 "Support activities for agriculture and forestry", add
+label define industry 370 "Oil and gas extraction", add
+label define industry 380 "Coal mining", add
+label define industry 390 "Metal ore mining", add
+label define industry 470 "Nonmetallic mineral mining and quarrying", add
+label define industry 480 "Not specified type of mining", add
+label define industry 490 "Support activities for mining", add
+label define industry 570 "Electric power generation", add
+label define industry 580 "Natural gas distribution", add
+label define industry 590 "Electric and gas, and other combinations", add
+label define industry 670 "Water, steam, air-conditioning, and irrigation systems", add
+label define industry 680 "Sewage treatment facilities", add
+label define industry 690 "Not specified utilities", add
+label define industry 770 "Construction", add
+label define industry 1070 "Animal food, grain and oilseed milling", add
+label define industry 1080 "Sugar and confectionery products", add
+label define industry 1090 "Fruit and vegetable preserving and specialty food", add
+label define industry 1170 "Dairy product manufacturing", add
+label define industry 1180 "Animal slaughtering and processing", add
+label define industry 1190 "Retail bakeries", add
+label define industry 1270 "Bakeries, except retail", add
+label define industry 1280 "Seafood and other miscellaneous foods", add
+label define industry 1290 "Not specified food industries", add
+label define industry 1370 "Beverage manufacturing", add
+label define industry 1390 "Tobacco manufacturing", add
+label define industry 1470 "Fiber, yarn, and thread mills", add
+label define industry 1480 "Fabric mills, except knitting", add
+label define industry 1490 "Textile and fabric finishing and coating mills", add
+label define industry 1570 "Carpet and rug mills", add
+label define industry 1590 "Textile product mills, except carpets and rugs", add
+label define industry 1670 "Knitting mills", add
+label define industry 1680 "Cut and sew apparel manufacturing", add
+label define industry 1690 "Apparel accessories and other apparel manufacturing", add
+label define industry 1770 "Footwear manufacturing", add
+label define industry 1790 "Leather tanning and products, except footwear", add
+label define industry 1870 "Pulp, paper, and paperboard mills", add
+label define industry 1880 "Paperboard containers and boxes", add
+label define industry 1890 "Miscellaneous paper and pulp products", add
+label define industry 1990 "Printing and related support activities", add
+label define industry 2070 "Petroleum refining", add
+label define industry 2090 "Miscellaneous petroleum and coal products", add
+label define industry 2170 "Resin, synthetic rubber and fibers, and filaments", add
+label values industry industry
+
+*lfstat = Labor force status
+label var lfstat "Labor force status"
+label define lfstat 1 "Employed" 2 "Unemployed" 3 "Not in Labor Force"
+label values lfstat lfstat
+
 
 *nocpr = Job code for principal job - best code
 label var nocpr "Principal Job"
