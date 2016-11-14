@@ -114,6 +114,25 @@ label values emsize emsize
 *emsmi = Employment status [same job/employer?], current and previous reference weeks
 *emrg = Region code for employer
 label var emrg "Employer Region"
+label define emrg 1 "New England", add
+label define emrg 2 "Middle Atlantic", add
+label define emrg 3 "East North Central", add
+label define emrg 4 "West North Central", add
+label define emrg 5 "South Atlantic", add
+label define emrg 6 "East South Central", add
+label define emrg 7 "West South Central", add
+label define emrg 8 "Mountain", add
+label define emrg 9 "Pacific", add
+label define emrg 10 "Europe", add
+label define emrg 20 "Asia", add
+label define emrg 30 "North America", add
+label define emrg 31 "Central America", add
+label define emrg 33 "Caribbean", add
+label define emrg 37 "South America", add
+label define emrg 50 "Oceania", add
+label define emrg 55 "Other", add
+label values emrg emrg
+
 *emsecdt = Employer sector [detailed codes]
 label var emsecdt "Employer Sector"
 label define emsecdt 11 "4-yr coll/univ; med schl; univ. res. inst.", add
@@ -149,6 +168,7 @@ foreach i in facadv facben facchal facind facloc facresp facsal facsoc {
 
 *indcode = Census industry code for employer
 rename indcode industry
+replace industry = . if industry >= 9990 //put missing and skipped to missing values
 label var industry "Industry"
 label define industry 170 "Crop production", add
 label define industry 180 "Animal production", add
@@ -235,8 +255,67 @@ label define industry 3380 "Navigational, measuring, electromedical, and control
 label define industry 3390 "Electronic component and product manufacturing, n.e.c", add
 label define industry 3470 "Household appliance manufacturing", add
 label define industry 3490 "Electrical lighting, equipment, and supplies manufacturing", add
-
+label define industry 3570 "Motor vehicles and motor vehicle equipment manufacturing", add
+label define industry 3580 "Aircraft and parts manufacturing", add
+label define industry 3590 "Aerospace products and parts manufacturing", add
+label define industry 3670 "Railroad rolling stock manufacturing", add
+label define industry 3680 "Ship and boat building", add
+label define industry 3690 "Other transportation equipment manufacturing", add
+label define industry 3770 "Sawmills and wood preservation", add
+label define industry 3780 "Veneer, plywood, and engineered wood products", add
+label define industry 3790 "Prefabricated wood buildings and mobile homes", add
+label define industry 3870 "Miscellaneous wood products", add
+label define industry 3890 "Furniture and related product manufacturing", add
+label define industry 3960 "Medical equipment and supplies manufacturing", add
+label define industry 3970 "Toys, amusement, and sporting goods manufacturing", add
+label define industry 3980 "Miscellaneous manufacturing, n.e.c.", add
+label define industry 3990 "Not specified manufacturing industries", add
+label define industry 4070 "Motor vehicles, parts and supplies, merchant wholesalers", add
+label define industry 4080 "Furniture and home furnishing, merchant wholesalers", add
+label define industry 4090 "Lumber and other construction materials, merchant wholesalers", add
+label define industry 4170 "Professional and commercial equipment and supplies, merchant wholesalers", add
+label define industry 4180 "Metals and minerals, except petroleum, merchant wholesalers", add
+label define industry 4190 "Electrical goods, merchant wholesalers", add
+label define industry 4260 "Hardware, plumbing and heating equipment, and supplies merchants wholesalers", add
+label define industry 4270 "Machinery, equipment, and supplies, merchant wholesalers", add
+label define industry 4280 "Recyclable material, merchant wholesalers", add
+label define industry 4290 "Miscellaneous durable goods, merchant wholesalers", add
+label define industry 4370 "Paper and paper products, merchant wholesalers", add
+label define industry 4380 "Drugs, sundries, and chemical and allied products, merchant wholesalers", add
+label define industry 4390 "Apparel, fabrics, and notions, merchant wholesalers", add
+label define industry 4470 "Groceries and related products, merchant wholesalers", add
+label define industry 4480 "Farm product raw materials, merchant wholesalers", add
+label define industry 4490 "Petroleum and petroleum products, merchant wholesalers", add
+label define industry 4560 "Alcoholic beverages, merchant wholesalers", add
+label define industry 4570 "Farm supplies, merchant wholesalers", add
+label define industry 4580 "Miscellaneous nondurable goods, merchant wholesalers", add
+label define industry 4590 "Not specified wholesale trade", add
 label values industry industry
+
+// gen var covering broad industry classes using NAICS 2002
+recode industry (170/290=1) (370/490=2) (570/690=3) (770=4) (1070/3990=5) (4070/4590=6) (4670/5790=7) (6070/6390=8) (6470/6780=9) (6870/6990=10) (7070/7190=11) (7270/7490=12) (7570=13) (7580/7790=14) (7860/7890=15) (7970/8470=16) (8560/8590=17) ( , gen(bindustry)
+label var bindustry "Industry"
+label define bindustry 1 "Agriculture, Forestry, Fishing and Hunting", add
+label define bindustry 2 "Mining", add
+label define bindustry 3 "Utilities", add
+label define bindustry 4 "Construction", add
+label define bindustry 5 "Manufacturing", add
+label define bindustry 6 "Wholesale Trade", add
+label define bindustry 7 "Retail Trade", add
+label define bindustry 8 "Transportation and Warehousing", add
+label define bindustry 9 "Information", add
+label define bindustry 10 "Finance and Insurance", add
+label define bindustry 11 "Real Estate and Rental and Leasing", add
+label define bindustry 12 "Professional, Scientific, and Technical Services", add
+label define bindustry 13 "Management of Companies and Enterprises", add
+label define bindustry 14 "Administrative and Support and Waste Management and Remediation Services", add
+label define bindustry 15 "Educational Services", add
+label define bindustry 16 "Health Care and Social Assistance", add
+label define bindustry 17 "Arts, Entertainment, and Recreation", add
+label define bindustry 18 "Accommodation and Food Services", add
+label define bindustry 19 "Other Services (except Public Administration)", add
+label define bindustry 20 "Public Administration", add
+label values bindustry bindustry 
 
 *lfstat = Labor force status
 label var lfstat "Labor force status"
@@ -262,6 +341,10 @@ label values nocprmg nocprmg
 *wascsm = Summarized secondary work activity
 *wapri = work activity spent most hours on
 *wasec = work activity spent second most hours on
+
+// gen var indicating years of working experience = 2003 - t(most recent degree)
+gen workexp = 2003 - mrdacyr if mrdacyr <= 2003
+replace workexp = 0 if mrdacyr > 2003 // 400 graduates in 2004 (expected graduation in 2004, but academic year 03-04)
 
 //generate dummies for work activities
 foreach i in waacc waaprsh wabrsh wacom wadev wadsn waemrl wamgmt waot waprod waqm wasale wasvc watea {

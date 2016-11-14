@@ -2,7 +2,7 @@
       name:  Cleaning
        log:  C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\joiners_cleaning.log
   log type:  text
- opened on:  14 Nov 2016, 15:39:16
+ opened on:  14 Nov 2016, 17:27:03
 
 . 
 . use joiners.dta
@@ -200,6 +200,43 @@
 . *emrg = Region code for employer
 . label var emrg "Employer Region"
 
+. label define emrg 1 "New England", add
+
+. label define emrg 2 "Middle Atlantic", add
+
+. label define emrg 3 "East North Central", add
+
+. label define emrg 4 "West North Central", add
+
+. label define emrg 5 "South Atlantic", add
+
+. label define emrg 6 "East South Central", add
+
+. label define emrg 7 "West South Central", add
+
+. label define emrg 8 "Mountain", add
+
+. label define emrg 9 "Pacific", add
+
+. label define emrg 10 "Europe", add
+
+. label define emrg 20 "Asia", add
+
+. label define emrg 30 "North America", add
+
+. label define emrg 31 "Central America", add
+
+. label define emrg 33 "Caribbean", add
+
+. label define emrg 37 "South America", add
+
+. label define emrg 50 "Oceania", add
+
+. label define emrg 55 "Other", add
+
+. label values emrg emrg
+
+. 
 . *emsecdt = Employer sector [detailed codes]
 . label var emsecdt "Employer Sector"
 
@@ -479,8 +516,85 @@
 
 . label define industry 4270 "Machinery, equipment, and supplies, merchant wholesalers", add
 
-. 
+. label define industry 4280 "Recyclable material, merchant wholesalers", add
+
+. label define industry 4290 "Miscellaneous durable goods, merchant wholesalers", add
+
+. label define industry 4370 "Paper and paper products, merchant wholesalers", add
+
+. label define industry 4380 "Drugs, sundries, and chemical and allied products, merchant wholesal
+> ers", add
+
+. label define industry 4390 "Apparel, fabrics, and notions, merchant wholesalers", add
+
+. label define industry 4470 "Groceries and related products, merchant wholesalers", add
+
+. label define industry 4480 "Farm product raw materials, merchant wholesalers", add
+
+. label define industry 4490 "Petroleum and petroleum products, merchant wholesalers", add
+
+. label define industry 4560 "Alcoholic beverages, merchant wholesalers", add
+
+. label define industry 4570 "Farm supplies, merchant wholesalers", add
+
+. label define industry 4580 "Miscellaneous nondurable goods, merchant wholesalers", add
+
+. label define industry 4590 "Not specified wholesale trade", add
+
 . label values industry industry
+
+. 
+. // gen var covering broad industry classes using NAICS 2002
+. recode industry (170/290=1) (370/490=2) (570/690=3) (770=4) (1070/3990=5) (4070/4590=6) (4670/57
+> 90=7) (6070/6390=8) (6470/6780=9) (6870/6990=10) (7070/7190=11) (7270/7490=12) (7570=13) (7580/7
+> 790=14) (7860/7890=15) (7970/8470=16) (8560/8590=17) (8660/8690=18) (8770/9290=19) (9300=20) , g
+> en(bindustry)
+(82861 differences between industry and bindustry)
+
+. label var bindustry "Industry"
+
+. label define bindustry 1 "Agriculture, Forestry, Fishing and Hunting", add
+
+. label define bindustry 2 "Mining", add
+
+. label define bindustry 3 "Utilities", add
+
+. label define bindustry 4 "Construction", add
+
+. label define bindustry 5 "Manufacturing", add
+
+. label define bindustry 6 "Wholesale Trade", add
+
+. label define bindustry 7 "Retail Trade", add
+
+. label define bindustry 8 "Transportation and Warehousing", add
+
+. label define bindustry 9 "Information", add
+
+. label define bindustry 10 "Finance and Insurance", add
+
+. label define bindustry 11 "Real Estate and Rental and Leasing", add
+
+. label define bindustry 12 "Professional, Scientific, and Technical Services", add
+
+. label define bindustry 13 "Management of Companies and Enterprises", add
+
+. label define bindustry 14 "Administrative and Support and Waste Management and Remediation Servi
+> ces", add
+
+. label define bindustry 15 "Educational Services", add
+
+. label define bindustry 16 "Health Care and Social Assistance", add
+
+. label define bindustry 17 "Arts, Entertainment, and Recreation", add
+
+. label define bindustry 18 "Accommodation and Food Services", add
+
+. label define bindustry 19 "Other Services (except Public Administration)", add
+
+. label define bindustry 20 "Public Administration", add
+
+. label values bindustry bindustry 
 
 . 
 . *lfstat = Labor force status
@@ -520,6 +634,15 @@
 . *wascsm = Summarized secondary work activity
 . *wapri = work activity spent most hours on
 . *wasec = work activity spent second most hours on
+. 
+. // gen var indicating years of working experience = 2003 - t(most recent degree)
+. gen workexp = 2003 - mrdacyr if mrdacyr <= 2003
+(300 missing values generated)
+
+. replace workexp = 0 if mrdacyr > 2003 // 400 graduates in 2004 (expected graduation in 2004, but
+>  academic year 03-04)
+(300 real changes made)
+
 . 
 . //generate dummies for work activities
 . foreach i in waacc waaprsh wabrsh wacom wadev wadsn waemrl wamgmt waot waprod waqm wasale wasvc 
@@ -686,266 +809,30 @@ file joinersc.dta saved
 . 
 end of do-file
 
-. tab industry
+. tab bindustry
 
                                Industry |      Freq.     Percent        Cum.
 ----------------------------------------+-----------------------------------
-                        Crop production |        157        0.19        0.19
-                      Animal production |        102        0.12        0.31
-                Forestry except logging |         11        0.01        0.33
-                                Logging |          4        0.00        0.33
-         Fishing, hunting, and trapping |         11        0.01        0.34
-Support activities for agriculture and  |         30        0.04        0.38
-                 Oil and gas extraction |        104        0.13        0.51
-                            Coal mining |         21        0.03        0.53
-                       Metal ore mining |         15        0.02        0.55
-Nonmetallic mineral mining and quarryin |         27        0.03        0.58
-           Not specified type of mining |          1        0.00        0.58
-          Support activities for mining |        188        0.23        0.81
-              Electric power generation |        485        0.59        1.40
-               Natural gas distribution |         74        0.09        1.48
-Electric and gas, and other combination |         89        0.11        1.59
-Water, steam, air-conditioning, and irr |         35        0.04        1.63
-            Sewage treatment facilities |         13        0.02        1.65
-                Not specified utilities |         13        0.02        1.67
+Agriculture, Forestry, Fishing and Hunt |        315        0.38        0.38
+                                 Mining |        356        0.43        0.81
+                              Utilities |        709        0.86        1.67
                            Construction |      1,305        1.57        3.24
- Animal food, grain and oilseed milling |         69        0.08        3.32
-       Sugar and confectionery products |         40        0.05        3.37
-Fruit and vegetable preserving and spec |         48        0.06        3.43
-            Dairy product manufacturing |         44        0.05        3.48
-     Animal slaughtering and processing |         33        0.04        3.52
-                        Retail bakeries |         13        0.02        3.54
-                Bakeries, except retail |         40        0.05        3.59
-  Seafood and other miscellaneous foods |         94        0.11        3.70
-          Not specified food industries |          3        0.00        3.70
-                 Beverage manufacturing |         90        0.11        3.81
-                  Tobacco manufacturing |         24        0.03        3.84
-          Fiber, yarn, and thread mills |          9        0.01        3.85
-          Fabric mills, except knitting |         44        0.05        3.91
-Textile and fabric finishing and coatin |         16        0.02        3.92
-                   Carpet and rug mills |         12        0.01        3.94
-Textile product mills, except carpets a |         31        0.04        3.98
-                         Knitting mills |         10        0.01        3.99
-      Cut and sew apparel manufacturing |         53        0.06        4.05
-Apparel accessories and other apparel m |          5        0.01        4.06
-                 Footwear manufacturing |         14        0.02        4.08
-Leather tanning and products, except fo |          7        0.01        4.08
-      Pulp, paper, and paperboard mills |        113        0.14        4.22
-        Paperboard containers and boxes |         40        0.05        4.27
-  Miscellaneous paper and pulp products |         81        0.10        4.37
-Printing and related support activities |        200        0.24        4.61
-                     Petroleum refining |        147        0.18        4.79
-Miscellaneous petroleum and coal produc |         11        0.01        4.80
-Resin, synthetic rubber and fibers, and |         87        0.10        4.90
-    Agricultural chemical manufacturing |         36        0.04        4.95
-Pharmaceutical and medicine manufacturi |        763        0.92        5.87
-Paint, coating, and adhesive manufactur |         71        0.09        5.95
-Soap, cleaning compound, and cosmetics  |        128        0.15        6.11
- Industrial and miscellaneous chemicals |        492        0.59        6.70
-         Plastics product manufacturing |        189        0.23        6.93
-                     Tire manufacturing |         40        0.05        6.98
-Rubber products, except tires, manufact |         29        0.03        7.01
-Pottery, ceramics, and related products |         19        0.02        7.04
-  Structural clay product manufacturing |         14        0.02        7.05
-  Glass and glass product manufacturing |         50        0.06        7.11
-Cement, concrete, lime, and gypsum prod |         37        0.04        7.16
-Misc nonmetallic mineral product manufa |         42        0.05        7.21
-Iron and steel mills and steel product  |         85        0.10        7.31
-     Aluminum production and processing |         40        0.05        7.36
-Nonferrous metal, except aluminum, prod |         22        0.03        7.39
-                              Foundries |         45        0.05        7.44
-           Metal forgings and stampings |         17        0.02        7.46
-    Cutlery and hand tool manufacturing |         24        0.03        7.49
-Structural metals, and tank and shippin |        113        0.14        7.63
-                          Machine shops |         45        0.05        7.68
-Coating, engraving, heat treating and a |         39        0.05        7.73
-                               Ordnance |         20        0.02        7.75
-Miscellaneous fabricated metal products |        129        0.16        7.91
-         Not specified metal industries |          2        0.00        7.91
-   Agricultural implement manufacturing |         39        0.05        7.96
-Construction, mining and oil field mach |         79        0.10        8.05
-Commercial and service industry machine |        154        0.19        8.24
-   Metalworking machinery manufacturing |         53        0.06        8.30
-Engines, turbines, and power transmissi |         73        0.09        8.39
-        Machinery manufacturing, n.e.c. |        445        0.54        8.93
-  Not specified machinery manufacturing |          1        0.00        8.93
-Computer and peripheral equipment manuf |        620        0.75        9.68
-Communications, audio, and video equipm |        415        0.50       10.18
-Navigational, measuring, electromedical |        482        0.58       10.76
-Electronic component and product manufa |      1,195        1.44       12.20
-      Household appliance manufacturing |         40        0.05       12.25
-Electrical lighting, equipment, and sup |        323        0.39       12.64
-Motor vehicles and motor vehicle equipm |        855        1.03       13.67
-       Aircraft and parts manufacturing |        512        0.62       14.29
-Aerospace products and parts manufactur |        579        0.70       14.99
-   Railroad rolling stock manufacturing |         11        0.01       15.00
-                 Ship and boat building |         69        0.08       15.08
-Other transportation equipment manufact |         29        0.03       15.12
-         Sawmills and wood preservation |         12        0.01       15.13
-Veneer, plywood, and engineered wood pr |         25        0.03       15.16
-Prefabricated wood buildings and mobile |          4        0.00       15.17
-            Miscellaneous wood products |         41        0.05       15.22
-Furniture and related product manufactu |        110        0.13       15.35
-Medical equipment and supplies manufact |        415        0.50       15.85
-Toys, amusement, and sporting goods man |         59        0.07       15.92
-    Miscellaneous manufacturing, n.e.c. |        132        0.16       16.08
- Not specified manufacturing industries |         21        0.03       16.11
-Motor vehicles, parts and supplies, mer |         61        0.07       16.18
-Furniture and home furnishing, merchant |         40        0.05       16.23
-Lumber and other construction materials |         56        0.07       16.30
-Professional and commercial equipment a |        291        0.35       16.65
-Metals and minerals, except petroleum,  |         34        0.04       16.69
- Electrical goods, merchant wholesalers |        187        0.23       16.92
-Hardware, plumbing and heating equipmen |         64        0.08       16.99
-Machinery, equipment, and supplies, mer |        267        0.32       17.31
-                                   4280 |         22        0.03       17.34
-                                   4290 |         76        0.09       17.43
-                                   4370 |         52        0.06       17.50
-                                   4380 |        282        0.34       17.84
-                                   4390 |         44        0.05       17.89
-                                   4470 |        182        0.22       18.11
-                                   4480 |         18        0.02       18.13
-                                   4490 |         53        0.06       18.19
-                                   4560 |         50        0.06       18.25
-                                   4570 |         24        0.03       18.28
-                                   4580 |         84        0.10       18.39
-                                   4585 |         48        0.06       18.44
-                                   4590 |          8        0.01       18.45
-                                   4670 |        166        0.20       18.65
-                                   4680 |         24        0.03       18.68
-                                   4690 |         57        0.07       18.75
-                                   4770 |        112        0.14       18.89
-                                   4780 |         13        0.02       18.90
-                                   4790 |        427        0.52       19.42
-                                   4870 |        140        0.17       19.59
-                                   4880 |         24        0.03       19.61
-                                   4890 |         55        0.07       19.68
-                                   4970 |        238        0.29       19.97
-                                   4980 |         41        0.05       20.02
-                                   4990 |         25        0.03       20.05
-                                   5070 |        454        0.55       20.60
-                                   5080 |         76        0.09       20.69
-                                   5090 |         50        0.06       20.75
-                                   5170 |        142        0.17       20.92
-                                   5180 |         20        0.02       20.94
-                                   5190 |         53        0.06       21.01
-                                   5270 |         69        0.08       21.09
-                                   5280 |         14        0.02       21.11
-                                   5290 |         25        0.03       21.14
-                                   5370 |         43        0.05       21.19
-                                   5380 |        270        0.33       21.52
-                                   5390 |         42        0.05       21.57
-                                   5470 |         26        0.03       21.60
-                                   5480 |         60        0.07       21.67
-                                   5490 |         39        0.05       21.72
-                                   5570 |         45        0.05       21.77
-                                   5580 |         82        0.10       21.87
-                                   5590 |         53        0.06       21.93
-                                   5591 |          9        0.01       21.95
-                                   5592 |         42        0.05       22.00
-                                   5670 |         11        0.01       22.01
-                                   5680 |          3        0.00       22.01
-                                   5690 |         95        0.11       22.13
-                                   5790 |         47        0.06       22.18
-                                   6070 |        321        0.39       22.57
-                                   6080 |         43        0.05       22.62
-                                   6090 |         23        0.03       22.65
-                                   6170 |        149        0.18       22.83
-                                   6180 |         39        0.05       22.88
-                                   6190 |         37        0.04       22.92
-                                   6270 |         41        0.05       22.97
-                                   6280 |         13        0.02       22.99
-                                   6290 |        121        0.15       23.13
-                                   6370 |          4        0.00       23.14
-                                   6380 |        177        0.21       23.35
-                                   6390 |         24        0.03       23.38
-                                   6470 |        194        0.23       23.62
-                                   6480 |        298        0.36       23.98
-                                   6490 |        102        0.12       24.10
-                                   6570 |        150        0.18       24.28
-                                   6590 |         14        0.02       24.30
-                                   6670 |        281        0.34       24.64
-                                   6675 |         10        0.01       24.65
-                                   6680 |        836        1.01       25.66
-                                   6690 |        318        0.38       26.04
-                                   6692 |        104        0.13       26.17
-                                   6695 |        110        0.13       26.30
-                                   6770 |         28        0.03       26.33
-                                   6780 |         63        0.08       26.41
-                                   6870 |        895        1.08       27.49
-                                   6880 |         90        0.11       27.60
-                                   6890 |        587        0.71       28.31
-                                   6970 |      1,131        1.36       29.67
-                                   6990 |      1,553        1.87       31.54
-                                   7070 |        934        1.13       32.67
-                                   7080 |         48        0.06       32.73
-                                   7170 |         10        0.01       32.74
-                                   7180 |         10        0.01       32.75
-                                   7190 |         29        0.03       32.79
-                                   7270 |      1,557        1.88       34.67
-                                   7280 |        634        0.77       35.43
-                                   7290 |      3,000        3.62       39.05
-                                   7370 |        267        0.32       39.38
-                                   7380 |      3,836        4.63       44.01
-                                   7390 |      1,600        1.93       45.94
-                                   7460 |      1,473        1.78       47.71
-                                   7470 |        271        0.33       48.04
-                                   7480 |        130        0.16       48.20
-                                   7490 |        237        0.29       48.48
-                                   7570 |         57        0.07       48.55
-                                   7580 |        386        0.47       49.02
-                                   7590 |        199        0.24       49.26
-                                   7670 |        113        0.14       49.39
-                                   7680 |        115        0.14       49.53
-                                   7690 |         72        0.09       49.62
-                                   7770 |         91        0.11       49.73
-                                   7780 |         85        0.10       49.83
-                                   7790 |         82        0.10       49.93
-                                   7860 |      9,422       11.37       61.30
-                                   7870 |      9,192       11.09       72.40
-                                   7880 |         84        0.10       72.50
-                                   7890 |        411        0.50       72.99
-                                   7970 |      1,917        2.31       75.31
-                                   7980 |        590        0.71       76.02
-                                   7990 |        151        0.18       76.20
-                                   8070 |        100        0.12       76.32
-                                   8080 |        633        0.76       77.09
-                                   8090 |        665        0.80       77.89
-                                   8170 |        182        0.22       78.11
-                                   8180 |        757        0.91       79.02
-                                   8190 |      2,837        3.42       82.45
-                                   8270 |        312        0.38       82.82
-                                   8290 |        154        0.19       83.01
-                                   8370 |        600        0.72       83.73
-                                   8380 |         34        0.04       83.77
-                                   8390 |         76        0.09       83.86
-                                   8470 |        299        0.36       84.23
-                                   8560 |        332        0.40       84.63
-                                   8570 |         88        0.11       84.73
-                                   8580 |          1        0.00       84.73
-                                   8590 |        241        0.29       85.02
-                                   8660 |        238        0.29       85.31
-                                   8670 |         19        0.02       85.33
-                                   8680 |        433        0.52       85.86
-                                   8690 |         11        0.01       85.87
-                                   8770 |         60        0.07       85.94
-                                   8780 |          9        0.01       85.95
-                                   8790 |         51        0.06       86.02
-                                   8870 |         29        0.03       86.05
-                                   8880 |         31        0.04       86.09
-                                   8890 |          1        0.00       86.09
-                                   8970 |          3        0.00       86.09
-                                   8980 |         24        0.03       86.12
-                                   8990 |         49        0.06       86.18
-                                   9070 |         57        0.07       86.25
-                                   9080 |         26        0.03       86.28
-                                   9090 |         52        0.06       86.34
-                                   9160 |        759        0.92       87.26
-                                   9170 |        470        0.57       87.83
-                                   9180 |         34        0.04       87.87
-                                   9190 |        173        0.21       88.08
-                                   9290 |         31        0.04       88.11
-                                   9300 |      9,849       11.89      100.00
+                          Manufacturing |     10,662       12.87       16.11
+                        Wholesale Trade |      1,943        2.34       18.45
+                           Retail Trade |      3,092        3.73       22.18
+         Transportation and Warehousing |        992        1.20       23.38
+                            Information |      2,508        3.03       26.41
+                  Finance and Insurance |      4,256        5.14       31.54
+     Real Estate and Rental and Leasing |      1,031        1.24       32.79
+Professional, Scientific, and Technical |     13,005       15.69       48.48
+Management of Companies and Enterprises |         57        0.07       48.55
+Administrative and Support and Waste Ma |      1,143        1.38       49.93
+                   Educational Services |     19,109       23.06       72.99
+      Health Care and Social Assistance |      9,307       11.23       84.23
+    Arts, Entertainment, and Recreation |        662        0.80       85.02
+        Accommodation and Food Services |        701        0.85       85.87
+Other Services (except Public Administr |      1,859        2.24       88.11
+                  Public Administration |      9,849       11.89      100.00
 ----------------------------------------+-----------------------------------
                                   Total |     82,861      100.00
 
