@@ -197,6 +197,45 @@ label define industry 1990 "Printing and related support activities", add
 label define industry 2070 "Petroleum refining", add
 label define industry 2090 "Miscellaneous petroleum and coal products", add
 label define industry 2170 "Resin, synthetic rubber and fibers, and filaments", add
+label define industry 2180 "Agricultural chemical manufacturing", add
+label define industry 2190 "Pharmaceutical and medicine manufacturing", add
+label define industry 2270 "Paint, coating, and adhesive manufacturing", add
+label define industry 2280 "Soap, cleaning compound, and cosmetics manufacturing", add
+label define industry 2290 "Industrial and miscellaneous chemicals", add
+label define industry 2370 "Plastics product manufacturing", add
+label define industry 2380 "Tire manufacturing", add
+label define industry 2390 "Rubber products, except tires, manufacturing", add
+label define industry 2470 "Pottery, ceramics, and related products manufacturing", add
+label define industry 2480 "Structural clay product manufacturing", add
+label define industry 2490 "Glass and glass product manufacturing", add
+label define industry 2570 "Cement, concrete, lime, and gypsum product manufacturing", add
+label define industry 2590 "Misc nonmetallic mineral product manufacturing", add
+label define industry 2670 "Iron and steel mills and steel product manufacturing", add
+label define industry 2680 "Aluminum production and processing", add
+label define industry 2690 "Nonferrous metal, except aluminum, production and processing", add
+label define industry 2770 "Foundries", add
+label define industry 2780 "Metal forgings and stampings", add
+label define industry 2790 "Cutlery and hand tool manufacturing", add
+label define industry 2870 "Structural metals, and tank and shipping container", add
+label define industry 2880 "Machine shops", add
+label define industry 2890 "Coating, engraving, heat treating and allied activities", add
+label define industry 2970 "Ordnance", add
+label define industry 2980 "Miscellaneous fabricated metal products manufacturing", add
+label define industry 2990 "Not specified metal industries", add
+label define industry 3070 "Agricultural implement manufacturing", add
+label define industry 3080 "Construction, mining and oil field machinery manufacturing", add
+label define industry 3090 "Commercial and service industry machinery manufacturing", add
+label define industry 3170 "Metalworking machinery manufacturing", add
+label define industry 3180 "Engines, turbines, and power transmission equipment manufacturing", add
+label define industry 3190 "Machinery manufacturing, n.e.c.", add
+label define industry 3290 "Not specified machinery manufacturing", add
+label define industry 3360 "Computer and peripheral equipment manufacturing", add
+label define industry 3370 "Communications, audio, and video equipment manufacturing", add
+label define industry 3380 "Navigational, measuring, electromedical, and control", add
+label define industry 3390 "Electronic component and product manufacturing, n.e.c", add
+label define industry 3470 "Household appliance manufacturing", add
+label define industry 3490 "Electrical lighting, equipment, and supplies manufacturing", add
+
 label values industry industry
 
 *lfstat = Labor force status

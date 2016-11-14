@@ -1,5 +1,7 @@
 1. wages are top-coded at 150,000. Only for 2003 we have non-censored data. 
 Could we use distribution of wages > 150,000 in 2003 as an imputation method for wages in 2006, 2008, 2010? 
 
+2. note to self: make broad industry classes based on NAICS 2002: https://www.census.gov/cgi-bin/sssd/naics/naicsrch?chart=2002
+
 
 
