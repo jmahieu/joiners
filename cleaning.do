@@ -22,8 +22,8 @@ use joiners.dta
 //age
 label var age "Age"
 
-gen sqrdage = age^2
-label var sqrdage "Age²"
+gen age2 = age^2
+label var age2 "Age²"
 
 //generate dummy for male
 gen male = 0 if gender == "F"
@@ -98,7 +98,7 @@ rename nb newbus
 label var newbus "Young Firm"
 
 //make numeric vars
-foreach i in emsize emtp ndgmemg ndgmeng emsmi emrg emsecdt facadv facben facchal facind facloc facresp facsal facsoc indcode lfstat nedtp nocpr nocprng nocprmg waprsm wascsm wapri wasec jobsatis{
+foreach i in emsize emtp ndgmemg ndgmeng emsmi emrg emsecdt facadv facben facchal facind facloc facresp facsal facsoc fptind indcode lfstat nedtp nocpr nocprng nocprmg waprsm wascsm wapri wasec jobsatis{
  gen `i'_n = real(`i')
  drop `i'
  rename `i'_n `i'
@@ -165,6 +165,11 @@ foreach i in facadv facben facchal facind facloc facresp facsal facsoc {
 	label define `i' 1 "Very important" 2 "Somewhat important" 3 "Somewhat unimportant" 4 "Not important at all"
 	label values `i' `i'
 }
+
+*fptind = Full-time/part-time status counting all jobs during reference week
+label var fptind "Full/Part-time"
+label define fptind 1 "Full-Time" 2 "Part-time"
+label values fptind fptind
 
 *indcode = Census industry code for employer
 rename indcode industry
@@ -293,7 +298,7 @@ label define industry 4590 "Not specified wholesale trade", add
 label values industry industry
 
 // gen var covering broad industry classes using NAICS 2002
-recode industry (170/290=1) (370/490=2) (570/690=3) (770=4) (1070/3990=5) (4070/4590=6) (4670/5790=7) (6070/6390=8) (6470/6780=9) (6870/6990=10) (7070/7190=11) (7270/7490=12) (7570=13) (7580/7790=14) (7860/7890=15) (7970/8470=16) (8560/8590=17) ( , gen(bindustry)
+recode industry (170/290=1) (370/490=2) (570/690=3) (770=4) (1070/3990=5) (4070/4590=6) (4670/5790=7) (6070/6390=8) (6470/6780=9) (6870/6990=10) (7070/7190=11) (7270/7490=12) (7570=13) (7580/7790=14) (7860/7890=15) (7970/8470=16) (8560/8590=17) (8660/8690=18) (8770/9290=19) (9300=20) , gen(bindustry)
 label var bindustry "Industry"
 label define bindustry 1 "Agriculture, Forestry, Fishing and Hunting", add
 label define bindustry 2 "Mining", add
@@ -322,9 +327,9 @@ label var lfstat "Labor force status"
 label define lfstat 1 "Employed" 2 "Unemployed" 3 "Not in Labor Force"
 label values lfstat lfstat
 
-
 *nocpr = Job code for principal job - best code
 label var nocpr "Principal Job"
+replace nocpr = . if nocpr == 999989 //put missing or skip to missing value
 
 *nocprmg = Occupation Major Group
 label var nocprmg "Occupation Major Group"
@@ -336,6 +341,14 @@ label define nocprmg 5 "Engineers", add
 label define nocprmg 6 "S and E related occupations", add
 label define nocprmg 7 "Non-S and E Occupations", add
 label values nocprmg nocprmg
+
+*nocprng = Occupation minor group for principal Job
+label var nocprng "Occupation minor group"
+replace nocprng = . if nocprng == 98
+
+
+
+
 
 *waprsm = Summarized primary work activity
 *wascsm = Summarized secondary work activity
