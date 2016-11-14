@@ -2,7 +2,7 @@
       name:  Cleaning
        log:  C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\joiners_cleaning.log
   log type:  text
- opened on:  14 Nov 2016, 17:27:03
+ opened on:  14 Nov 2016, 17:35:59
 
 . 
 . use joiners.dta
@@ -21,9 +21,9 @@
 . label var age "Age"
 
 . 
-. gen sqrdage = age^2
+. gen age2 = age^2
 
-. label var sqrdage "Age²"
+. label var age2 "Age²"
 
 . 
 . //generate dummy for male
@@ -158,8 +158,8 @@
 . 
 . //make numeric vars
 . foreach i in emsize emtp ndgmemg ndgmeng emsmi emrg emsecdt facadv facben facchal facind facloc 
-> facresp facsal facsoc indcode lfstat nedtp nocpr nocprng nocprmg waprsm wascsm wapri wasec jobsa
-> tis{
+> facresp facsal facsoc fptind indcode lfstat nedtp nocpr nocprng nocprmg waprsm wascsm wapri wase
+> c jobsatis{
   2.  gen `i'_n = real(`i')
   3.  drop `i'
   4.  rename `i'_n `i'
@@ -177,6 +177,7 @@
 (181 missing values generated)
 (181 missing values generated)
 (181 missing values generated)
+(17,378 missing values generated)
 (17,378 missing values generated)
 (17,378 missing values generated)
 (17,378 missing values generated)
@@ -287,6 +288,14 @@
 >  "Not important at all"
   3.         label values `i' `i'
   4. }
+
+. 
+. *fptind = Full-time/part-time status counting all jobs during reference week
+. label var fptind "Full/Part-time"
+
+. label define fptind 1 "Full-Time" 2 "Part-time"
+
+. label values fptind fptind
 
 . 
 . *indcode = Census industry code for employer
@@ -605,7 +614,6 @@
 . label values lfstat lfstat
 
 . 
-. 
 . *nocpr = Job code for principal job - best code
 . label var nocpr "Principal Job"
 
@@ -808,31 +816,4 @@ file joinersc.dta saved
 . 
 . 
 end of do-file
-
-. tab bindustry
-
-                               Industry |      Freq.     Percent        Cum.
-----------------------------------------+-----------------------------------
-Agriculture, Forestry, Fishing and Hunt |        315        0.38        0.38
-                                 Mining |        356        0.43        0.81
-                              Utilities |        709        0.86        1.67
-                           Construction |      1,305        1.57        3.24
-                          Manufacturing |     10,662       12.87       16.11
-                        Wholesale Trade |      1,943        2.34       18.45
-                           Retail Trade |      3,092        3.73       22.18
-         Transportation and Warehousing |        992        1.20       23.38
-                            Information |      2,508        3.03       26.41
-                  Finance and Insurance |      4,256        5.14       31.54
-     Real Estate and Rental and Leasing |      1,031        1.24       32.79
-Professional, Scientific, and Technical |     13,005       15.69       48.48
-Management of Companies and Enterprises |         57        0.07       48.55
-Administrative and Support and Waste Ma |      1,143        1.38       49.93
-                   Educational Services |     19,109       23.06       72.99
-      Health Care and Social Assistance |      9,307       11.23       84.23
-    Arts, Entertainment, and Recreation |        662        0.80       85.02
-        Accommodation and Food Services |        701        0.85       85.87
-Other Services (except Public Administr |      1,859        2.24       88.11
-                  Public Administration |      9,849       11.89      100.00
-----------------------------------------+-----------------------------------
-                                  Total |     82,861      100.00
 
