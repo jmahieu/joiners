@@ -1,7 +1,7 @@
 						*SESTAT 2003-2010*
 							*CLEANING*
 							
-cd "C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\"
+cd "C:\Users\Jeroen\Desktop\joiners\"
 			  
 clear all 
 log close _all
@@ -332,7 +332,7 @@ label var nocpr "Principal Job"
 replace nocpr = . if nocpr == 999989 //put missing or skip to missing value
 
 *nocprmg = Occupation Major Group
-label var nocprmg "Occupation Major Group"
+label var nocprmg "Occupation (Major Group)"
 label define nocprmg 1 "Computer and mathematical scientists", add
 label define nocprmg 2 "Biological, agricultural and other life scientists", add
 label define nocprmg 3 "Physical and related scientists", add
@@ -343,12 +343,48 @@ label define nocprmg 7 "Non-S and E Occupations", add
 label values nocprmg nocprmg
 
 *nocprng = Occupation minor group for principal Job
-label var nocprng "Occupation minor group"
+label var nocprng "Occupation (minor group)"
 replace nocprng = . if nocprng == 98
-
-
-
-
+label define nocprng 11 "Computer and information scientists", add
+label define nocprng 12 "Mathematical scientists", add
+label define nocprng 18 "Postsecondary teachers - computer and math sciences", add
+label define nocprng 21 "Agricultural and food scientists", add
+label define nocprng 22 "Biological and medical scientists", add
+label define nocprng 23 "Environmental life scientists", add
+label define nocprng 28 "Postsecondary teachers - life and related sciences", add
+label define nocprng 31 "Chemists, except biochemists", add
+label define nocprng 32 "Earth scientists, geologists and oceanographers", add
+label define nocprng 33 "Physicists and astronomers", add
+label define nocprng 34 "Other physical and related scientists", add
+label define nocprng 38 "Postsecondary teachers - physical and related sciences", add
+label define nocprng 41 "Economists", add
+label define nocprng 42 "Political scientists", add
+label define nocprng 43 "Psychologists", add
+label define nocprng 44 "Sociologists and anthropologists", add
+label define nocprng 45 "Other social and related scientists", add
+label define nocprng 48 "Postsecondary teachers - social and related sciences", add
+label define nocprng 51 "Aerospace and related engineers", add
+label define nocprng 52 "Chemical engineers", add
+label define nocprng 53 "Civil and architectural engineers", add
+label define nocprng 54 "Electrical and related engineers", add
+label define nocprng 55 "Industrial engineers", add
+label define nocprng 56 "Mechanical engineers", add
+label define nocprng 57 "Other engineers", add
+label define nocprng 58 "Postsecondary teachers - engineering", add
+label define nocprng 61 "Health-related occupations", add
+label define nocprng 62 "S and E managers", add
+label define nocprng 63 "S and E Pre-college Teachers", add
+label define nocprng 64 "S and E technicians and technologists", add
+label define nocprng 65 "Other S and E-related occupations", add
+label define nocprng 71 "Non-S and E Managers", add
+label define nocprng 72 "Management-related occupations", add
+label define nocprng 73 "Non-S and E precollege teachers", add
+label define nocprng 74 "Non-S and E postsecondary teachers", add
+label define nocprng 75 "Social services and related occupations", add
+label define nocprng 76 "Sales and marketing occupations", add
+label define nocprng 77 "Art, humanties and related occupations", add
+label define nocprng 78 "Other non-S and E occupations", add
+label values nocprng nocprng
 
 *waprsm = Summarized primary work activity
 *wascsm = Summarized secondary work activity
