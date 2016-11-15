@@ -493,10 +493,18 @@ foreach i in wage03 wage06 wage08 wage10 {
 	replace `i' = . if `i' >= 999998
 }
 
+foreach i in 03 06 08 10 {
+	label var wage`i' "20`i' wage"
+}
+
 //generate lnwage
 foreach i in wage03 wage06 wage08 wage10 {
 	gen ln`i' = log(`i') if `i' > 0
 	replace ln`i' = 0 if `i' == 0
+}
+
+foreach i in 03 06 08 10 {
+	label var lnwage`i' "log 20`i' wage"
 }
 
 //gen log yearly wage growth
@@ -504,7 +512,7 @@ foreach i in wage03 wage06 wage08 wage10 {
 gen dlnwage = (lnwage10 - lnwage03)/7 if wage10 != .
 replace dlnwage = (lnwage08 - lnwage03)/5 if dlnwage == . & wage08 != .
 replace dlnwage = (lnwage06 - lnwage03)/3 if dlnwage == . & wage06 != .
-
+label var dlnwage "yearly growth log wage"
 
 save joinersc.dta, replace
 

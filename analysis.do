@@ -24,8 +24,9 @@ lnwage03	lnwage06	lnwage08	lnwage10		dlnwage
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
-// summary statistics for full dataset 
-logout, save(summary_full) word fix replace: sum ibn.emplr wage03 wage06 wage08 wage10 lnwage03 lnwage06 lnwage08 lnwage10 dlnwage age age2 male mar ibn.race ibn.degree ibn.major ibn.hdclas tenure newbus ibn.emsize	ibn.emrg ibn.emsecdt ibn.facadv ibn.facben ibn.facchal ibn.facind ibn.facloc ibn.facres ibn.facsal ibn.facsoc ibn.fptind ibn.bindustry	ibn.lfstat ibn.nocprng workexp ibn.wapri waacc waemrl wamgmt waprod	waqm wasale wasvc waaprsh wabrsh wacom	wadev wadsn waot watea wan cmrcn resn if emplr != ., fvwrap(4) 
+
+// summary statistics for full dataset
+logout, save (summary_full) fix excel replace: fsum emplr wage* lnwage* dlnwage age age2 workexp male race mar degree major hdclas fptind tenure emsize emrg emsecdt bindustry nocprng wapri waacc waemrl wamgmt waprod waqm wasale wasvc waaprsh wabrsh wacom wadev wadsn waot watea wan cmrcn resn facadv facben facchal facind facloc facres facsal facsoc, catvar(emplr male race mar degree major hdclas fptind emsize emrg emsecdt bindustry nocprng wapri facadv facben facchal facind facloc facres facsal facsoc) uselabel  
 
 //summary statistics for startup employees
 logout, save(summary_startup) word fix replace: sum ibn.emplr wage03 wage06 wage08 wage10 lnwage03 lnwage06 lnwage08 lnwage10 dlnwage age age2 male mar ibn.race ibn.degree ibn.major ibn.hdclas tenure newbus ibn.emsize	ibn.emrg ibn.emsecdt ibn.facadv ibn.facben ibn.facchal ibn.facind ibn.facloc ibn.facres ibn.facsal ibn.facsoc ibn.fptind ibn.bindustry	ibn.lfstat ibn.nocprng workexp ibn.wapri waacc waemrl wamgmt waprod	waqm wasale wasvc waaprsh wabrsh wacom	wadev wadsn waot watea wan cmrcn resn if emplr == 1, fvwrap(4) 
