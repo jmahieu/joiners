@@ -1,8 +1,8 @@
----------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
       name:  Analysis
-       log:  C:\Users\Jeroen\Desktop\joiners\joiners_analysis.log
+       log:  C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\joiners_analysis.log
   log type:  text
- opened on:  15 Nov 2016, 15:00:13
+ opened on:  15 Nov 2016, 17:12:10
 
 . 
 . use joinersc.dta
@@ -24,418 +24,2131 @@
 > +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 . 
 . // summary statistics for full dataset 
-. outreg2 using summary, replace sum(log) eqkeep(ibn.emplr wage03 wage06 wage08 wage10 lnwage03 lnwage06 lnwage08 lnwage10 
-> dlnwage age age2 male mar ibn.race ibn.degree ibn.major ibn.hdclas tenure newbus ibn.emsize ibn.emrg ibn.emsecdt ibn.faca
-> dv ibn.facben ibn.facchal ibn.facind ibn.facloc ibn.facres ibn.facsal ibn.facsoc ibn.fptind ibn.bindustry ibn.lfstat ibn.
-> nocprng workexp ibn.wapri waacc waemrl wamgmt waprod waqm wasale wasvc waaprsh wabrsh wacom wadev wadsn waot watea wan cm
-> rcn resn) see
+. logout, save(summary_full) word fix replace: sum ibn.emplr wage03 wage06 wage08 wage10 lnwage03 lnwage06 lnwage08 lnwage10 dlnwage age age2 male mar ibn.race ibn.degree ibn.major ibn.hdclas te
+> nure newbus ibn.emsize  ibn.emrg ibn.emsecdt ibn.facadv ibn.facben ibn.facchal ibn.facind ibn.facloc ibn.facres ibn.facsal ibn.facsoc ibn.fptind ibn.bindustry  ibn.lfstat ibn.nocprng workexp i
+> bn.wapri waacc waemrl wamgmt waprod     waqm wasale wasvc waaprsh wabrsh wacom  wadev wadsn waot watea wan cmrcn resn if emplr != ., fvwrap(4) 
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-         age |    100,402    46.94755    11.84354         23         76
-       agegr |    100,402    44.92336    11.88419         20         70
-      biryrp |    100,402    1953.868    11.65679       1925       1970
-      difage |    100,402     85.3045    25.73426          1         98
-    difagegr |    100,402    85.47427    25.05803         20         98
+       emplr |
+    Startup  |     68,258    .0255062    .1576578          0          1
+      Small  |
+Established  |     68,258    .1638929     .370181          0          1
+      Large  |
+Established  |     68,258     .810601    .3918281          0          1
+             |
+      wage03 |     68,258    63665.68    34254.08          0     150000
+      wage06 |     33,347    76294.09    35335.42          0     150000
 -------------+---------------------------------------------------------
-      hdacyr |    100,402    1984.577    11.82138       1945       2004
-       dgryr |    100,402    1984.303    11.76716       1945       2003
-      hdacy3 |    100,402     1983.31    11.80058       1944       2001
-       hday5 |    100,402    1982.279    11.80554       1945       2000
-      ch1218 |    100,402    49.34676    48.71689          0         98
+      wage08 |     28,563       84144    37459.87          0     150000
+      wage10 |     13,282    85919.52    39619.05          0     150000
+    lnwage03 |     68,258     10.8171    1.083404          0   11.91839
+    lnwage06 |     33,347    11.07611    .8124668          0   11.91839
+    lnwage08 |     28,563    11.16796    .8603983          0   11.91839
 -------------+---------------------------------------------------------
-        ch19 |    100,402    49.20275    48.85969          0         98
-        ch25 |    100,402    49.23308    48.82925          0         98
-      ch25pb |    100,402    49.23287    48.82944          0         98
-       ch611 |    100,402    49.32386     48.7395          0         98
-     ch611pb |    100,402    49.32322    48.74007          0         98
+    lnwage10 |     13,282    11.14387    1.077646          0   11.91839
+     dlnwage |     34,146    .0340612     .234594  -3.972797   3.972797
+         age |     68,258     44.7458    10.40368         24         76
+        age2 |     68,258    2110.422    964.2587        576       5776
+        male |     68,258    .5740719    .4944865          0          1
 -------------+---------------------------------------------------------
-        chu2 |    100,402    49.15875    48.90286          0         98
-      chu2pb |    100,402    49.15857    48.90301          0         98
-         ch6 |    100,402    49.33132    48.73227          0         98
-       ch6pb |    100,402     49.3308    48.73274          0         98
-     fnusyr6 |    100,402    8379.707    3217.928       1929       9998
+         mar |     68,258    .7374374    .4400299          0          1
+             |
+        race |
+      Asian  |     68,258    .1190044     .323796          0          1
+   American  |
+Indian/Alas  |
+  ka Native  |     68,258    .0064608    .0801195          0          1
+      Black  |     68,258    .0834481    .2765604          0          1
+      White  |     68,258    .7681737    .4220018          0          1
 -------------+---------------------------------------------------------
-       refyr |    100,402        2003           0       2003       2003
-     permvyr |    100,402    9603.865    1731.867       1946       9998
-     wtsurvy |    100,402    404.5778    408.7081         12   5050.919
-        hsyr |    100,402    1989.014    345.2429       1942       9998
-       hsyrp |    100,402    1985.307    345.3406       1940       9998
+     Native  |
+Hawaiian/Ot  |
+her Pacific  |
+   Islander  |     68,258    .0040142    .0632307          0          1
+   Multiple  |     68,258    .0188989     .136169          0          1
+             |
+      degree |
+ Bachelor's  |     68,258    .5234991    .4994511          0          1
+   Master's  |     68,258    .3243722    .4681432          0          1
+  Doctorate  |     68,258    .1001641    .3002209          0          1
 -------------+---------------------------------------------------------
-       bsdgn |    100,402    1.663214    .8191267          1          9
-      strtmn |    100,402    22.36494     34.7212          1         98
-      strtyr |     83,024    1994.623    8.641363       1943       2003
-      nwrtyr |    100,402    9271.941    2298.292       1952       9998
-      supdir |    100,402     6256.59    4834.982          1       9998
+Professio~l  |     68,258    .0519646    .2219572          0          1
+             |
+       major |
+   Computer  |
+        and  |
+mathematica  |
+ l sciences  |     68,258    .0760936    .2651498          0          1
+   Life and  |
+    related  |
+   sciences  |     68,258    .0608427    .2390433          0          1
+   Physical  |
+and related  |
+   sciences  |     68,258    .0406839    .1975583          0          1
+ Social and  |
+    related  |
+   sciences  |     68,258    .0950658    .2933079          0          1
 -------------+---------------------------------------------------------
-      spdirp |    100,402    6256.551    4835.033          1       9998
-      supind |    100,402    62553.78    48388.72          0      99998
-      spindp |    100,402    62551.75    48391.22          0      99998
-     ptretyr |    100,402    9830.359    1145.864       1954       9998
-     ptretyp |    100,402    9830.319    1146.135       1969       9998
+Engineering  |     68,258    .1493891    .3564742          0          1
+      S and  |
+  E-Related  |
+     Fields  |     68,258    .1214656      .32667          0          1
+Non-S and E  |
+     Fields  |     68,258    .4564593    .4981042          0          1
+             |
+      hdclas |
+   Research  |
+ University  |
+          I  |     60,810    .3409637    .4740371          0          1
+   Research  |
+ University  |
+         II  |     60,810    .0875021    .2825717          0          1
 -------------+---------------------------------------------------------
-     ftprtyr |    100,402    9767.509    1338.385       1958       9998
-     ftprtyp |    100,402     9767.51    1338.382       1970       9998
-       wkswk |    100,402    57.46113    19.78158          1         98
-       hrswk |    100,402    52.71856    23.49383          1         98
-       prmbr |    100,402    1.349814    4.420135          0         98
+  Doctorate  |
+ Granting I  |     60,810    .0798224    .2710203          0          1
+  Doctorate  |
+Granting II  |     60,810    .0706298    .2562076          0          1
+Comprehensi  |
+       ve I  |     60,810    .2808091    .4493981          0          1
+Comprehensi  |
+      ve II  |     60,810    .0174807    .1310549          0          1
+    Liberal  |
+     Arts I  |     60,810     .022151    .1471756          0          1
 -------------+---------------------------------------------------------
-     prmbrpb |    100,402    1.339296    4.391658          0         98
-      salary |    100,402    229773.4    356072.8          0     999998
-      wage03 |     83,024    64162.52    36370.01          0     150000
-     article |    100,402    .8322643    5.650329          0         98
-    articlep |    100,402    2.770413    42.53256          0        998
+    Liberal  |
+    Arts II  |     60,810    .0502713    .2185061          0          1
+   Two-year  |
+instituti~s  |     60,810    .0026147    .0510677          0          1
+Theological  |
+seminaries,  |
+      bible  |
+   colleges  |     60,810    .0063312    .0793172          0          1
+    Medical  |
+schools and  |
+    medical  |
+    centers  |     60,810    .0130406    .1134494          0          1
+      Other  |
+   separate  |
+   health..  |
+    schools  |     60,810     .002072    .0454727          0          1
 -------------+---------------------------------------------------------
-       books |    100,402    .2900739    4.354138          0         98
-        lwmn |    100,402    82.33733    34.47593          1         98
-        lwyr |    100,402    8627.805    3013.929       1951       9998
-       lwyrp |    100,402    8627.448    3014.715       1950       9998
-      papers |    100,402    1.274168    6.482801          0         98
+ Schools of  |
+engineering  |
+        and  |
+ technology  |     60,810    .0060845    .0777663          0          1
+ Schools of  |
+art, music,  |
+ and design  |     60,810    .0031738    .0562477          0          1
+ Schools of  |
+        law  |     60,810     .002368    .0486052          0          1
+      Other  |
+specialized  |
+instituti~s  |     60,810    .0146522    .1201572          0          1
+     Indian  |
+     Tribal  |
+Instituti~s  |     60,810    .0000329    .0057349          0          1
 -------------+---------------------------------------------------------
-     papersp |    100,402    3.314446    42.66028          0        998
-      uspapp |    100,402    94.78439     17.1642          1         98
-      uspcom |    100,402    94.69943    17.58914          0         98
-      uspgrt |    100,402    94.73318    17.42001          0         98
-        earn |    100,402     1303975     3275819          0    9999998
+             |
+      tenure |     68,258    8.169035    8.387115          0         52
+      newbus |     68,258    .0255062    .1576578          0          1
+             |
+      emsize |
+        <10  |     68,258    .0496206    .2171613          0          1
+      10-24  |     68,258     .040259    .1965675          0          1
+    25 - 99  |     68,258    .0995195    .2993604          0          1
 -------------+---------------------------------------------------------
-        hdmn |    100,402    6.426007    2.615316          1         12
-      baacyr |     97,786    1980.924    11.90254       1944       2003
-        bamn |     97,786    6.231741    2.449293          1         12
-        bayr |     97,786    1980.704    11.84691       1944       2003
-      baayr3 |     97,786    1979.716    11.88766       1944       2001
+  100 - 499  |     68,258    .1629553    .3693276          0          1
+  500 - 999  |     68,258    .0837411    .2770012          0          1
+1000 - 4999  |     68,258    .1785578    .3829844          0          1
+     5000 -  |
+      24999  |     68,258    .1623985    .3688187          0          1
+     >25000  |     68,258    .2229482    .4162269          0          1
 -------------+---------------------------------------------------------
-      baayr5 |     97,786    1978.663    11.85318       1940       2000
-     mrdacyr |    100,402    1984.687     11.8189       1945       2004
-        mrmn |    100,402    6.426954    2.614227          1         12
-        mryr |    100,402    1984.413    11.76476       1945       2003
-       mr3yr |    100,402     1983.42     11.7968       1944       2001
+             |
+        emrg |
+New England  |     68,253    .0655502    .2474961          0          1
+     Middle  |
+   Atlantic  |     68,253    .1499275    .3570029          0          1
+ East North  |
+    Central  |     68,253    .1534731    .3604456          0          1
+ West North  |
+    Central  |     68,253    .0670007    .2500251          0          1
+      South  |
+   Atlantic  |     68,253    .1887683    .3913273          0          1
 -------------+---------------------------------------------------------
-       mr5yr |    100,402     1982.39    11.80477       1945       2000
-       d2ayr |     47,330    1980.318    11.69536       1944       2004
-        d2mn |     47,330    6.180076     2.30838          1         12
-        d2yr |     47,330    1980.099    11.64564       1944       2003
-       d23yr |     47,330    1979.106    11.67389       1944       2001
+ East South  |
+    Central  |     68,253    .0424597    .2016369          0          1
+ West South  |
+    Central  |     68,253    .0913513    .2881101          0          1
+   Mountain  |     68,253    .0604955    .2384044          0          1
+    Pacific  |     68,253    .1800507    .3842325          0          1
+     Europe  |     68,253    .0002637    .0162376          0          1
 -------------+---------------------------------------------------------
-       d25yr |     47,330    1978.076     11.6997       1940       2000
-       d3ayr |     11,669    1976.274    11.39065       1946       2003
-        d3mn |     11,669    6.060159    2.105744          1         12
-        d3yr |     11,669    1976.067    11.33119       1946       2003
-       d33yr |     11,669    1975.067    11.36171       1944       2001
+       Asia  |     68,253    .0002344    .0153092          0          1
+      North  |
+    America  |     68,253    .0001612    .0126942          0          1
+    Central  |
+    America  |     68,253    .0001319    .0114825          0          1
+  Caribbean  |     68,253    .0000147    .0038277          0          1
+    Oceania  |     68,253     .000044    .0066297          0          1
 -------------+---------------------------------------------------------
-       d35yr |     11,669    1974.085    11.39788       1945       2000
-      wage06 |     42,854    75966.44    37781.78          0     150000
-      wage08 |     36,912    83122.64    39661.93          0     150000
-      wage10 |     17,260     83766.8    41734.58          0     150000
-        age2 |    100,402    2344.341    1162.102        529       5776
+      Other  |     68,253    .0000733    .0085588          0          1
+             |
+     emsecdt |
+       4-yr  |
+ coll/univ;  |
+med schl;..  |
+ res. inst.  |     68,258    .1263149    .3322063          0          1
+       2-yr  |
+coll/pre-co  |
+      llege  |
+instituti~s  |     68,258    .1621788    .3686174          0          1
+   Bus/Ind,  |
+ for-profit  |     68,258    .4904773     .499913          0          1
+   Bus/Ind,  |
+ non-profit  |     68,258     .079639    .2707355          0          1
 -------------+---------------------------------------------------------
-        male |    100,402    .5698791    .4950953          0          1
-         mar |    100,402    .7464294    .4350568          0          1
-        race |    100,402    3.600088    1.038308          1          6
-      degree |    100,402    1.690026     .896186          1          4
-       major |    100,402    5.444025    1.913322          1          7
+    Federal  |
+ government  |     68,258    .0572973    .2324115          0          1
+State/Local  |
+ government  |     68,258    .0840927    .2775288          0          1
+             |
+      facadv |
+       Very  |
+  important  |     68,258    .4187495    .4933578          0          1
+   Somewhat  |
+  important  |     68,258    .4715052     .499191          0          1
+   Somewhat  |
+unimportant  |     68,258    .0854698    .2795816          0          1
 -------------+---------------------------------------------------------
-      hdclas |     89,011    18.25928    10.56131         11         60
-      tenure |     83,024     8.37718    8.641363          0         60
-      newbus |     83,024    .0677515    .2513205          0          1
-      emsize |     83,024    4.964287     2.38511          1          8
-        emtp |     83,024     9.29736    4.407253          1         18
+        Not  |
+  important  |
+     at all  |     68,258    .0242755    .1539045          0          1
+             |
+      facben |
+       Very  |
+  important  |     68,258    .6618272    .4730912          0          1
+   Somewhat  |
+  important  |     68,258    .3064403    .4610182          0          1
+   Somewhat  |
+unimportant  |     68,258    .0210671    .1436092          0          1
+        Not  |
+  important  |
+     at all  |     68,258    .0106654    .1027221          0          1
 -------------+---------------------------------------------------------
-     ndgmemg |    100,402    5.444025    1.913322          1          7
-     ndgmeng |    100,402    57.21929    19.53483         11         76
-       emsmi |     78,023    1.542878    1.011154          1          4
-        emrg |     83,019    5.089425    2.734715          1         55
-     emsecdt |     83,024    20.18408     5.83158         11         32
+             |
+     facchal |
+       Very  |
+  important  |     68,258    .6531249    .4759791          0          1
+   Somewhat  |
+  important  |     68,258    .3227168    .4675188          0          1
+   Somewhat  |
+unimportant  |     68,258    .0195288    .1383754          0          1
+        Not  |
+  important  |
+     at all  |     68,258    .0046295    .0678832          0          1
+             |
+      facind |
+       Very  |
+  important  |     68,258       .6217    .4849665          0          1
 -------------+---------------------------------------------------------
-      facadv |    100,221    1.766187    .7820837          1          4
-      facben |    100,221    1.451323    .6719557          1          4
-     facchal |    100,221    1.401622    .5845522          1          4
-      facind |    100,221    1.427036    .5888414          1          4
-      facloc |    100,221     1.54295    .6431126          1          4
+   Somewhat  |
+  important  |     68,258    .3502447      .47705          0          1
+   Somewhat  |
+unimportant  |     68,258    .0246858    .1551667          0          1
+        Not  |
+  important  |
+     at all  |     68,258    .0033696    .0579505          0          1
+             |
+      facloc |
+       Very  |
+  important  |     68,258    .5147382    .4997864          0          1
+   Somewhat  |
+  important  |     68,258    .4357877    .4958633          0          1
 -------------+---------------------------------------------------------
-     facresp |    100,221    1.636404    .6654856          1          4
-      facsal |    100,221    1.494667    .5941107          1          4
-      facsoc |    100,221      1.6288    .7241634          1          4
-      fptind |     83,024    1.101657     .302199          1          2
-    industry |     82,861    6861.824    2207.979        170       9300
+   Somewhat  |
+unimportant  |     68,258    .0425591    .2018624          0          1
+        Not  |
+  important  |
+     at all  |     68,258    .0069149    .0828687          0          1
+             |
+     facresp |
+       Very  |
+  important  |     68,258    .4558147    .4980475          0          1
+   Somewhat  |
+  important  |     68,258    .4812916    .4996535          0          1
+   Somewhat  |
+unimportant  |     68,258    .0542647    .2265409          0          1
 -------------+---------------------------------------------------------
-      lfstat |    100,402    1.314785    .7064708          1          3
-       nedtp |     83,024     3.74087    1.663591          1          9
-       nocpr |     83,024    592387.1    217267.3     110510     785000
-     nocprng |     83,024    59.08312    21.68981         11         78
-     nocprmg |    100,402    5.960001    2.095135          1          8
+        Not  |
+  important  |
+     at all  |     68,258     .008629    .0924916          0          1
+             |
+      facsal |
+       Very  |
+  important  |     68,258    .5660582    .4956207          0          1
+   Somewhat  |
+  important  |     68,258      .41286    .4923517          0          1
+   Somewhat  |
+unimportant  |     68,258    .0165695    .1276526          0          1
+        Not  |
+  important  |
+     at all  |     68,258    .0045123    .0670224          0          1
 -------------+---------------------------------------------------------
-      waprsm |     83,024    3.077725    1.353573          1          5
-      wascsm |     83,024    3.298877    1.661079          1          6
-       wapri |     83,024    8.295059    3.661708          1         14
-       wasec |     83,024     5.91535    4.167915          0         14
-    jobsatis |     83,024    1.650005    .7020152          1          4
+             |
+      facsoc |
+       Very  |
+  important  |     68,258    .5023733     .499998          0          1
+   Somewhat  |
+  important  |     68,258    .4039087    .4906832          0          1
+   Somewhat  |
+unimportant  |     68,258    .0775733    .2675009          0          1
+        Not  |
+  important  |
+     at all  |     68,258    .0161446    .1260326          0          1
+             |
+      fptind |
+  Full-Time  |     68,258    .9156875    .2778579          0          1
 -------------+---------------------------------------------------------
-   bindustry |     82,861    12.59842    4.912842          1         20
-     workexp |    100,402    18.31588    11.81414          0         58
-       waacc |     83,024    .3065499    .4610636          0          1
-     waaprsh |     83,024     .299287    .4579485          0          1
-      wabrsh |     83,024    .2073617    .4054193          0          1
+  Part-time  |     68,258    .0843125    .2778579          0          1
+             |
+   bindustry |
+Agriculture  |
+, Forestry,  |
+Fishing and  |
+    Hunting  |     68,130    .0012623    .0355066          0          1
+     Mining  |     68,130    .0040951    .0638624          0          1
+  Utilities  |     68,130    .0096287    .0976529          0          1
+Construct~n  |     68,130    .0105974    .1023974          0          1
 -------------+---------------------------------------------------------
-       wacom |     83,024    .3660387    .4817231          0          1
-       wadev |     83,024    .2943004    .4557304          0          1
-       wadsn |     83,024    .2587685    .4379608          0          1
-      waemrl |     83,024    .3425034    .4745498          0          1
-      wamgmt |     83,024    .5853488    .4926647          0          1
+Manufactu~g  |     68,130    .1339645    .3406166          0          1
+  Wholesale  |
+      Trade  |     68,130    .0209159    .1431039          0          1
+     Retail  |
+      Trade  |     68,130    .0307794    .1727208          0          1
+Transportat  |
+    ion and  |
+Warehousing  |     68,130    .0119184    .1085197          0          1
+Information  |     68,130    .0305739    .1721615          0          1
 -------------+---------------------------------------------------------
-        waot |     83,024    .0655955    .2475752          0          1
-      waprod |     83,024    .1490292    .3561194          0          1
-        waqm |     83,024    .2414844    .4279858          0          1
-      wasale |     83,024    .3105367    .4627162          0          1
-       wasvc |     83,024    .3033942    .4597268          0          1
+Finance and  |
+  Insurance  |     68,130    .0528108    .2236572          0          1
+Real Estate  |
+ and Rental  |
+and Leasing  |     68,130    .0070307    .0835545          0          1
+Professiona  |
+         l,  |
+Scientifi..  |
+   Services  |     68,130    .1263907    .3322916          0          1
+ Management  |
+         of  |
+Companies..  |
+Enterprises  |     68,130    .0007632    .0276166          0          1
+Administrat  |
+    ive and  |
+Support a..  |
+   Services  |     68,130    .0117276    .1076579          0          1
 -------------+---------------------------------------------------------
-       watea |     83,024    .3239666    .4679902          0          1
-         wan |     83,024    4.054165    2.347525          1         14
-       cmrcn |     83,024    2.238847    1.665706          0          7
-        resn |     83,024    1.425756    1.436859          0          5
-       emplr |     68,258    2.785095    .4687606          1          3
+Educational  |
+   Services  |     68,130    .2749596    .4464972          0          1
+Health Care  |
+ and Social  |
+ Assistance  |     68,130    .0939381    .2917447          0          1
+      Arts,  |
+Entertainme  |
+    nt, and  |
+ Recreation  |     68,130    .0053721    .0730979          0          1
+Accommodati  |
+on and Food  |
+   Services  |     68,130    .0065023    .0803747          0          1
+      Other  |
+   Services  |
+  (except..  |
+ Adminis~n)  |     68,130    .0225745    .1485436          0          1
 -------------+---------------------------------------------------------
-    lnwage03 |     83,024    10.77093    1.267921          0   11.91839
-    lnwage06 |     42,854    11.02079    .9995347          0   11.91839
-    lnwage08 |     36,912    11.10721    1.041003          0   11.91839
-    lnwage10 |     17,260    11.06272    1.238343          0   11.91839
-     dlnwage |     41,893    .0346293    .2693801  -3.972797   3.972797
+     Public  |
+Administr~n  |     68,130    .1441949    .3512898          0          1
+             |
+      lfstat |
+   Employed  |     68,258           1           0          1          1
+             |
+     nocprng |
+   Computer  |
+        and  |
+information  |
+ scientists  |     68,258    .1141551    .3180019          0          1
+Mathematica  |
+          l  |
+ scientists  |     68,258     .004732    .0686274          0          1
+Postseconda  |
+ry teachers  |
+- compute..  |
+   sciences  |     68,258    .0088781    .0938051          0          1
+-------------+---------------------------------------------------------
+Agricultura  |
+ l and food  |
+ scientists  |     68,258    .0031645    .0561649          0          1
+ Biological  |
+and medical  |
+ scientists  |     68,258    .0239825    .1529958          0          1
+Environment  |
+    al life  |
+ scientists  |     68,258    .0023733    .0486595          0          1
+Postseconda  |
+ry teachers  |
+- life an..  |
+   sciences  |     68,258    .0051862    .0718289          0          1
+  Chemists,  |
+     except  |
+biochemists  |     68,258     .010475    .1018106          0          1
+-------------+---------------------------------------------------------
+      Earth  |
+scientists,  |
+geologist..  |
+oceanogra~s  |     68,258    .0049958    .0705044          0          1
+ Physicists  |
+        and  |
+astronomers  |     68,258    .0031205    .0557747          0          1
+      Other  |
+   physical  |
+and related  |
+ scientists  |     68,258     .002725    .0521303          0          1
+Postseconda  |
+ry teachers  |
+- physica..  |
+   sciences  |     68,258    .0043804    .0660402          0          1
+ Economists  |     68,258    .0022854     .047752          0          1
+-------------+---------------------------------------------------------
+  Political  |
+ scientists  |     68,258    .0004688    .0216471          0          1
+Psycholog~s  |     68,258    .0093322    .0961524          0          1
+Sociologist  |
+      s and  |
+anthropol~s  |     68,258    .0011134    .0333497          0          1
+      Other  |
+ social and  |
+    related  |
+ scientists  |     68,258    .0048639    .0695724          0          1
+Postseconda  |
+ry teachers  |
+ - social..  |
+   sciences  |     68,258    .0099183     .099096          0          1
+-------------+---------------------------------------------------------
+  Aerospace  |
+and related  |
+  engineers  |     68,258    .0082481    .0904445          0          1
+   Chemical  |
+  engineers  |     68,258    .0065487    .0806591          0          1
+  Civil and  |
+architectur  |
+         al  |
+  engineers  |     68,258    .0188256    .1359099          0          1
+ Electrical  |
+and related  |
+  engineers  |     68,258    .0309414    .1731603          0          1
+ Industrial  |
+  engineers  |     68,258    .0061678    .0782932          0          1
+-------------+---------------------------------------------------------
+ Mechanical  |
+  engineers  |     68,258    .0221806    .1472715          0          1
+      Other  |
+  engineers  |     68,258    .0250667    .1563288          0          1
+Postseconda  |
+ry teachers  |
+          -  |
+engineering  |     68,258    .0035307    .0593153          0          1
+Health-rela  |
+        ted  |
+occupations  |     68,258    .0882973    .2837289          0          1
+    S and E  |
+   managers  |     68,258    .0190307     .136634          0          1
+-------------+---------------------------------------------------------
+    S and E  |
+Pre-college  |
+   Teachers  |     68,258    .0271763    .1625981          0          1
+    S and E  |
+technicians  |
+        and  |
+technolog~s  |     68,258    .0247444    .1553461          0          1
+Other S and  |
+  E-related  |
+occupations  |     68,258    .0043365    .0657096          0          1
+Non-S and E  |
+   Managers  |     68,258    .0542794    .2265698          0          1
+Management-  |
+    related  |
+occupations  |     68,258    .0854259    .2795165          0          1
+-------------+---------------------------------------------------------
+Non-S and E  |
+ precollege  |
+   teachers  |     68,258    .0843711    .2779455          0          1
+Non-S and E  |
+postseconda  |
+ry teachers  |     68,258    .0409769    .1982381          0          1
+     Social  |
+   services  |
+and related  |
+occupations  |     68,258    .0403762    .1968414          0          1
+  Sales and  |
+  marketing  |
+occupations  |     68,258    .0589528    .2355381          0          1
+       Art,  |
+  humanties  |
+and related  |
+occupations  |     68,258     .014621     .120031          0          1
+-------------+---------------------------------------------------------
+Other non-S  |
+      and E  |
+occupations  |     68,258    .1197515    .3246731          0          1
+             |
+     workexp |     68,258    16.05706    10.37165          0         55
+             |
+       wapri |
+Accounting,  |
+   finance,  |
+  contracts  |     68,258    .0543819    .2267714          0          1
+      Basic  |
+   Research  |     68,258    .0317472    .1753276          0          1
+    Applied  |
+   Research  |     68,258    .0521697    .2223708          0          1
+-------------+---------------------------------------------------------
+   Computer  |
+application  |
+       s,..  |
+development  |     68,258    .0428961    .2026243          0          1
+Development  |     68,258    .0457675    .2089821          0          1
+  Design of  |
+ equipment,  |
+processes..  |
+     models  |     68,258    .1048961    .3064218          0          1
+   Employee  |
+  relations  |     68,258    .0244074    .1543114          0          1
+ Management  |
+        and  |
+Administr~n  |     68,258     .166193    .3722565          0          1
+-------------+---------------------------------------------------------
+Production,  |
+operations,  |
+maintenance  |     68,258    .0331683    .1790771          0          1
+      Prof.  |
+   services  |     68,258    .1335375    .3401572          0          1
+     Sales,  |
+purchasing,  |
+  marketing  |     68,258    .0783644    .2687462          0          1
+ Quality or  |
+productivit  |
+          y  |
+ management  |     68,258    .0204811    .1416402          0          1
+   Teaching  |     68,258    .1779132    .3824425          0          1
+-------------+---------------------------------------------------------
+ Other work  |
+   activity  |     68,258    .0340766    .1814273          0          1
+             |
+       waacc |     68,258    .2718949    .4449393          0          1
+      waemrl |     68,258    .3480618    .4763592          0          1
+      wamgmt |     68,258    .5923262    .4914056          0          1
+      waprod |     68,258     .145287    .3523925          0          1
+-------------+---------------------------------------------------------
+        waqm |     68,258    .2375106    .4255608          0          1
+      wasale |     68,258    .2780919    .4480622          0          1
+       wasvc |     68,258    .2771983    .4476185          0          1
+     waaprsh |     68,258    .3087111     .461965          0          1
+      wabrsh |     68,258    .2148906    .4107494          0          1
+-------------+---------------------------------------------------------
+       wacom |     68,258    .3743151    .4839491          0          1
+       wadev |     68,258    .2973131    .4570789          0          1
+       wadsn |     68,258    .2609218    .4391406          0          1
+        waot |     68,258     .068329    .2523115          0          1
+       watea |     68,258    .3558411    .4787709          0          1
+-------------+---------------------------------------------------------
+         wan |     68,258    4.030692    2.326918          1         14
+       cmrcn |     68,258    2.150371    1.647054          0          7
+        resn |     68,258    1.456152    1.440333          0          5
+  fixcut(13 19 29 41 51 63 82)
 
-Following variable is string, not included:  
-bthrgn  bthst  bthus  chtotpb  chun12  ctzn  cmpri  cmsec  ctzdual  difbir  wrkg  emsecsm  emsecpb  eddad  fnccd  fncrgn  g
-> ender  dgrdg  ndgrmed  hispcat  hispanic  chlvin  fninus  marsta  marind  minrty  edmom  fnvsatp  ctzfor  difno  ch1218in
->   ch19in  ch25in  ch611in  chu2in  ch6in  difhear  diflift  difsee  difwalk  hcapin  asian  black  racethm  racethmp  nat
-> ive  racem  pacific  white  cmedu  cmfam  cmopp  cmot  cmfld  refid  resploc  resplo3  resplcus  spnat  spot  spsoc  spow
-> k  cohort  surid  srvmode  vsatp  ctzusin  ctzus  valind  asdgri  comcoli  acus  bsdgri  acfpt  acst  acccep  hsnoi  hsst
->   naced  nacedmg  nacedng  nacedx  acadv  accar  acchg  acem  acskl  aclic  acot  acint  acgrd  acsin  acdrg  actcap  act
-> ded  actmgt  actrd  actres  actrdt  acttch  acadadjf  acaddean  acadna  acadothr  acadpdoc  acadpres  acadrchf  acadra  a
-> cadtchf  acadta  satadv  fsagr  fsdod  fsdk  fsded  fsdoe  fsepa  fshhs  fsnasa  fsnih  fsnsf  fsot  fsdot  promtgi  satb
-> en  satchal  edtp  emed  emus  facrank  govsup  satind  indcodf  satloc  lookwk  nwfam  nwill  nwlay  nwocna  nwnond  nwo
-> t  nwret  nwstu  nrchg  nrfam  nrloc  nrrea  nrocna  nrot  nrpay  nrsec  nrcon  ptfam  ptill  ptlay  ptocna  ptnond  ptot
->   ptret  ptstu  ptwtft  ftpret  emrgp  emst  nocprx  wkswkp  prmbrno  satresp  satsal  facsec  satsec  satsoc  supwk  mgr
-> nat  mgroth  mgrsoc  tensta  teni  wtrskl  wtradv  wtrchg  wtrem  wtrlic  wtrsn  wtrnew  wtrot  chchg  chfam  chlay  chlo
-> c  chot  chpay  chret  chsch  chcon  carneg  instcod  pubpri  wrkgp  mgrind  noclst  noclstx  lwnvr  nocmlst  nocnlst  pa
-> tent  ocedrlp  wtaprf  wktrni  wtmgt  wtot  wttech  nhdmedx  hdcarn  hdpbpr  hdrgn  hdrgnp  hdst  hddgrus  nhdned  nhdned
-> x  nhdsemg  nhdneng  nbamed  nbamedx  nbamemg  nbameng  bacarn  bapbpr  bargn  bargnp  bast  badgrus  nbaned  nbanedx  nb
-> asemg  nbaneng  mrdg  nmrmed  nmrmedx  nmrmemg  nmrmeng  mrcarn  mrpbpr  mrrgn  mrrgnp  mrst  mrdgrus  nmrned  nmrnedx  n
-> mrsemg  nmrneng  d2dg  nd2med  nd2medx  nd2memg  nd2meng  d2carn  d2pbpr  d2rgn  d2rgnp  d2st  d2dgrus  nd2ned  nd2nedx  
-> nd2semg  nd2neng  d3dg  nd3med  nd3medx  nd3memg  nd3meng  d3carn  d3pbpr  d3rgn  d3rgnp  d3st  d3dgrus  nd3ned  nd3nedx 
->  nd3semg  nd3neng  d4dg  nd4med  nd4medx  nd4memg  nd4meng  d4carn  d4pbpr  d4rgn  d4rgnp  d4st  d4dgrus  nd4ned  nd4nedx
->   nd4semg  nd4neng  d5dg  nd5med  nd5medx  nd5memg  nd5meng  d5carn  d5pbpr  d5rgn  d5rgnp  d5st  d5dgrus  nd5ned  nd5ned
-> x  nd5semg  nd5neng  Following variable has no observation, not included:  
-agep  hday5p  hrswkp  earnpb  baayr5p  mr5yrp  d4ayr  d4mn  d4yr  d43yr  d45yr  d5ayr  d5mn  d5yr  d53yr  d55yr  
-__00000D not found
-r(111);
+summary_full.rtf
+dir
 
-end of do-file
-
-r(111);
-
-. do "C:\Users\Jeroen\AppData\Local\Temp\STD00000000.tmp"
-
-. // summary statistics for full dataset 
-. outreg2 using summary, replace sum(log) eqkeep(ibn.emplr wage03 wage06 wage08 wage10 lnwage03 lnwage06 lnwage08 lnwage10 
-> dlnwage age age2 male mar ibn.race ibn.degree ibn.major ibn.hdclas tenure newbus ibn.emsize ibn.emrg ibn.emsecdt ibn.faca
-> dv ibn.facben ibn.facchal ibn.facind ibn.facloc ibn.facres ibn.facsal ibn.facsoc ibn.fptind ibn.bindustry ibn.lfstat ibn.
-> nocprng workexp ibn.wapri waacc waemrl wamgmt waprod waqm wasale wasvc waaprsh wabrsh wacom wadev wadsn waot watea wan cm
-> rcn resn) excel see
+. 
+. //summary statistics for startup employees
+. logout, save(summary_startup) word fix replace: sum ibn.emplr wage03 wage06 wage08 wage10 lnwage03 lnwage06 lnwage08 lnwage10 dlnwage age age2 male mar ibn.race ibn.degree ibn.major ibn.hdclas
+>  tenure newbus ibn.emsize       ibn.emrg ibn.emsecdt ibn.facadv ibn.facben ibn.facchal ibn.facind ibn.facloc ibn.facres ibn.facsal ibn.facsoc ibn.fptind ibn.bindustry  ibn.lfstat ibn.nocprng w
+> orkexp ibn.wapri waacc waemrl wamgmt waprod     waqm wasale wasvc waaprsh wabrsh wacom  wadev wadsn waot watea wan cmrcn resn if emplr == 1, fvwrap(4) 
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-         age |    100,402    46.94755    11.84354         23         76
-       agegr |    100,402    44.92336    11.88419         20         70
-      biryrp |    100,402    1953.868    11.65679       1925       1970
-      difage |    100,402     85.3045    25.73426          1         98
-    difagegr |    100,402    85.47427    25.05803         20         98
+       emplr |
+    Startup  |      1,741           1           0          1          1
+      wage03 |      1,741    66145.32     41689.8          0     150000
+      wage06 |        850    81489.41    40977.66          0     150000
+      wage08 |        710     91583.1    41077.63          0     150000
+      wage10 |        358    93483.24    39535.23          0     150000
 -------------+---------------------------------------------------------
-      hdacyr |    100,402    1984.577    11.82138       1945       2004
-       dgryr |    100,402    1984.303    11.76716       1945       2003
-      hdacy3 |    100,402     1983.31    11.80058       1944       2001
-       hday5 |    100,402    1982.279    11.80554       1945       2000
-      ch1218 |    100,402    49.34676    48.71689          0         98
+    lnwage03 |      1,741    10.64913    1.685816          0   11.91839
+    lnwage06 |        850    11.00183    1.409687          0   11.91839
+    lnwage08 |        710    11.20862    1.082744          0   11.91839
+    lnwage10 |        358    11.22091    1.221233          0   11.91839
+     dlnwage |        879    .0445552    .3937473  -3.837642   3.619666
 -------------+---------------------------------------------------------
-        ch19 |    100,402    49.20275    48.85969          0         98
-        ch25 |    100,402    49.23308    48.82925          0         98
-      ch25pb |    100,402    49.23287    48.82944          0         98
-       ch611 |    100,402    49.32386     48.7395          0         98
-     ch611pb |    100,402    49.32322    48.74007          0         98
+         age |      1,741    42.14072     10.1531         26         75
+        age2 |      1,741    1878.867    924.2396        676       5625
+        male |      1,741    .6639862    .4724794          0          1
+         mar |      1,741    .7219989    .4481427          0          1
+             |
+        race |
+      Asian  |      1,741    .1987364    .3991638          0          1
 -------------+---------------------------------------------------------
-        chu2 |    100,402    49.15875    48.90286          0         98
-      chu2pb |    100,402    49.15857    48.90301          0         98
-         ch6 |    100,402    49.33132    48.73227          0         98
-       ch6pb |    100,402     49.3308    48.73274          0         98
-     fnusyr6 |    100,402    8379.707    3217.928       1929       9998
+   American  |
+Indian/Alas  |
+  ka Native  |      1,741     .007467    .0861132          0          1
+      Black  |      1,741    .0568639    .2316489          0          1
+      White  |      1,741    .7110856    .4533883          0          1
+     Native  |
+Hawaiian/Ot  |
+her Pacific  |
+   Islander  |      1,741    .0057438    .0755918          0          1
+   Multiple  |      1,741    .0201034    .1403943          0          1
 -------------+---------------------------------------------------------
-       refyr |    100,402        2003           0       2003       2003
-     permvyr |    100,402    9603.865    1731.867       1946       9998
-     wtsurvy |    100,402    404.5778    408.7081         12   5050.919
-        hsyr |    100,402    1989.014    345.2429       1942       9998
-       hsyrp |    100,402    1985.307    345.3406       1940       9998
+             |
+      degree |
+ Bachelor's  |      1,741    .5663412    .4957217          0          1
+   Master's  |      1,741    .2940839    .4557607          0          1
+  Doctorate  |      1,741    .0804136    .2720105          0          1
+Professio~l  |      1,741    .0591614    .2359943          0          1
+             |
+       major |
+   Computer  |
+        and  |
+mathematica  |
+ l sciences  |      1,741    .1074095    .3097222          0          1
 -------------+---------------------------------------------------------
-       bsdgn |    100,402    1.663214    .8191267          1          9
-      strtmn |    100,402    22.36494     34.7212          1         98
-      strtyr |     83,024    1994.623    8.641363       1943       2003
-      nwrtyr |    100,402    9271.941    2298.292       1952       9998
-      supdir |    100,402     6256.59    4834.982          1       9998
+   Life and  |
+    related  |
+   sciences  |      1,741    .0534176    .2249293          0          1
+   Physical  |
+and related  |
+   sciences  |      1,741    .0493969    .2167575          0          1
+ Social and  |
+    related  |
+   sciences  |      1,741    .0832855    .2763926          0          1
+Engineering  |      1,741    .1838024    .3874343          0          1
+      S and  |
+  E-Related  |
+     Fields  |      1,741    .1028145    .3038037          0          1
 -------------+---------------------------------------------------------
-      spdirp |    100,402    6256.551    4835.033          1       9998
-      supind |    100,402    62553.78    48388.72          0      99998
-      spindp |    100,402    62551.75    48391.22          0      99998
-     ptretyr |    100,402    9830.359    1145.864       1954       9998
-     ptretyp |    100,402    9830.319    1146.135       1969       9998
+Non-S and E  |
+     Fields  |      1,741    .4198736    .4936798          0          1
+             |
+      hdclas |
+   Research  |
+ University  |
+          I  |      1,465    .3945392    .4889184          0          1
+   Research  |
+ University  |
+         II  |      1,465     .090785    .2874012          0          1
+  Doctorate  |
+ Granting I  |      1,465    .0709898    .2568954          0          1
+  Doctorate  |
+Granting II  |      1,465    .0675768     .251104          0          1
 -------------+---------------------------------------------------------
-     ftprtyr |    100,402    9767.509    1338.385       1958       9998
-     ftprtyp |    100,402     9767.51    1338.382       1970       9998
-       wkswk |    100,402    57.46113    19.78158          1         98
-       hrswk |    100,402    52.71856    23.49383          1         98
-       prmbr |    100,402    1.349814    4.420135          0         98
+Comprehensi  |
+       ve I  |      1,465    .2279863     .419677          0          1
+Comprehensi  |
+      ve II  |      1,465      .01843    .1345464          0          1
+    Liberal  |
+     Arts I  |      1,465    .0245734    .1548738          0          1
+    Liberal  |
+    Arts II  |      1,465     .043686    .2044653          0          1
+   Two-year  |
+instituti~s  |      1,465    .0020478    .0452215          0          1
 -------------+---------------------------------------------------------
-     prmbrpb |    100,402    1.339296    4.391658          0         98
-      salary |    100,402    229773.4    356072.8          0     999998
-      wage03 |     83,024    64162.52    36370.01          0     150000
-     article |    100,402    .8322643    5.650329          0         98
-    articlep |    100,402    2.770413    42.53256          0        998
+Theological  |
+seminaries,  |
+      bible  |
+   colleges  |      1,465    .0061433     .078165          0          1
+    Medical  |
+schools and  |
+    medical  |
+    centers  |      1,465    .0156997    .1243533          0          1
+      Other  |
+   separate  |
+   health..  |
+    schools  |      1,465    .0013652    .0369358          0          1
+ Schools of  |
+engineering  |
+        and  |
+ technology  |      1,465    .0054608      .07372          0          1
+ Schools of  |
+art, music,  |
+ and design  |      1,465    .0047782    .0689824          0          1
 -------------+---------------------------------------------------------
-       books |    100,402    .2900739    4.354138          0         98
-        lwmn |    100,402    82.33733    34.47593          1         98
-        lwyr |    100,402    8627.805    3013.929       1951       9998
-       lwyrp |    100,402    8627.448    3014.715       1950       9998
-      papers |    100,402    1.274168    6.482801          0         98
+ Schools of  |
+        law  |      1,465    .0040956    .0638872          0          1
+      Other  |
+specialized  |
+instituti~s  |      1,465     .021843    .1462207          0          1
+             |
+      tenure |      1,741     1.79552    2.459932          0         38
+      newbus |      1,741           1           0          1          1
+             |
+      emsize |
+        <10  |      1,741    .4141298    .4927126          0          1
 -------------+---------------------------------------------------------
-     papersp |    100,402    3.314446    42.66028          0        998
-      uspapp |    100,402    94.78439     17.1642          1         98
-      uspcom |    100,402    94.69943    17.58914          0         98
-      uspgrt |    100,402    94.73318    17.42001          0         98
-        earn |    100,402     1303975     3275819          0    9999998
+      10-24  |      1,741    .2119472     .408805          0          1
+    25 - 99  |      1,741     .373923    .4839826          0          1
+             |
+        emrg |
+New England  |      1,739    .0736055     .261203          0          1
+     Middle  |
+   Atlantic  |      1,739     .120184    .3252701          0          1
+ East North  |
+    Central  |      1,739    .1040828    .3054558          0          1
 -------------+---------------------------------------------------------
-        hdmn |    100,402    6.426007    2.615316          1         12
-      baacyr |     97,786    1980.924    11.90254       1944       2003
-        bamn |     97,786    6.231741    2.449293          1         12
-        bayr |     97,786    1980.704    11.84691       1944       2003
-      baayr3 |     97,786    1979.716    11.88766       1944       2001
+ West North  |
+    Central  |      1,739    .0425532    .2019056          0          1
+      South  |
+   Atlantic  |      1,739    .2047154    .4036095          0          1
+ East South  |
+    Central  |      1,739    .0327775    .1781049          0          1
+ West South  |
+    Central  |      1,739    .0874066    .2825111          0          1
+   Mountain  |      1,739     .080506    .2721533          0          1
 -------------+---------------------------------------------------------
-      baayr5 |     97,786    1978.663    11.85318       1940       2000
-     mrdacyr |    100,402    1984.687     11.8189       1945       2004
-        mrmn |    100,402    6.426954    2.614227          1         12
-        mryr |    100,402    1984.413    11.76476       1945       2003
-       mr3yr |    100,402     1983.42     11.7968       1944       2001
+    Pacific  |      1,739    .2489937    .4325545          0          1
+     Europe  |      1,739    .0011501    .0339032          0          1
+       Asia  |      1,739    .0017251    .0415108          0          1
+      North  |
+    America  |      1,739    .0011501    .0339032          0          1
+    Central  |
+    America  |      1,739     .000575    .0239801          0          1
 -------------+---------------------------------------------------------
-       mr5yr |    100,402     1982.39    11.80477       1945       2000
-       d2ayr |     47,330    1980.318    11.69536       1944       2004
-        d2mn |     47,330    6.180076     2.30838          1         12
-        d2yr |     47,330    1980.099    11.64564       1944       2003
-       d23yr |     47,330    1979.106    11.67389       1944       2001
+    Oceania  |      1,739     .000575    .0239801          0          1
+             |
+     emsecdt |
+       4-yr  |
+ coll/univ;  |
+med schl;..  |
+ res. inst.  |      1,741    .0063182    .0792584          0          1
+       2-yr  |
+coll/pre-co  |
+      llege  |
+instituti~s  |      1,741    .0534176    .2249293          0          1
+   Bus/Ind,  |
+ for-profit  |      1,741     .860425    .3466451          0          1
+   Bus/Ind,  |
+ non-profit  |      1,741    .0712234    .2572716          0          1
 -------------+---------------------------------------------------------
-       d25yr |     47,330    1978.076     11.6997       1940       2000
-       d3ayr |     11,669    1976.274    11.39065       1946       2003
-        d3mn |     11,669    6.060159    2.105744          1         12
-        d3yr |     11,669    1976.067    11.33119       1946       2003
-       d33yr |     11,669    1975.067    11.36171       1944       2001
+State/Local  |
+ government  |      1,741    .0086157    .0924468          0          1
+             |
+      facadv |
+       Very  |
+  important  |      1,741    .4715681    .4993344          0          1
+   Somewhat  |
+  important  |      1,741    .4026422    .4905708          0          1
+   Somewhat  |
+unimportant  |      1,741    .0919012    .2889694          0          1
+        Not  |
+  important  |
+     at all  |      1,741    .0338886    .1809943          0          1
 -------------+---------------------------------------------------------
-       d35yr |     11,669    1974.085    11.39788       1945       2000
-      wage06 |     42,854    75966.44    37781.78          0     150000
-      wage08 |     36,912    83122.64    39661.93          0     150000
-      wage10 |     17,260     83766.8    41734.58          0     150000
-        age2 |    100,402    2344.341    1162.102        529       5776
+             |
+      facben |
+       Very  |
+  important  |      1,741    .5370477    .4987688          0          1
+   Somewhat  |
+  important  |      1,741    .3905801    .4880206          0          1
+   Somewhat  |
+unimportant  |      1,741     .046525    .2106796          0          1
+        Not  |
+  important  |
+     at all  |      1,741    .0258472    .1587249          0          1
+             |
+     facchal |
+       Very  |
+  important  |      1,741    .6835152    .4652381          0          1
 -------------+---------------------------------------------------------
-        male |    100,402    .5698791    .4950953          0          1
-         mar |    100,402    .7464294    .4350568          0          1
-        race |    100,402    3.600088    1.038308          1          6
-      degree |    100,402    1.690026     .896186          1          4
-       major |    100,402    5.444025    1.913322          1          7
+   Somewhat  |
+  important  |      1,741    .2808731    .4495547          0          1
+   Somewhat  |
+unimportant  |      1,741    .0275704    .1637854          0          1
+        Not  |
+  important  |
+     at all  |      1,741    .0080414     .089338          0          1
+             |
+      facind |
+       Very  |
+  important  |      1,741    .6519242    .4764971          0          1
+   Somewhat  |
+  important  |      1,741    .3118897    .4633982          0          1
 -------------+---------------------------------------------------------
-      hdclas |     89,011    18.25928    10.56131         11         60
-      tenure |     83,024     8.37718    8.641363          0         60
-      newbus |     83,024    .0677515    .2513205          0          1
-      emsize |     83,024    4.964287     2.38511          1          8
-        emtp |     83,024     9.29736    4.407253          1         18
+   Somewhat  |
+unimportant  |      1,741    .0292935    .1686764          0          1
+        Not  |
+  important  |
+     at all  |      1,741    .0068926    .0827588          0          1
+             |
+      facloc |
+       Very  |
+  important  |      1,741    .4905227    .5000538          0          1
+   Somewhat  |
+  important  |      1,741    .4365307    .4960978          0          1
+   Somewhat  |
+unimportant  |      1,741    .0620333    .2412854          0          1
 -------------+---------------------------------------------------------
-     ndgmemg |    100,402    5.444025    1.913322          1          7
-     ndgmeng |    100,402    57.21929    19.53483         11         76
-       emsmi |     78,023    1.542878    1.011154          1          4
-        emrg |     83,019    5.089425    2.734715          1         55
-     emsecdt |     83,024    20.18408     5.83158         11         32
+        Not  |
+  important  |
+     at all  |      1,741    .0109133    .1039248          0          1
+             |
+     facresp |
+       Very  |
+  important  |      1,741    .5089029    .5000644          0          1
+   Somewhat  |
+  important  |      1,741    .4244687    .4944041          0          1
+   Somewhat  |
+unimportant  |      1,741     .053992    .2260668          0          1
+        Not  |
+  important  |
+     at all  |      1,741    .0126364    .1117314          0          1
 -------------+---------------------------------------------------------
-      facadv |    100,221    1.766187    .7820837          1          4
-      facben |    100,221    1.451323    .6719557          1          4
-     facchal |    100,221    1.401622    .5845522          1          4
-      facind |    100,221    1.427036    .5888414          1          4
-      facloc |    100,221     1.54295    .6431126          1          4
+             |
+      facsal |
+       Very  |
+  important  |      1,741    .5824239    .4933012          0          1
+   Somewhat  |
+  important  |      1,741    .3854107     .486832          0          1
+   Somewhat  |
+unimportant  |      1,741    .0206778    .1423441          0          1
+        Not  |
+  important  |
+     at all  |      1,741    .0114877    .1065937          0          1
+             |
+      facsoc |
+       Very  |
+  important  |      1,741     .447444    .4973731          0          1
 -------------+---------------------------------------------------------
-     facresp |    100,221    1.636404    .6654856          1          4
-      facsal |    100,221    1.494667    .5941107          1          4
-      facsoc |    100,221      1.6288    .7241634          1          4
-      fptind |     83,024    1.101657     .302199          1          2
-    industry |     82,861    6861.824    2207.979        170       9300
+   Somewhat  |
+  important  |      1,741     .427915    .4949186          0          1
+   Somewhat  |
+unimportant  |      1,741    .0970706     .296139          0          1
+        Not  |
+  important  |
+     at all  |      1,741    .0275704    .1637854          0          1
+             |
+      fptind |
+  Full-Time  |      1,741    .8765078    .3290959          0          1
+  Part-time  |      1,741    .1234922    .3290959          0          1
 -------------+---------------------------------------------------------
-      lfstat |    100,402    1.314785    .7064708          1          3
-       nedtp |     83,024     3.74087    1.663591          1          9
-       nocpr |     83,024    592387.1    217267.3     110510     785000
-     nocprng |     83,024    59.08312    21.68981         11         78
-     nocprmg |    100,402    5.960001    2.095135          1          8
+             |
+   bindustry |
+Agriculture  |
+, Forestry,  |
+Fishing and  |
+    Hunting  |      1,732    .0023095    .0480153          0          1
+     Mining  |      1,732    .0046189    .0678252          0          1
+  Utilities  |      1,732    .0034642    .0587724          0          1
+Construct~n  |      1,732    .0236721    .1520692          0          1
+Manufactu~g  |      1,732    .1039261    .3052528          0          1
 -------------+---------------------------------------------------------
-      waprsm |     83,024    3.077725    1.353573          1          5
-      wascsm |     83,024    3.298877    1.661079          1          6
-       wapri |     83,024    8.295059    3.661708          1         14
-       wasec |     83,024     5.91535    4.167915          0         14
-    jobsatis |     83,024    1.650005    .7020152          1          4
+  Wholesale  |
+      Trade  |      1,732    .0352194    .1843872          0          1
+     Retail  |
+      Trade  |      1,732    .0444573    .2061683          0          1
+Transportat  |
+    ion and  |
+Warehousing  |      1,732    .0086605    .0926848          0          1
+Information  |      1,732    .0438799     .204887          0          1
+Finance and  |
+  Insurance  |      1,732    .0525404    .2231786          0          1
 -------------+---------------------------------------------------------
-   bindustry |     82,861    12.59842    4.912842          1         20
-     workexp |    100,402    18.31588    11.81414          0         58
-       waacc |     83,024    .3065499    .4610636          0          1
-     waaprsh |     83,024     .299287    .4579485          0          1
-      wabrsh |     83,024    .2073617    .4054193          0          1
+Real Estate  |
+ and Rental  |
+and Leasing  |      1,732     .028291    .1658508          0          1
+Professiona  |
+         l,  |
+Scientifi..  |
+   Services  |      1,732    .3775982    .4849263          0          1
+Administrat  |
+    ive and  |
+Support a..  |
+   Services  |      1,732    .0294457    .1691011          0          1
+Educational  |
+   Services  |      1,732    .0646651    .2460051          0          1
+Health Care  |
+ and Social  |
+ Assistance  |      1,732    .1062356    .3082279          0          1
 -------------+---------------------------------------------------------
-       wacom |     83,024    .3660387    .4817231          0          1
-       wadev |     83,024    .2943004    .4557304          0          1
-       wadsn |     83,024    .2587685    .4379608          0          1
-      waemrl |     83,024    .3425034    .4745498          0          1
-      wamgmt |     83,024    .5853488    .4926647          0          1
+      Arts,  |
+Entertainme  |
+    nt, and  |
+ Recreation  |      1,732    .0121247    .1094743          0          1
+Accommodati  |
+on and Food  |
+   Services  |      1,732    .0150115    .1216336          0          1
+      Other  |
+   Services  |
+  (except..  |
+ Adminis~n)  |      1,732    .0334873    .1799572          0          1
+     Public  |
+Administr~n  |      1,732    .0103926    .1014423          0          1
+             |
+      lfstat |
+   Employed  |      1,741           1           0          1          1
 -------------+---------------------------------------------------------
-        waot |     83,024    .0655955    .2475752          0          1
-      waprod |     83,024    .1490292    .3561194          0          1
-        waqm |     83,024    .2414844    .4279858          0          1
-      wasale |     83,024    .3105367    .4627162          0          1
-       wasvc |     83,024    .3033942    .4597268          0          1
+             |
+     nocprng |
+   Computer  |
+        and  |
+information  |
+ scientists  |      1,741    .1843768    .3879026          0          1
+Mathematica  |
+          l  |
+ scientists  |      1,741    .0017231    .0414869          0          1
+Postseconda  |
+ry teachers  |
+- compute..  |
+   sciences  |      1,741    .0011488    .0338837          0          1
+Agricultura  |
+ l and food  |
+ scientists  |      1,741    .0017231    .0414869          0          1
+ Biological  |
+and medical  |
+ scientists  |      1,741    .0241241    .1534784          0          1
 -------------+---------------------------------------------------------
-       watea |     83,024    .3239666    .4679902          0          1
-         wan |     83,024    4.054165    2.347525          1         14
-       cmrcn |     83,024    2.238847    1.665706          0          7
-        resn |     83,024    1.425756    1.436859          0          5
-       emplr |     68,258    2.785095    .4687606          1          3
+Environment  |
+    al life  |
+ scientists  |      1,741    .0005744    .0239663          0          1
+Postseconda  |
+ry teachers  |
+- life an..  |
+   sciences  |      1,741    .0005744    .0239663          0          1
+  Chemists,  |
+     except  |
+biochemists  |      1,741    .0103389    .1011824          0          1
+      Earth  |
+scientists,  |
+geologist..  |
+oceanogra~s  |      1,741    .0040207    .0632994          0          1
+ Physicists  |
+        and  |
+astronomers  |      1,741    .0017231    .0414869          0          1
 -------------+---------------------------------------------------------
-    lnwage03 |     83,024    10.77093    1.267921          0   11.91839
-    lnwage06 |     42,854    11.02079    .9995347          0   11.91839
-    lnwage08 |     36,912    11.10721    1.041003          0   11.91839
-    lnwage10 |     17,260    11.06272    1.238343          0   11.91839
-     dlnwage |     41,893    .0346293    .2693801  -3.972797   3.972797
+      Other  |
+   physical  |
+and related  |
+ scientists  |      1,741    .0011488    .0338837          0          1
+Psycholog~s  |      1,741    .0063182    .0792584          0          1
+Sociologist  |
+      s and  |
+anthropol~s  |      1,741    .0005744    .0239663          0          1
+      Other  |
+ social and  |
+    related  |
+ scientists  |      1,741    .0091901     .095451          0          1
+  Aerospace  |
+and related  |
+  engineers  |      1,741    .0028719    .0535286          0          1
+-------------+---------------------------------------------------------
+   Chemical  |
+  engineers  |      1,741    .0034463    .0586207          0          1
+  Civil and  |
+architectur  |
+         al  |
+  engineers  |      1,741    .0132108    .1142093          0          1
+ Electrical  |
+and related  |
+  engineers  |      1,741    .0407812    .1978397          0          1
+ Industrial  |
+  engineers  |      1,741    .0028719    .0535286          0          1
+ Mechanical  |
+  engineers  |      1,741    .0160827    .1258299          0          1
+-------------+---------------------------------------------------------
+      Other  |
+  engineers  |      1,741     .026996    .1621181          0          1
+Health-rela  |
+        ted  |
+occupations  |      1,741    .0631821    .2433601          0          1
+    S and E  |
+   managers  |      1,741    .0080414     .089338          0          1
+    S and E  |
+Pre-college  |
+   Teachers  |      1,741    .0063182    .0792584          0          1
+    S and E  |
+technicians  |
+        and  |
+technolog~s  |      1,741    .0281447    .1654338          0          1
+-------------+---------------------------------------------------------
+Other S and  |
+  E-related  |
+occupations  |      1,741    .0034463    .0586207          0          1
+Non-S and E  |
+   Managers  |      1,741    .0723722    .2591776          0          1
+Management-  |
+    related  |
+occupations  |      1,741    .1108558    .3140437          0          1
+Non-S and E  |
+ precollege  |
+   teachers  |      1,741    .0373349    .1896355          0          1
+Non-S and E  |
+postseconda  |
+ry teachers  |      1,741    .0022975    .0478912          0          1
+-------------+---------------------------------------------------------
+     Social  |
+   services  |
+and related  |
+occupations  |      1,741    .0235497    .1516849          0          1
+  Sales and  |
+  marketing  |
+occupations  |      1,741    .1275129    .3336425          0          1
+       Art,  |
+  humanties  |
+and related  |
+occupations  |      1,741    .0241241    .1534784          0          1
+Other non-S  |
+      and E  |
+occupations  |      1,741    .1390006    .3460465          0          1
+             |
+     workexp |      1,741     14.9506    10.04077          0         52
+-------------+---------------------------------------------------------
+             |
+       wapri |
+Accounting,  |
+   finance,  |
+  contracts  |      1,741    .0815623    .2737754          0          1
+      Basic  |
+   Research  |      1,741    .0218265    .1461588          0          1
+    Applied  |
+   Research  |      1,741     .046525    .2106796          0          1
+   Computer  |
+application  |
+       s,..  |
+development  |      1,741    .0695003     .254376          0          1
+Development  |      1,741     .046525    .2106796          0          1
+-------------+---------------------------------------------------------
+  Design of  |
+ equipment,  |
+processes..  |
+     models  |      1,741    .1642734    .3706299          0          1
+   Employee  |
+  relations  |      1,741    .0149339    .1213234          0          1
+ Management  |
+        and  |
+Administr~n  |      1,741    .1338311    .3405686          0          1
+Production,  |
+operations,  |
+maintenance  |      1,741    .0356117    .1853733          0          1
+      Prof.  |
+   services  |      1,741     .120046    .3251086          0          1
+-------------+---------------------------------------------------------
+     Sales,  |
+purchasing,  |
+  marketing  |      1,741    .1527858    .3598842          0          1
+ Quality or  |
+productivit  |
+          y  |
+ management  |      1,741    .0201034    .1403943          0          1
+   Teaching  |      1,741    .0637565    .2443888          0          1
+ Other work  |
+   activity  |      1,741    .0287191     .167064          0          1
+             |
+       waacc |      1,741    .3877082    .4873674          0          1
+-------------+---------------------------------------------------------
+      waemrl |      1,741    .3641585    .4813317          0          1
+      wamgmt |      1,741     .599081    .4902255          0          1
+      waprod |      1,741    .1769098     .381702          0          1
+        waqm |      1,741    .2791499    .4487102          0          1
+      wasale |      1,741    .4417002    .4967322          0          1
+-------------+---------------------------------------------------------
+       wasvc |      1,741    .2780011    .4481427          0          1
+     waaprsh |      1,741    .3360138    .4724794          0          1
+      wabrsh |      1,741    .2331993    .4229896          0          1
+       wacom |      1,741    .4623779    .4987258          0          1
+       wadev |      1,741    .3946008    .4889052          0          1
+-------------+---------------------------------------------------------
+       wadsn |      1,741    .3331419    .4714722          0          1
+        waot |      1,741    .0522688    .2226325          0          1
+       watea |      1,741    .2056289    .4042766          0          1
+         wan |      1,741     4.54394    2.485578          1         13
+       cmrcn |      1,741    2.526709    1.755453          0          7
+-------------+---------------------------------------------------------
+        resn |      1,741    1.759334    1.551077          0          5
+  fixcut(13 20 29 41 51 63 82)
 
-Following variable is string, not included:  
-bthrgn  bthst  bthus  chtotpb  chun12  ctzn  cmpri  cmsec  ctzdual  difbir  wrkg  emsecsm  emsecpb  eddad  fnccd  fncrgn  g
-> ender  dgrdg  ndgrmed  hispcat  hispanic  chlvin  fninus  marsta  marind  minrty  edmom  fnvsatp  ctzfor  difno  ch1218in
->   ch19in  ch25in  ch611in  chu2in  ch6in  difhear  diflift  difsee  difwalk  hcapin  asian  black  racethm  racethmp  nat
-> ive  racem  pacific  white  cmedu  cmfam  cmopp  cmot  cmfld  refid  resploc  resplo3  resplcus  spnat  spot  spsoc  spow
-> k  cohort  surid  srvmode  vsatp  ctzusin  ctzus  valind  asdgri  comcoli  acus  bsdgri  acfpt  acst  acccep  hsnoi  hsst
->   naced  nacedmg  nacedng  nacedx  acadv  accar  acchg  acem  acskl  aclic  acot  acint  acgrd  acsin  acdrg  actcap  act
-> ded  actmgt  actrd  actres  actrdt  acttch  acadadjf  acaddean  acadna  acadothr  acadpdoc  acadpres  acadrchf  acadra  a
-> cadtchf  acadta  satadv  fsagr  fsdod  fsdk  fsded  fsdoe  fsepa  fshhs  fsnasa  fsnih  fsnsf  fsot  fsdot  promtgi  satb
-> en  satchal  edtp  emed  emus  facrank  govsup  satind  indcodf  satloc  lookwk  nwfam  nwill  nwlay  nwocna  nwnond  nwo
-> t  nwret  nwstu  nrchg  nrfam  nrloc  nrrea  nrocna  nrot  nrpay  nrsec  nrcon  ptfam  ptill  ptlay  ptocna  ptnond  ptot
->   ptret  ptstu  ptwtft  ftpret  emrgp  emst  nocprx  wkswkp  prmbrno  satresp  satsal  facsec  satsec  satsoc  supwk  mgr
-> nat  mgroth  mgrsoc  tensta  teni  wtrskl  wtradv  wtrchg  wtrem  wtrlic  wtrsn  wtrnew  wtrot  chchg  chfam  chlay  chlo
-> c  chot  chpay  chret  chsch  chcon  carneg  instcod  pubpri  wrkgp  mgrind  noclst  noclstx  lwnvr  nocmlst  nocnlst  pa
-> tent  ocedrlp  wtaprf  wktrni  wtmgt  wtot  wttech  nhdmedx  hdcarn  hdpbpr  hdrgn  hdrgnp  hdst  hddgrus  nhdned  nhdned
-> x  nhdsemg  nhdneng  nbamed  nbamedx  nbamemg  nbameng  bacarn  bapbpr  bargn  bargnp  bast  badgrus  nbaned  nbanedx  nb
-> asemg  nbaneng  mrdg  nmrmed  nmrmedx  nmrmemg  nmrmeng  mrcarn  mrpbpr  mrrgn  mrrgnp  mrst  mrdgrus  nmrned  nmrnedx  n
-> mrsemg  nmrneng  d2dg  nd2med  nd2medx  nd2memg  nd2meng  d2carn  d2pbpr  d2rgn  d2rgnp  d2st  d2dgrus  nd2ned  nd2nedx  
-> nd2semg  nd2neng  d3dg  nd3med  nd3medx  nd3memg  nd3meng  d3carn  d3pbpr  d3rgn  d3rgnp  d3st  d3dgrus  nd3ned  nd3nedx 
->  nd3semg  nd3neng  d4dg  nd4med  nd4medx  nd4memg  nd4meng  d4carn  d4pbpr  d4rgn  d4rgnp  d4st  d4dgrus  nd4ned  nd4nedx
->   nd4semg  nd4neng  d5dg  nd5med  nd5medx  nd5memg  nd5meng  d5carn  d5pbpr  d5rgn  d5rgnp  d5st  d5dgrus  nd5ned  nd5ned
-> x  nd5semg  nd5neng  Following variable has no observation, not included:  
-agep  hday5p  hrswkp  earnpb  baayr5p  mr5yrp  d4ayr  d4mn  d4yr  d43yr  d45yr  d5ayr  d5mn  d5yr  d53yr  d55yr  
-__00000D not found
-r(111);
+summary_startup.rtf
+dir
 
+. 
+. //summary statistics for small established firm employees
+. logout, save(summary_smallest) word fix replace: sum ibn.emplr wage03 wage06 wage08 wage10 lnwage03 lnwage06 lnwage08 lnwage10 dlnwage age age2 male mar ibn.race ibn.degree ibn.major ibn.hdcla
+> s tenure newbus ibn.emsize      ibn.emrg ibn.emsecdt ibn.facadv ibn.facben ibn.facchal ibn.facind ibn.facloc ibn.facres ibn.facsal ibn.facsoc ibn.fptind ibn.bindustry  ibn.lfstat ibn.nocprng w
+> orkexp ibn.wapri waacc waemrl wamgmt waprod     waqm wasale wasvc waaprsh wabrsh wacom  wadev wadsn waot watea wan cmrcn resn if emplr == 2, fvwrap(4) 
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+       emplr |
+      Small  |
+Established  |     11,187           1           0          1          1
+      wage03 |     11,187    54174.58    36549.58          0     150000
+      wage06 |      4,679    67416.11     38731.4          0     150000
+      wage08 |      4,011    74495.14    40185.27          0     150000
+      wage10 |      2,032    74800.69    42036.12          0     150000
+-------------+---------------------------------------------------------
+    lnwage03 |     11,187    10.54062    1.321806          0   11.91839
+    lnwage06 |      4,679    10.86651    1.014463          0   11.91839
+    lnwage08 |      4,011    10.98289    .9778471          0   11.91839
+    lnwage10 |      2,032    10.92532    1.216962          0   11.91839
+     dlnwage |      4,815    .0356269     .290885  -3.487701   3.972797
+-------------+---------------------------------------------------------
+         age |     11,187    45.19836    10.98669         24         76
+        age2 |     11,187    2163.588    1034.382        576       5776
+        male |     11,187    .5513543     .497378          0          1
+         mar |     11,187     .736748    .4404177          0          1
+             |
+        race |
+      Asian  |     11,187      .10396    .3052222          0          1
+-------------+---------------------------------------------------------
+   American  |
+Indian/Alas  |
+  ka Native  |     11,187    .0076875    .0873446          0          1
+      Black  |     11,187    .0664164    .2490196          0          1
+      White  |     11,187    .8008403    .3993863          0          1
+     Native  |
+Hawaiian/Ot  |
+her Pacific  |
+   Islander  |     11,187    .0039331    .0625941          0          1
+   Multiple  |     11,187    .0171628    .1298835          0          1
+-------------+---------------------------------------------------------
+             |
+      degree |
+ Bachelor's  |     11,187    .5789756    .4937455          0          1
+   Master's  |     11,187    .2913203    .4543911          0          1
+  Doctorate  |     11,187     .053008    .2240594          0          1
+Professio~l  |     11,187    .0766962    .2661206          0          1
+             |
+       major |
+   Computer  |
+        and  |
+mathematica  |
+ l sciences  |     11,187     .047287    .2122616          0          1
+-------------+---------------------------------------------------------
+   Life and  |
+    related  |
+   sciences  |     11,187    .0473764    .2124522          0          1
+   Physical  |
+and related  |
+   sciences  |     11,187    .0298561    .1701978          0          1
+ Social and  |
+    related  |
+   sciences  |     11,187    .1044069    .3058013          0          1
+Engineering  |     11,187    .1097703    .3126172          0          1
+      S and  |
+  E-Related  |
+     Fields  |     11,187    .1216591    .3269062          0          1
+-------------+---------------------------------------------------------
+Non-S and E  |
+     Fields  |     11,187    .5396442    .4984481          0          1
+             |
+      hdclas |
+   Research  |
+ University  |
+          I  |      9,749    .3024926    .4593609          0          1
+   Research  |
+ University  |
+         II  |      9,749    .0779567    .2681172          0          1
+  Doctorate  |
+ Granting I  |      9,749    .0772387    .2669835          0          1
+  Doctorate  |
+Granting II  |      9,749    .0707765    .2564643          0          1
+-------------+---------------------------------------------------------
+Comprehensi  |
+       ve I  |      9,749    .2926454    .4550003          0          1
+Comprehensi  |
+      ve II  |      9,749    .0184634    .1346269          0          1
+    Liberal  |
+     Arts I  |      9,749    .0284132    .1661586          0          1
+    Liberal  |
+    Arts II  |      9,749    .0619551    .2410863          0          1
+   Two-year  |
+instituti~s  |      9,749    .0034875    .0589553          0          1
+-------------+---------------------------------------------------------
+Theological  |
+seminaries,  |
+      bible  |
+   colleges  |      9,749    .0211304    .1438263          0          1
+    Medical  |
+schools and  |
+    medical  |
+    centers  |      9,749     .013027    .1133957          0          1
+      Other  |
+   separate  |
+   health..  |
+    schools  |      9,749     .003385    .0580849          0          1
+ Schools of  |
+engineering  |
+        and  |
+ technology  |      9,749     .004821    .0692695          0          1
+ Schools of  |
+art, music,  |
+ and design  |      9,749    .0043081    .0654982          0          1
+-------------+---------------------------------------------------------
+ Schools of  |
+        law  |      9,749    .0051287    .0714349          0          1
+      Other  |
+specialized  |
+instituti~s  |      9,749    .0146682    .1202269          0          1
+     Indian  |
+     Tribal  |
+Instituti~s  |      9,749    .0001026    .0101279          0          1
+             |
+      tenure |     11,187     7.41879    7.855258          0         49
+      newbus |     11,187           0           0          0          0
+-------------+---------------------------------------------------------
+             |
+      emsize |
+        <10  |     11,187    .2383123    .4260702          0          1
+      10-24  |     11,187    .2126575    .4092057          0          1
+    25 - 99  |     11,187    .5490301    .4976125          0          1
+             |
+        emrg |
+New England  |     11,187    .0738357     .261515          0          1
+     Middle  |
+   Atlantic  |     11,187    .1533923    .3603814          0          1
+-------------+---------------------------------------------------------
+ East North  |
+    Central  |     11,187    .1578618    .3646277          0          1
+ West North  |
+    Central  |     11,187    .0706177    .2561966          0          1
+      South  |
+   Atlantic  |     11,187    .1720747    .3774623          0          1
+ East South  |
+    Central  |     11,187    .0446053     .206445          0          1
+ West South  |
+    Central  |     11,187    .0890319    .2848025          0          1
+-------------+---------------------------------------------------------
+   Mountain  |     11,187    .0560472    .2300231          0          1
+    Pacific  |     11,187     .181997    .3858593          0          1
+     Europe  |     11,187    .0002682    .0163744          0          1
+       Asia  |     11,187    .0000894    .0094546          0          1
+      North  |
+    America  |     11,187    .0000894    .0094546          0          1
+-------------+---------------------------------------------------------
+    Oceania  |     11,187    .0000894    .0094546          0          1
+             |
+     emsecdt |
+       4-yr  |
+ coll/univ;  |
+med schl;..  |
+ res. inst.  |     11,187    .0370966     .189007          0          1
+       2-yr  |
+coll/pre-co  |
+      llege  |
+instituti~s  |     11,187    .1761866    .3809959          0          1
+   Bus/Ind,  |
+ for-profit  |     11,187     .570126      .49508          0          1
+   Bus/Ind,  |
+ non-profit  |     11,187     .154465    .3614101          0          1
+-------------+---------------------------------------------------------
+State/Local  |
+ government  |     11,187    .0621257    .2413945          0          1
+             |
+      facadv |
+       Very  |
+  important  |     11,187    .3909895    .4879939          0          1
+   Somewhat  |
+  important  |     11,187    .4648252    .4987835          0          1
+   Somewhat  |
+unimportant  |     11,187    .1030661    .3040587          0          1
+        Not  |
+  important  |
+     at all  |     11,187    .0411192    .1985747          0          1
+-------------+---------------------------------------------------------
+             |
+      facben |
+       Very  |
+  important  |     11,187     .589166    .4920072          0          1
+   Somewhat  |
+  important  |     11,187    .3495128    .4768374          0          1
+   Somewhat  |
+unimportant  |     11,187    .0379011    .1909657          0          1
+        Not  |
+  important  |
+     at all  |     11,187      .02342    .1512402          0          1
+             |
+     facchal |
+       Very  |
+  important  |     11,187    .6360955    .4811431          0          1
+-------------+---------------------------------------------------------
+   Somewhat  |
+  important  |     11,187    .3302941      .47034          0          1
+   Somewhat  |
+unimportant  |     11,187    .0248503    .1556756          0          1
+        Not  |
+  important  |
+     at all  |     11,187    .0087602    .0931891          0          1
+             |
+      facind |
+       Very  |
+  important  |     11,187    .6412801    .4796462          0          1
+   Somewhat  |
+  important  |     11,187    .3282381     .469593          0          1
+-------------+---------------------------------------------------------
+   Somewhat  |
+unimportant  |     11,187    .0244033    .1543047          0          1
+        Not  |
+  important  |
+     at all  |     11,187    .0060785    .0777308          0          1
+             |
+      facloc |
+       Very  |
+  important  |     11,187    .5179226     .499701          0          1
+   Somewhat  |
+  important  |     11,187    .4217395    .4938594          0          1
+   Somewhat  |
+unimportant  |     11,187    .0482703    .2143464          0          1
+-------------+---------------------------------------------------------
+        Not  |
+  important  |
+     at all  |     11,187    .0120676    .1091926          0          1
+             |
+     facresp |
+       Very  |
+  important  |     11,187    .4845803    .4997845          0          1
+   Somewhat  |
+  important  |     11,187    .4511487    .4976301          0          1
+   Somewhat  |
+unimportant  |     11,187    .0513989      .22082          0          1
+        Not  |
+  important  |
+     at all  |     11,187    .0128721    .1127277          0          1
+-------------+---------------------------------------------------------
+             |
+      facsal |
+       Very  |
+  important  |     11,187    .5201573    .4996158          0          1
+   Somewhat  |
+  important  |     11,187    .4422097    .4966713          0          1
+   Somewhat  |
+unimportant  |     11,187     .027085    .1623384          0          1
+        Not  |
+  important  |
+     at all  |     11,187     .010548    .1021647          0          1
+             |
+      facsoc |
+       Very  |
+  important  |     11,187    .5478681    .4977256          0          1
+-------------+---------------------------------------------------------
+   Somewhat  |
+  important  |     11,187    .3709663     .483085          0          1
+   Somewhat  |
+unimportant  |     11,187    .0646286    .2458803          0          1
+        Not  |
+  important  |
+     at all  |     11,187    .0165371    .1275344          0          1
+             |
+      fptind |
+  Full-Time  |     11,187    .8584071    .3486477          0          1
+  Part-time  |     11,187    .1415929    .3486477          0          1
+-------------+---------------------------------------------------------
+             |
+   bindustry |
+Agriculture  |
+, Forestry,  |
+Fishing and  |
+    Hunting  |     11,152    .0042145    .0647851          0          1
+     Mining  |     11,152    .0025108    .0500468          0          1
+  Utilities  |     11,152    .0023314    .0482306          0          1
+Construct~n  |     11,152      .02717    .1625859          0          1
+Manufactu~g  |     11,152    .0694943    .2543042          0          1
+-------------+---------------------------------------------------------
+  Wholesale  |
+      Trade  |     11,152    .0363164    .1870845          0          1
+     Retail  |
+      Trade  |     11,152    .0374821    .1899484          0          1
+Transportat  |
+    ion and  |
+Warehousing  |     11,152    .0083393    .0909423          0          1
+Information  |     11,152    .0241212    .1534324          0          1
+Finance and  |
+  Insurance  |     11,152    .0365854    .1877499          0          1
+-------------+---------------------------------------------------------
+Real Estate  |
+ and Rental  |
+and Leasing  |     11,152     .016858    .1287449          0          1
+Professiona  |
+         l,  |
+Scientifi..  |
+   Services  |     11,152     .205434    .4040365          0          1
+ Management  |
+         of  |
+Companies..  |
+Enterprises  |     11,152     .000269    .0164001          0          1
+Administrat  |
+    ive and  |
+Support a..  |
+   Services  |     11,152    .0169476     .129081          0          1
+Educational  |
+   Services  |     11,152     .205703    .4042325          0          1
+-------------+---------------------------------------------------------
+Health Care  |
+ and Social  |
+ Assistance  |     11,152    .1322633     .338792          0          1
+      Arts,  |
+Entertainme  |
+    nt, and  |
+ Recreation  |     11,152    .0121951     .109761          0          1
+Accommodati  |
+on and Food  |
+   Services  |     11,152    .0113881    .1061104          0          1
+      Other  |
+   Services  |
+  (except..  |
+ Adminis~n)  |     11,152    .0853659    .2794379          0          1
+     Public  |
+Administr~n  |     11,152    .0650108    .2465559          0          1
+-------------+---------------------------------------------------------
+             |
+      lfstat |
+   Employed  |     11,187           1           0          1          1
+             |
+     nocprng |
+   Computer  |
+        and  |
+information  |
+ scientists  |     11,187    .0616787    .2405819          0          1
+Mathematica  |
+          l  |
+ scientists  |     11,187    .0017878    .0422463          0          1
+Postseconda  |
+ry teachers  |
+- compute..  |
+   sciences  |     11,187    .0024135    .0490704          0          1
+Agricultura  |
+ l and food  |
+ scientists  |     11,187    .0024135    .0490704          0          1
+-------------+---------------------------------------------------------
+ Biological  |
+and medical  |
+ scientists  |     11,187    .0135872    .1157747          0          1
+Environment  |
+    al life  |
+ scientists  |     11,187    .0018772    .0432877          0          1
+Postseconda  |
+ry teachers  |
+- life an..  |
+   sciences  |     11,187    .0008045    .0283537          0          1
+  Chemists,  |
+     except  |
+biochemists  |     11,187    .0069724    .0832129          0          1
+      Earth  |
+scientists,  |
+geologist..  |
+oceanogra~s  |     11,187    .0043801    .0660401          0          1
+-------------+---------------------------------------------------------
+ Physicists  |
+        and  |
+astronomers  |     11,187    .0012515    .0353553          0          1
+      Other  |
+   physical  |
+and related  |
+ scientists  |     11,187    .0022347    .0472223          0          1
+Postseconda  |
+ry teachers  |
+- physica..  |
+   sciences  |     11,187    .0008939     .029886          0          1
+ Economists  |     11,187    .0016984    .0411785          0          1
+  Political  |
+ scientists  |     11,187    .0007151    .0267333          0          1
+-------------+---------------------------------------------------------
+Psycholog~s  |     11,187     .010101    .0999994          0          1
+Sociologist  |
+      s and  |
+anthropol~s  |     11,187    .0017878    .0422463          0          1
+      Other  |
+ social and  |
+    related  |
+ scientists  |     11,187    .0058103    .0760071          0          1
+Postseconda  |
+ry teachers  |
+ - social..  |
+   sciences  |     11,187    .0013408    .0365946          0          1
+  Aerospace  |
+and related  |
+  engineers  |     11,187    .0018772    .0432877          0          1
+-------------+---------------------------------------------------------
+   Chemical  |
+  engineers  |     11,187    .0021453    .0462703          0          1
+  Civil and  |
+architectur  |
+         al  |
+  engineers  |     11,187    .0227943    .1492539          0          1
+ Electrical  |
+and related  |
+  engineers  |     11,187    .0172522    .1302154          0          1
+ Industrial  |
+  engineers  |     11,187     .003218    .0566388          0          1
+ Mechanical  |
+  engineers  |     11,187    .0139448    .1172669          0          1
+-------------+---------------------------------------------------------
+      Other  |
+  engineers  |     11,187    .0168052    .1285468          0          1
+Postseconda  |
+ry teachers  |
+          -  |
+engineering  |     11,187    .0002682    .0163744          0          1
+Health-rela  |
+        ted  |
+occupations  |     11,187    .0821489    .2746037          0          1
+    S and E  |
+   managers  |     11,187    .0060785    .0777308          0          1
+    S and E  |
+Pre-college  |
+   Teachers  |     11,187    .0303924    .1716722          0          1
+-------------+---------------------------------------------------------
+    S and E  |
+technicians  |
+        and  |
+technolog~s  |     11,187    .0194869    .1382348          0          1
+Other S and  |
+  E-related  |
+occupations  |     11,187    .0102798    .1008713          0          1
+Non-S and E  |
+   Managers  |     11,187    .0628408    .2426872          0          1
+Management-  |
+    related  |
+occupations  |     11,187    .0946634    .2927626          0          1
+Non-S and E  |
+ precollege  |
+   teachers  |     11,187    .1085188    .3110484          0          1
+-------------+---------------------------------------------------------
+Non-S and E  |
+postseconda  |
+ry teachers  |     11,187    .0147493     .120553          0          1
+     Social  |
+   services  |
+and related  |
+occupations  |     11,187    .0724055    .2591697          0          1
+  Sales and  |
+  marketing  |
+occupations  |     11,187    .0848306    .2786419          0          1
+       Art,  |
+  humanties  |
+and related  |
+occupations  |     11,187    .0310181    .1733745          0          1
+Other non-S  |
+      and E  |
+occupations  |     11,187    .1825333    .3863007          0          1
+-------------+---------------------------------------------------------
+             |
+     workexp |     11,187    17.05909     10.8751          0         55
+             |
+       wapri |
+Accounting,  |
+   finance,  |
+  contracts  |     11,187    .0818808    .2741952          0          1
+      Basic  |
+   Research  |     11,187    .0180567    .1331624          0          1
+    Applied  |
+   Research  |     11,187    .0350407    .1838909          0          1
+   Computer  |
+application  |
+       s,..  |
+development  |     11,187    .0301243    .1709368          0          1
+-------------+---------------------------------------------------------
+Development  |     11,187    .0422812     .201239          0          1
+  Design of  |
+ equipment,  |
+processes..  |
+     models  |     11,187    .0686511    .2528712          0          1
+   Employee  |
+  relations  |     11,187    .0220792    .1469477          0          1
+ Management  |
+        and  |
+Administr~n  |     11,187    .1520515    .3590868          0          1
+Production,  |
+operations,  |
+maintenance  |     11,187    .0322696    .1767231          0          1
+-------------+---------------------------------------------------------
+      Prof.  |
+   services  |     11,187    .1699294    .3755875          0          1
+     Sales,  |
+purchasing,  |
+  marketing  |     11,187    .1171896    .3216604          0          1
+ Quality or  |
+productivit  |
+          y  |
+ management  |     11,187    .0147493     .120553          0          1
+   Teaching  |     11,187     .171449    .3769177          0          1
+ Other work  |
+   activity  |     11,187    .0442478    .2056543          0          1
+-------------+---------------------------------------------------------
+             |
+       waacc |     11,187    .3302047    .4703077          0          1
+      waemrl |     11,187    .3620274    .4806082          0          1
+      wamgmt |     11,187    .6005185    .4898137          0          1
+      waprod |     11,187    .1394476    .3464285          0          1
+        waqm |     11,187    .2280325    .4195825          0          1
+-------------+---------------------------------------------------------
+      wasale |     11,187    .3799946    .4854068          0          1
+       wasvc |     11,187    .3342272    .4717407          0          1
+     waaprsh |     11,187    .2510056    .4336111          0          1
+      wabrsh |     11,187    .1731474    .3783916          0          1
+       wacom |     11,187    .3187628    .4660177          0          1
+-------------+---------------------------------------------------------
+       wadev |     11,187    .2546706    .4356954          0          1
+       wadsn |     11,187    .1990703    .3993189          0          1
+        waot |     11,187    .0788415    .2695033          0          1
+       watea |     11,187    .3438813    .4750233          0          1
+         wan |     11,187    3.993832    2.426693          1         14
+-------------+---------------------------------------------------------
+       cmrcn |     11,187    2.374452    1.729479          0          7
+        resn |     11,187    1.196657    1.374767          0          5
+  fixcut(13 19 29 41 51 63 82)
+
+summary_smallest.rtf
+dir
+
+. 
+. //summary statistics for large established firm employees
+. logout, save(summary_largeest) word fix replace: sum ibn.emplr wage03 wage06 wage08 wage10 lnwage03 lnwage06 lnwage08 lnwage10 dlnwage age age2 male mar ibn.race ibn.degree ibn.major ibn.hdcla
+> s tenure newbus ibn.emsize      ibn.emrg ibn.emsecdt ibn.facadv ibn.facben ibn.facchal ibn.facind ibn.facloc ibn.facres ibn.facsal ibn.facsoc ibn.fptind ibn.bindustry  ibn.lfstat ibn.nocprng w
+> orkexp ibn.wapri waacc waemrl wamgmt waprod     waqm wasale wasvc waaprsh wabrsh wacom  wadev wadsn waot watea wan cmrcn resn if emplr == 3, fvwrap(4) 
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+       emplr |
+      Large  |
+Established  |     55,330           1           0          1          1
+      wage03 |     55,330    65506.63    33180.87          0     150000
+      wage06 |     27,818    77628.62    34312.93          0     150000
+      wage08 |     23,842    85545.72    36606.57          0     150000
+      wage10 |     10,892    87745.23    38795.48          0     150000
+-------------+---------------------------------------------------------
+    lnwage03 |     55,330    10.87828    .9926381          0   11.91839
+    lnwage06 |     27,818    11.11364    .7406875          0   11.91839
+    lnwage08 |     23,842    11.19789    .8273316          0   11.91839
+    lnwage10 |     10,892    11.18211    1.039485          0   11.91839
+     dlnwage |     28,452     .033472    .2166633  -3.972797   3.912023
+-------------+---------------------------------------------------------
+         age |     55,330    44.73627    10.27746         24         76
+        age2 |     55,330    2106.958    949.5261        576       5776
+        male |     55,330    .5758359    .4942199          0          1
+         mar |     55,330    .7380625    .4396928          0          1
+             |
+        race |
+      Asian  |     55,330    .1195373    .3244226          0          1
+-------------+---------------------------------------------------------
+   American  |
+Indian/Alas  |
+  ka Native  |     55,330    .0061811    .0783773          0          1
+      Black  |     55,330    .0877282    .2829017          0          1
+      White  |     55,330    .7633653      .42502          0          1
+     Native  |
+Hawaiian/Ot  |
+her Pacific  |
+   Islander  |     55,330    .0039761    .0629317          0          1
+   Multiple  |     55,330     .019212    .1372707          0          1
+-------------+---------------------------------------------------------
+             |
+      degree |
+ Bachelor's  |     55,330    .5109344    .4998849          0          1
+   Master's  |     55,330     .332008    .4709381          0          1
+  Doctorate  |     55,330    .1103199    .3132909          0          1
+Professio~l  |     55,330    .0467378    .2110785          0          1
+             |
+       major |
+   Computer  |
+        and  |
+mathematica  |
+ l sciences  |     55,330    .0809326     .272734          0          1
+-------------+---------------------------------------------------------
+   Life and  |
+    related  |
+   sciences  |     55,330     .063799    .2443968          0          1
+   Physical  |
+and related  |
+   sciences  |     55,330     .042599     .201953          0          1
+ Social and  |
+    related  |
+   sciences  |     55,330    .0935478    .2912012          0          1
+Engineering  |     55,330    .1563166    .3631586          0          1
+      S and  |
+  E-Related  |
+     Fields  |     55,330    .1220134    .3273042          0          1
+-------------+---------------------------------------------------------
+Non-S and E  |
+     Fields  |     55,330    .4407916    .4964865          0          1
+             |
+      hdclas |
+   Research  |
+ University  |
+          I  |     49,596    .3469433    .4760023          0          1
+   Research  |
+ University  |
+         II  |     49,596    .0892814    .2851524          0          1
+  Doctorate  |
+ Granting I  |     49,596    .0805912     .272209          0          1
+  Doctorate  |
+Granting II  |     49,596    .0706912    .2563109          0          1
+-------------+---------------------------------------------------------
+Comprehensi  |
+       ve I  |     49,596    .2800427    .4490244          0          1
+Comprehensi  |
+      ve II  |     49,596    .0172595    .1302379          0          1
+    Liberal  |
+     Arts I  |     49,596    .0208485    .1428783          0          1
+    Liberal  |
+    Arts II  |     49,596    .0481692    .2141258          0          1
+   Two-year  |
+instituti~s  |     49,596    .0024599    .0495366          0          1
+-------------+---------------------------------------------------------
+Theological  |
+seminaries,  |
+      bible  |
+   colleges  |     49,596    .0034277    .0584467          0          1
+    Medical  |
+schools and  |
+    medical  |
+    centers  |     49,596    .0129648    .1131235          0          1
+      Other  |
+   separate  |
+   health..  |
+    schools  |     49,596    .0018348     .042796          0          1
+ Schools of  |
+engineering  |
+        and  |
+ technology  |     49,596    .0063513    .0794425          0          1
+ Schools of  |
+art, music,  |
+ and design  |     49,596    .0029035     .053806          0          1
+-------------+---------------------------------------------------------
+ Schools of  |
+        law  |     49,596    .0017743    .0420859          0          1
+      Other  |
+specialized  |
+instituti~s  |     49,596    .0144366    .1192834          0          1
+     Indian  |
+     Tribal  |
+Instituti~s  |     49,596    .0000202    .0044903          0          1
+             |
+      tenure |     55,330    8.521272    8.520476          0         52
+      newbus |     55,330           0           0          0          0
+-------------+---------------------------------------------------------
+             |
+      emsize |
+  100 - 499  |     55,330    .2010302    .4007742          0          1
+  500 - 999  |     55,330    .1033074    .3043627          0          1
+1000 - 4999  |     55,330    .2202783     .414438          0          1
+     5000 -  |
+      24999  |     55,330    .2003434    .4002609          0          1
+     >25000  |     55,330    .2750407    .4465388          0          1
+-------------+---------------------------------------------------------
+             |
+        emrg |
+New England  |     55,327    .0636217    .2440801          0          1
+     Middle  |
+   Atlantic  |     55,327    .1501618    .3572331          0          1
+ East North  |
+    Central  |     55,327    .1541381    .3610844          0          1
+ West North  |
+    Central  |     55,327    .0670378    .2500897          0          1
+      South  |
+   Atlantic  |     55,327    .1916424    .3935967          0          1
+-------------+---------------------------------------------------------
+ East South  |
+    Central  |     55,327    .0423301    .2013431          0          1
+ West South  |
+    Central  |     55,327    .0919443    .2889499          0          1
+   Mountain  |     55,327     .060766    .2389027          0          1
+    Pacific  |     55,327    .1774902    .3820865          0          1
+     Europe  |     55,327     .000235     .015327          0          1
+-------------+---------------------------------------------------------
+       Asia  |     55,327    .0002169    .0147258          0          1
+      North  |
+    America  |     55,327    .0001446     .012024          0          1
+    Central  |
+    America  |     55,327    .0001446     .012024          0          1
+  Caribbean  |     55,327    .0000181    .0042514          0          1
+    Oceania  |     55,327    .0000181    .0042514          0          1
+-------------+---------------------------------------------------------
+      Other  |     55,327    .0000904    .0095061          0          1
+             |
+     emsecdt |
+       4-yr  |
+ coll/univ;  |
+med schl;..  |
+ res. inst.  |     55,330    .1481294    .3552314          0          1
+       2-yr  |
+coll/pre-co  |
+      llege  |
+instituti~s  |     55,330    .1627688     .369158          0          1
+   Bus/Ind,  |
+ for-profit  |     55,330    .4627327    .4986137          0          1
+   Bus/Ind,  |
+ non-profit  |     55,330     .064775    .2461306          0          1
+-------------+---------------------------------------------------------
+    Federal  |
+ government  |     55,330     .070685    .2563002          0          1
+State/Local  |
+ government  |     55,330    .0909091    .2874824          0          1
+             |
+      facadv |
+       Very  |
+  important  |     55,330    .4227002    .4939931          0          1
+   Somewhat  |
+  important  |     55,330    .4750226    .4993803          0          1
+   Somewhat  |
+unimportant  |     55,330    .0817097    .2739245          0          1
+-------------+---------------------------------------------------------
+        Not  |
+  important  |
+     at all  |     55,330    .0205675    .1419325          0          1
+             |
+      facben |
+       Very  |
+  important  |     55,330    .6804446    .4663086          0          1
+   Somewhat  |
+  important  |     55,330     .295084    .4560847          0          1
+   Somewhat  |
+unimportant  |     55,330    .0168625    .1287572          0          1
+        Not  |
+  important  |
+     at all  |     55,330    .0076089    .0868973          0          1
+-------------+---------------------------------------------------------
+             |
+     facchal |
+       Very  |
+  important  |     55,330    .6556118    .4751727          0          1
+   Somewhat  |
+  important  |     55,330    .3225014    .4674379          0          1
+   Somewhat  |
+unimportant  |     55,330    .0181999    .1336749          0          1
+        Not  |
+  important  |
+     at all  |     55,330     .003687    .0606089          0          1
+             |
+      facind |
+       Very  |
+  important  |     55,330    .6167902    .4861731          0          1
+-------------+---------------------------------------------------------
+   Somewhat  |
+  important  |     55,330     .355901    .4787897          0          1
+   Somewhat  |
+unimportant  |     55,330    .0245979    .1548975          0          1
+        Not  |
+  important  |
+     at all  |     55,330     .002711    .0519972          0          1
+             |
+      facloc |
+       Very  |
+  important  |     55,330    .5148563    .4997838          0          1
+   Somewhat  |
+  important  |     55,330    .4386047    .4962208          0          1
+-------------+---------------------------------------------------------
+   Somewhat  |
+unimportant  |     55,330    .0407916    .1978089          0          1
+        Not  |
+  important  |
+     at all  |     55,330    .0057473    .0755937          0          1
+             |
+     facresp |
+       Very  |
+  important  |     55,330    .4483282    .4973274          0          1
+   Somewhat  |
+  important  |     55,330     .489174    .4998873          0          1
+   Somewhat  |
+unimportant  |     55,330    .0548527    .2276946          0          1
+-------------+---------------------------------------------------------
+        Not  |
+  important  |
+     at all  |     55,330     .007645    .0871018          0          1
+             |
+      facsal |
+       Very  |
+  important  |     55,330    .5748238    .4943742          0          1
+   Somewhat  |
+  important  |     55,330    .4077896    .4914281          0          1
+   Somewhat  |
+unimportant  |     55,330    .0143141    .1187833          0          1
+        Not  |
+  important  |
+     at all  |     55,330    .0030725    .0553452          0          1
+-------------+---------------------------------------------------------
+             |
+      facsoc |
+       Very  |
+  important  |     55,330    .4949033    .4999785          0          1
+   Somewhat  |
+  important  |     55,330    .4098138    .4918036          0          1
+   Somewhat  |
+unimportant  |     55,330    .0795771    .2706398          0          1
+        Not  |
+  important  |
+     at all  |     55,330    .0157058    .1243357          0          1
+             |
+      fptind |
+  Full-Time  |     55,330    .9285017    .2576577          0          1
+-------------+---------------------------------------------------------
+  Part-time  |     55,330    .0714983    .2576577          0          1
+             |
+   bindustry |
+Agriculture  |
+, Forestry,  |
+Fishing and  |
+    Hunting  |     55,246    .0006335    .0251623          0          1
+     Mining  |     55,246    .0043985    .0661758          0          1
+  Utilities  |     55,246    .0112949    .1056767          0          1
+Construct~n  |     55,246    .0068421    .0824344          0          1
+-------------+---------------------------------------------------------
+Manufactu~g  |     55,246    .1479202    .3550241          0          1
+  Wholesale  |
+      Trade  |     55,246    .0173587    .1306052          0          1
+     Retail  |
+      Trade  |     55,246    .0289976    .1678011          0          1
+Transportat  |
+    ion and  |
+Warehousing  |     55,246     .012743    .1121644          0          1
+Information  |     55,246    .0314593     .174557          0          1
+-------------+---------------------------------------------------------
+Finance and  |
+  Insurance  |     55,246    .0560946    .2301063          0          1
+Real Estate  |
+ and Rental  |
+and Leasing  |     55,246    .0043804    .0660401          0          1
+Professiona  |
+         l,  |
+Scientifi..  |
+   Services  |     55,246    .1025595    .3033854          0          1
+ Management  |
+         of  |
+Companies..  |
+Enterprises  |     55,246    .0008869    .0297686          0          1
+Administrat  |
+    ive and  |
+Support a..  |
+   Services  |     55,246    .0101184    .1000809          0          1
+-------------+---------------------------------------------------------
+Educational  |
+   Services  |     55,246    .2955327     .456286          0          1
+Health Care  |
+ and Social  |
+ Assistance  |     55,246    .0858162    .2800949          0          1
+      Arts,  |
+Entertainme  |
+    nt, and  |
+ Recreation  |     55,246    .0037831    .0613908          0          1
+Accommodati  |
+on and Food  |
+   Services  |     55,246    .0052492    .0722619          0          1
+      Other  |
+   Services  |
+  (except..  |
+ Adminis~n)  |     55,246    .0095573    .0972938          0          1
+-------------+---------------------------------------------------------
+     Public  |
+Administr~n  |     55,246    .1643739    .3706179          0          1
+             |
+      lfstat |
+   Employed  |     55,330           1           0          1          1
+             |
+     nocprng |
+   Computer  |
+        and  |
+information  |
+ scientists  |     55,330    .1225556    .3279293          0          1
+Mathematica  |
+          l  |
+ scientists  |     55,330     .005422    .0734351          0          1
+Postseconda  |
+ry teachers  |
+- compute..  |
+   sciences  |     55,330    .0104283    .1015863          0          1
+-------------+---------------------------------------------------------
+Agricultura  |
+ l and food  |
+ scientists  |     55,330    .0033616    .0578827          0          1
+ Biological  |
+and medical  |
+ scientists  |     55,330    .0260799    .1593743          0          1
+Environment  |
+    al life  |
+ scientists  |     55,330    .0025303    .0502386          0          1
+Postseconda  |
+ry teachers  |
+- life an..  |
+   sciences  |     55,330    .0062172    .0786047          0          1
+  Chemists,  |
+     except  |
+biochemists  |     55,330    .0111874    .1051782          0          1
+-------------+---------------------------------------------------------
+      Earth  |
+scientists,  |
+geologist..  |
+oceanogra~s  |     55,330    .0051509    .0715854          0          1
+ Physicists  |
+        and  |
+astronomers  |     55,330    .0035424    .0594129          0          1
+      Other  |
+   physical  |
+and related  |
+ scientists  |     55,330    .0028737      .05353          0          1
+Postseconda  |
+ry teachers  |
+- physica..  |
+   sciences  |     55,330    .0052232    .0720834          0          1
+ Economists  |     55,330    .0024761    .0496988          0          1
+-------------+---------------------------------------------------------
+  Political  |
+ scientists  |     55,330    .0004338    .0208226          0          1
+Psycholog~s  |     55,330    .0092716    .0958428          0          1
+Sociologist  |
+      s and  |
+anthropol~s  |     55,330     .000994    .0315129          0          1
+      Other  |
+ social and  |
+    related  |
+ scientists  |     55,330    .0045364    .0672006          0          1
+Postseconda  |
+ry teachers  |
+ - social..  |
+   sciences  |     55,330    .0119646    .1087274          0          1
+-------------+---------------------------------------------------------
+  Aerospace  |
+and related  |
+  engineers  |     55,330    .0097054    .0980377          0          1
+   Chemical  |
+  engineers  |     55,330    .0075366    .0864866          0          1
+  Civil and  |
+architectur  |
+         al  |
+  engineers  |     55,330    .0181999    .1336749          0          1
+ Electrical  |
+and related  |
+  engineers  |     55,330    .0333996    .1796793          0          1
+ Industrial  |
+  engineers  |     55,330    .0068679    .0825884          0          1
+-------------+---------------------------------------------------------
+ Mechanical  |
+  engineers  |     55,330    .0240376    .1531673          0          1
+      Other  |
+  engineers  |     55,330    .0266763    .1611371          0          1
+Postseconda  |
+ry teachers  |
+          -  |
+engineering  |     55,330    .0043015    .0654449          0          1
+Health-rela  |
+        ted  |
+occupations  |     55,330    .0903307    .2866576          0          1
+    S and E  |
+   managers  |     55,330    .0219953    .1466693          0          1
+-------------+---------------------------------------------------------
+    S and E  |
+Pre-college  |
+   Teachers  |     55,330    .0271824     .162616          0          1
+    S and E  |
+technicians  |
+        and  |
+technolog~s  |     55,330    .0257003    .1582412          0          1
+Other S and  |
+  E-related  |
+occupations  |     55,330    .0031628    .0561506          0          1
+Non-S and E  |
+   Managers  |     55,330     .051979    .2219867          0          1
+Management-  |
+    related  |
+occupations  |     55,330     .082758    .2755186          0          1
+-------------+---------------------------------------------------------
+Non-S and E  |
+ precollege  |
+   teachers  |     55,330    .0809687    .2727896          0          1
+Non-S and E  |
+postseconda  |
+ry teachers  |     55,330    .0474968     .212701          0          1
+     Social  |
+   services  |
+and related  |
+occupations  |     55,330    .0344298     .182332          0          1
+  Sales and  |
+  marketing  |
+occupations  |     55,330    .0515633    .2211458          0          1
+       Art,  |
+  humanties  |
+and related  |
+occupations  |     55,330    .0110067    .1043347          0          1
+-------------+---------------------------------------------------------
+Other non-S  |
+      and E  |
+occupations  |     55,330    .1064522    .3084183          0          1
+             |
+     workexp |     55,330    15.88928    10.26427          0         55
+             |
+       wapri |
+Accounting,  |
+   finance,  |
+  contracts  |     55,330    .0479667    .2136978          0          1
+      Basic  |
+   Research  |     55,330    .0348274    .1833441          0          1
+    Applied  |
+   Research  |     55,330    .0558106    .2295577          0          1
+-------------+---------------------------------------------------------
+   Computer  |
+application  |
+       s,..  |
+development  |     55,330    .0446412    .2065168          0          1
+Development  |     55,330    .0464486    .2104564          0          1
+  Design of  |
+ equipment,  |
+processes..  |
+     models  |     55,330     .110356    .3133359          0          1
+   Employee  |
+  relations  |     55,330    .0251762    .1566615          0          1
+ Management  |
+        and  |
+Administr~n  |     55,330    .1700705    .3756981          0          1
+-------------+---------------------------------------------------------
+Production,  |
+operations,  |
+maintenance  |     55,330    .0332731    .1793504          0          1
+      Prof.  |
+   services  |     55,330     .126604    .3325319          0          1
+     Sales,  |
+purchasing,  |
+  marketing  |     55,330    .0681728    .2520444          0          1
+ Quality or  |
+productivit  |
+          y  |
+ management  |     55,330    .0216519    .1455455          0          1
+   Teaching  |     55,330    .1828122     .386516          0          1
+-------------+---------------------------------------------------------
+ Other work  |
+   activity  |     55,330    .0321887    .1765025          0          1
+             |
+       waacc |     55,330    .2564612    .4366833          0          1
+      waemrl |     55,330    .3447316     .475285          0          1
+      wamgmt |     55,330    .5904573    .4917539          0          1
+      waprod |     55,330    .1454726    .3525799          0          1
+-------------+---------------------------------------------------------
+        waqm |     55,330    .2381168    .4259348          0          1
+      wasale |     55,330    .2523405    .4343595          0          1
+       wasvc |     55,330    .2656425    .4416787          0          1
+     waaprsh |     55,330    .3195192    .4662946          0          1
+      wabrsh |     55,330    .2227544    .4160985          0          1
+-------------+---------------------------------------------------------
+       wacom |     55,330    .3827761    .4860687          0          1
+       wadev |     55,330    .3028737    .4595052          0          1
+       wadsn |     55,330    .2711549    .4445599          0          1
+        waot |     55,330    .0667088    .2495193          0          1
+       watea |     55,330    .3629857    .4808651          0          1
+-------------+---------------------------------------------------------
+         wan |     55,330    4.021995    2.299174          1         14
+       cmrcn |     55,330    2.093222    1.620846          0          7
+        resn |     55,330    1.499078    1.443324          0          5
+  fixcut(13 19 29 41 51 63 82)
+
+summary_largeest.rtf
+dir
+
+. 
+. 
 end of do-file
-
-r(111);
 

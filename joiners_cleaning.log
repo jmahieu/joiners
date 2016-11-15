@@ -1,8 +1,8 @@
----------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
       name:  Cleaning
-       log:  C:\Users\Jeroen\Desktop\joiners\joiners_cleaning.log
+       log:  C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\joiners_cleaning.log
   log type:  text
- opened on:  15 Nov 2016, 14:34:42
+ opened on:  15 Nov 2016, 16:34:49
 
 . 
 . use joiners.dta
@@ -51,940 +51,117 @@
 
 . label var race "Race"
 
-. label define race 1 "Asian" 2 "American Indian/Alaska Native" 3 "Black" 4 "White" 5 "Native Hawaiian/Other Pacific Island
-> er" 6 "Multiple"
+. label define race 1 "Asian" 2 "American Indian/Alaska Native" 3 "Black" 4 "White" 5 "Native Hawa
+> iian/Other Pacific Islander" 6 "Multiple"
 
 . label values race race
 
-. 
-. /*      EDUCATION */
-. 
-. //Highest degree type
-. gen degree = real(dgrdg)
+. qui tab race, gen (race)
 
-. label var degree "Highest degree"
+. label var race1 "Asian"
 
-. label define degree 1 "Bachelor's" 2 "Master's" 3 "Doctorate" 4 "Professional"
+. label var race2 "American Indian/Alaska Native"
 
-. label values degree degree
+. label var race3 "Black"
 
-. 
-. //Major Field for highest degree
-. gen major = real(ndgmemg)
+. label var race4 "White"
 
-. label var major "Major Field"
+. label var race5 "Native Hawaiian/Other Pacific Islander"
 
-. label define major 1 "Computer and mathematical sciences", add
+. label var race6 "Multiple"
 
-. label define major 2 "Life and related sciences", add
-
-. label define major 3 "Physical and related sciences", add
-
-. label define major 4 "Social and related sciences", add
-
-. label define major 5 "Engineering", add
-
-. label define major 6 "S and E-Related Fields", add
-
-. label define major 7 "Non-S and E Fields", add
-
-. label values major major 
-
-. 
-. //Carnegie Classification of Institution granting highest degree
-. gen hdclas = real(hdcarn)
-(11,391 missing values generated)
-
-. label var hdclas "Carnegie Classification"
-
-. label define hdclas 11 "Research University I", add
-
-. label define hdclas 12 "Research University II", add
-
-. label define hdclas 13 "Doctorate Granting I", add
-
-. label define hdclas 14 "Doctorate Granting II", add
-
-. label define hdclas 21 "Comprehensive I", add
-
-. label define hdclas 22 "Comprehensive II", add
-
-. label define hdclas 31 "Liberal Arts I", add
-
-. label define hdclas 32 "Liberal Arts II", add
-
-. label define hdclas 40 "Two-year institutions", add
-
-. label define hdclas 51 "Theological seminaries, bible colleges", add
-
-. label define hdclas 52 "Medical schools and medical centers", add
-
-. label define hdclas 53 "Other separate health professional schools", add
-
-. label define hdclas 54 "Schools of engineering and technology", add
-
-. label define hdclas 56 "Schools of art, music, and design", add
-
-. label define hdclas 57 "Schools of law", add
-
-. label define hdclas 59 "Other specialized institutions", add
-
-. label define hdclas 60 "Indian Tribal Institutions", add
-
-. label values hdclas hdclas
-
-. 
-. 
-. /* EMPLOYMENT */
-. 
-. //gen tenure var
-. replace strtyr = . if strtyr == 9998
-(17,378 real changes made, 17,378 to missing)
-
-. gen tenure = refyr - strtyr
-(17,378 missing values generated)
-
-. label var tenure "Tenure"
-
-. 
-. //generate dummy for newbus
-. gen nb = .
-(100,402 missing values generated)
-
-. replace nb = 1 if newbus == "Y"
-(5,625 real changes made)
-
-. replace nb = 0 if newbus == "N"
-(77,399 real changes made)
-
-. drop newbus
-
-. rename nb newbus
-
-. label var newbus "Young Firm"
-
-. 
-. //make numeric vars
-. foreach i in emsize emtp ndgmemg ndgmeng emsmi emrg emsecdt facadv facben facchal facind facloc facresp facsal facsoc fpt
-> ind indcode lfstat nedtp nocpr nocprng nocprmg waprsm wascsm wapri wasec jobsatis{
-  2.  gen `i'_n = real(`i')
-  3.  drop `i'
-  4.  rename `i'_n `i'
-  5. }
-(17,378 missing values generated)
-(17,378 missing values generated)
-(22,379 missing values generated)
-(17,383 missing values generated)
-(17,378 missing values generated)
-(181 missing values generated)
-(181 missing values generated)
-(181 missing values generated)
-(181 missing values generated)
-(181 missing values generated)
-(181 missing values generated)
-(181 missing values generated)
-(181 missing values generated)
-(17,378 missing values generated)
-(17,378 missing values generated)
-(17,378 missing values generated)
-(17,378 missing values generated)
-(17,378 missing values generated)
-(17,378 missing values generated)
-(17,378 missing values generated)
-
-. 
-. *emsize = employer size 
-. label var emsize "Employer Size"
-
-. label define emsize 1 "<10" 2 "10-24" 3 "25 - 99" 4 "100 - 499" 5 "500 - 999" 5 "500 - 999" 6 "1000 - 4999" 7 "5000 - 249
-> 99" 8 ">25000"
-
-. label values emsize emsize
-
-. 
-. *nedtp = Employer type [not taking into account if it was an educational institution]
-. *emtp = Employer type [taking into account educational institutions]
-. *emsmi = Employment status [same job/employer?], current and previous reference weeks
-. *emrg = Region code for employer
-. label var emrg "Employer Region"
-
-. label define emrg 1 "New England", add
-
-. label define emrg 2 "Middle Atlantic", add
-
-. label define emrg 3 "East North Central", add
-
-. label define emrg 4 "West North Central", add
-
-. label define emrg 5 "South Atlantic", add
-
-. label define emrg 6 "East South Central", add
-
-. label define emrg 7 "West South Central", add
-
-. label define emrg 8 "Mountain", add
-
-. label define emrg 9 "Pacific", add
-
-. label define emrg 10 "Europe", add
-
-. label define emrg 20 "Asia", add
-
-. label define emrg 30 "North America", add
-
-. label define emrg 31 "Central America", add
-
-. label define emrg 33 "Caribbean", add
-
-. label define emrg 37 "South America", add
-
-. label define emrg 50 "Oceania", add
-
-. label define emrg 55 "Other", add
-
-. label values emrg emrg
-
-. 
-. *emsecdt = Employer sector [detailed codes]
-. label var emsecdt "Employer Sector"
-
-. label define emsecdt 11 "4-yr coll/univ; med schl; univ. res. inst.", add
-
-. label define emsecdt 12 "2-yr coll/pre-college institutions", add
-
-. label define emsecdt 21 "Bus/Ind, for-profit", add
-
-. label define emsecdt 22 "Bus/ind, self-employd, not-incorporated", add
-
-. label define emsecdt 23 "Bus/Ind, non-profit", add
-
-. label define emsecdt 31 "Federal government", add
-
-. label define emsecdt 32 "State/Local government", add
-
-. label values emsecdt emsecdt
-
-. 
-. *facadv = Importance of job"s opportunities for advancement
-. label var facadv "Importance of job's opportunities for advancement"
-
-. *facben = Importance of job"s benefits
-. label var facben "Importance of job's benefits"
-
-. *facchal = Importance of job"s intellectual challenge
-. label var facchal "Importance of job's intellectual challenge"
-
-. *facind = Importance of job"s degree of independence
-. label var facind "Importance of job's degree of independence"
-
-. *facloc = Importance of job"s location
-. label var facloc "Importance of job's location"
-
-. *facresp = Importance of job"s level of responsibility
-. label var facresp "Importance of job's level of responsibility"
-
-. *facsal = Importance of job's salary
-. label var facsal "Importance of job's salary"
-
-. *facsoc = Importance of job's contribution to society
-. label var facsoc "Importance of job's contribution to society"
-
-. 
-. foreach i in facadv facben facchal facind facloc facresp facsal facsoc {
-  2.         label define `i' 1 "Very important" 2 "Somewhat important" 3 "Somewhat unimportant" 4 "Not important at all"
-  3.         label values `i' `i'
-  4. }
-
-. 
-. *fptind = Full-time/part-time status counting all jobs during reference week
-. label var fptind "Full/Part-time"
-
-. label define fptind 1 "Full-Time" 2 "Part-time"
-
-. label values fptind fptind
-
-. 
-. *indcode = Census industry code for employer
-. rename indcode industry
-
-. replace industry = . if industry >= 9990 //put missing and skipped to missing values
-(17,541 real changes made, 17,541 to missing)
-
-. label var industry "Industry"
-
-. label define industry 170 "Crop production", add
-
-. label define industry 180 "Animal production", add
-
-. label define industry 190 "Forestry except logging", add
-
-. label define industry 270 "Logging", add
-
-. label define industry 280 "Fishing, hunting, and trapping", add
-
-. label define industry 290 "Support activities for agriculture and forestry", add
-
-. label define industry 370 "Oil and gas extraction", add
-
-. label define industry 380 "Coal mining", add
-
-. label define industry 390 "Metal ore mining", add
-
-. label define industry 470 "Nonmetallic mineral mining and quarrying", add
-
-. label define industry 480 "Not specified type of mining", add
-
-. label define industry 490 "Support activities for mining", add
-
-. label define industry 570 "Electric power generation", add
-
-. label define industry 580 "Natural gas distribution", add
-
-. label define industry 590 "Electric and gas, and other combinations", add
-
-. label define industry 670 "Water, steam, air-conditioning, and irrigation systems", add
-
-. label define industry 680 "Sewage treatment facilities", add
-
-. label define industry 690 "Not specified utilities", add
-
-. label define industry 770 "Construction", add
-
-. label define industry 1070 "Animal food, grain and oilseed milling", add
-
-. label define industry 1080 "Sugar and confectionery products", add
-
-. label define industry 1090 "Fruit and vegetable preserving and specialty food", add
-
-. label define industry 1170 "Dairy product manufacturing", add
-
-. label define industry 1180 "Animal slaughtering and processing", add
-
-. label define industry 1190 "Retail bakeries", add
-
-. label define industry 1270 "Bakeries, except retail", add
-
-. label define industry 1280 "Seafood and other miscellaneous foods", add
-
-. label define industry 1290 "Not specified food industries", add
-
-. label define industry 1370 "Beverage manufacturing", add
-
-. label define industry 1390 "Tobacco manufacturing", add
-
-. label define industry 1470 "Fiber, yarn, and thread mills", add
-
-. label define industry 1480 "Fabric mills, except knitting", add
-
-. label define industry 1490 "Textile and fabric finishing and coating mills", add
-
-. label define industry 1570 "Carpet and rug mills", add
-
-. label define industry 1590 "Textile product mills, except carpets and rugs", add
-
-. label define industry 1670 "Knitting mills", add
-
-. label define industry 1680 "Cut and sew apparel manufacturing", add
-
-. label define industry 1690 "Apparel accessories and other apparel manufacturing", add
-
-. label define industry 1770 "Footwear manufacturing", add
-
-. label define industry 1790 "Leather tanning and products, except footwear", add
-
-. label define industry 1870 "Pulp, paper, and paperboard mills", add
-
-. label define industry 1880 "Paperboard containers and boxes", add
-
-. label define industry 1890 "Miscellaneous paper and pulp products", add
-
-. label define industry 1990 "Printing and related support activities", add
-
-. label define industry 2070 "Petroleum refining", add
-
-. label define industry 2090 "Miscellaneous petroleum and coal products", add
-
-. label define industry 2170 "Resin, synthetic rubber and fibers, and filaments", add
-
-. label define industry 2180 "Agricultural chemical manufacturing", add
-
-. label define industry 2190 "Pharmaceutical and medicine manufacturing", add
-
-. label define industry 2270 "Paint, coating, and adhesive manufacturing", add
-
-. label define industry 2280 "Soap, cleaning compound, and cosmetics manufacturing", add
-
-. label define industry 2290 "Industrial and miscellaneous chemicals", add
-
-. label define industry 2370 "Plastics product manufacturing", add
-
-. label define industry 2380 "Tire manufacturing", add
-
-. label define industry 2390 "Rubber products, except tires, manufacturing", add
-
-. label define industry 2470 "Pottery, ceramics, and related products manufacturing", add
-
-. label define industry 2480 "Structural clay product manufacturing", add
-
-. label define industry 2490 "Glass and glass product manufacturing", add
-
-. label define industry 2570 "Cement, concrete, lime, and gypsum product manufacturing", add
-
-. label define industry 2590 "Misc nonmetallic mineral product manufacturing", add
-
-. label define industry 2670 "Iron and steel mills and steel product manufacturing", add
-
-. label define industry 2680 "Aluminum production and processing", add
-
-. label define industry 2690 "Nonferrous metal, except aluminum, production and processing", add
-
-. label define industry 2770 "Foundries", add
-
-. label define industry 2780 "Metal forgings and stampings", add
-
-. label define industry 2790 "Cutlery and hand tool manufacturing", add
-
-. label define industry 2870 "Structural metals, and tank and shipping container", add
-
-. label define industry 2880 "Machine shops", add
-
-. label define industry 2890 "Coating, engraving, heat treating and allied activities", add
-
-. label define industry 2970 "Ordnance", add
-
-. label define industry 2980 "Miscellaneous fabricated metal products manufacturing", add
-
-. label define industry 2990 "Not specified metal industries", add
-
-. label define industry 3070 "Agricultural implement manufacturing", add
-
-. label define industry 3080 "Construction, mining and oil field machinery manufacturing", add
-
-. label define industry 3090 "Commercial and service industry machinery manufacturing", add
-
-. label define industry 3170 "Metalworking machinery manufacturing", add
-
-. label define industry 3180 "Engines, turbines, and power transmission equipment manufacturing", add
-
-. label define industry 3190 "Machinery manufacturing, n.e.c.", add
-
-. label define industry 3290 "Not specified machinery manufacturing", add
-
-. label define industry 3360 "Computer and peripheral equipment manufacturing", add
-
-. label define industry 3370 "Communications, audio, and video equipment manufacturing", add
-
-. label define industry 3380 "Navigational, measuring, electromedical, and control", add
-
-. label define industry 3390 "Electronic component and product manufacturing, n.e.c", add
-
-. label define industry 3470 "Household appliance manufacturing", add
-
-. label define industry 3490 "Electrical lighting, equipment, and supplies manufacturing", add
-
-. label define industry 3570 "Motor vehicles and motor vehicle equipment manufacturing", add
-
-. label define industry 3580 "Aircraft and parts manufacturing", add
-
-. label define industry 3590 "Aerospace products and parts manufacturing", add
-
-. label define industry 3670 "Railroad rolling stock manufacturing", add
-
-. label define industry 3680 "Ship and boat building", add
-
-. label define industry 3690 "Other transportation equipment manufacturing", add
-
-. label define industry 3770 "Sawmills and wood preservation", add
-
-. label define industry 3780 "Veneer, plywood, and engineered wood products", add
-
-. label define industry 3790 "Prefabricated wood buildings and mobile homes", add
-
-. label define industry 3870 "Miscellaneous wood products", add
-
-. label define industry 3890 "Furniture and related product manufacturing", add
-
-. label define industry 3960 "Medical equipment and supplies manufacturing", add
-
-. label define industry 3970 "Toys, amusement, and sporting goods manufacturing", add
-
-. label define industry 3980 "Miscellaneous manufacturing, n.e.c.", add
-
-. label define industry 3990 "Not specified manufacturing industries", add
-
-. label define industry 4070 "Motor vehicles, parts and supplies, merchant wholesalers", add
-
-. label define industry 4080 "Furniture and home furnishing, merchant wholesalers", add
-
-. label define industry 4090 "Lumber and other construction materials, merchant wholesalers", add
-
-. label define industry 4170 "Professional and commercial equipment and supplies, merchant wholesalers", add
-
-. label define industry 4180 "Metals and minerals, except petroleum, merchant wholesalers", add
-
-. label define industry 4190 "Electrical goods, merchant wholesalers", add
-
-. label define industry 4260 "Hardware, plumbing and heating equipment, and supplies merchants wholesalers", add
-
-. label define industry 4270 "Machinery, equipment, and supplies, merchant wholesalers", add
-
-. label define industry 4280 "Recyclable material, merchant wholesalers", add
-
-. label define industry 4290 "Miscellaneous durable goods, merchant wholesalers", add
-
-. label define industry 4370 "Paper and paper products, merchant wholesalers", add
-
-. label define industry 4380 "Drugs, sundries, and chemical and allied products, merchant wholesalers", add
-
-. label define industry 4390 "Apparel, fabrics, and notions, merchant wholesalers", add
-
-. label define industry 4470 "Groceries and related products, merchant wholesalers", add
-
-. label define industry 4480 "Farm product raw materials, merchant wholesalers", add
-
-. label define industry 4490 "Petroleum and petroleum products, merchant wholesalers", add
-
-. label define industry 4560 "Alcoholic beverages, merchant wholesalers", add
-
-. label define industry 4570 "Farm supplies, merchant wholesalers", add
-
-. label define industry 4580 "Miscellaneous nondurable goods, merchant wholesalers", add
-
-. label define industry 4590 "Not specified wholesale trade", add
-
-. label values industry industry
-
-. 
-. // gen var covering broad industry classes using NAICS 2002
-. recode industry (170/290=1) (370/490=2) (570/690=3) (770=4) (1070/3990=5) (4070/4590=6) (4670/5790=7) (6070/6390=8) (6470
-> /6780=9) (6870/6990=10) (7070/7190=11) (7270/7490=12) (7570=13) (7580/7790=14) (7860/7890=15) (7970/8470=16) (8560/8590=1
-> 7) (8660/8690=18) (8770/9290=19) (9300=20) , gen(bindustry)
-(82861 differences between industry and bindustry)
-
-. label var bindustry "Industry"
-
-. label define bindustry 1 "Agriculture, Forestry, Fishing and Hunting", add
-
-. label define bindustry 2 "Mining", add
-
-. label define bindustry 3 "Utilities", add
-
-. label define bindustry 4 "Construction", add
-
-. label define bindustry 5 "Manufacturing", add
-
-. label define bindustry 6 "Wholesale Trade", add
-
-. label define bindustry 7 "Retail Trade", add
-
-. label define bindustry 8 "Transportation and Warehousing", add
-
-. label define bindustry 9 "Information", add
-
-. label define bindustry 10 "Finance and Insurance", add
-
-. label define bindustry 11 "Real Estate and Rental and Leasing", add
-
-. label define bindustry 12 "Professional, Scientific, and Technical Services", add
-
-. label define bindustry 13 "Management of Companies and Enterprises", add
-
-. label define bindustry 14 "Administrative and Support and Waste Management and Remediation Services", add
-
-. label define bindustry 15 "Educational Services", add
-
-. label define bindustry 16 "Health Care and Social Assistance", add
-
-. label define bindustry 17 "Arts, Entertainment, and Recreation", add
-
-. label define bindustry 18 "Accommodation and Food Services", add
-
-. label define bindustry 19 "Other Services (except Public Administration)", add
-
-. label define bindustry 20 "Public Administration", add
-
-. label values bindustry bindustry 
-
-. 
-. *lfstat = Labor force status
-. label var lfstat "Labor force status"
-
-. label define lfstat 1 "Employed" 2 "Unemployed" 3 "Not in Labor Force"
-
-. label values lfstat lfstat
-
-. 
-. *nocpr = Job code for principal job - best code
-. label var nocpr "Principal Job"
-
-. replace nocpr = . if nocpr == 999989 //put missing or skip to missing value
-(17,378 real changes made, 17,378 to missing)
-
-. 
-. *nocprmg = Occupation Major Group
-. label var nocprmg "Occupation (Major Group)"
-
-. label define nocprmg 1 "Computer and mathematical scientists", add
-
-. label define nocprmg 2 "Biological, agricultural and other life scientists", add
-
-. label define nocprmg 3 "Physical and related scientists", add
-
-. label define nocprmg 4 "Social and related scientists", add
-
-. label define nocprmg 5 "Engineers", add
-
-. label define nocprmg 6 "S and E related occupations", add
-
-. label define nocprmg 7 "Non-S and E Occupations", add
-
-. label values nocprmg nocprmg
-
-. 
-. *nocprng = Occupation minor group for principal Job
-. label var nocprng "Occupation (minor group)"
-
-. replace nocprng = . if nocprng == 98
-(17,378 real changes made, 17,378 to missing)
-
-. label define nocprng 11 "Computer and information scientists", add
-
-. label define nocprng 12 "Mathematical scientists", add
-
-. label define nocprng 18 "Postsecondary teachers - computer and math sciences", add
-
-. label define nocprng 21 "Agricultural and food scientists", add
-
-. label define nocprng 22 "Biological and medical scientists", add
-
-. label define nocprng 23 "Environmental life scientists", add
-
-. label define nocprng 28 "Postsecondary teachers - life and related sciences", add
-
-. label define nocprng 31 "Chemists, except biochemists", add
-
-. label define nocprng 32 "Earth scientists, geologists and oceanographers", add
-
-. label define nocprng 33 "Physicists and astronomers", add
-
-. label define nocprng 34 "Other physical and related scientists", add
-
-. label define nocprng 38 "Postsecondary teachers - physical and related sciences", add
-
-. label define nocprng 41 "Economists", add
-
-. label define nocprng 42 "Political scientists", add
-
-. label define nocprng 43 "Psychologists", add
-
-. label define nocprng 44 "Sociologists and anthropologists", add
-
-. label define nocprng 45 "Other social and related scientists", add
-
-. label define nocprng 48 "Postsecondary teachers - social and related sciences", add
-
-. label define nocprng 51 "Aerospace and related engineers", add
-
-. label define nocprng 52 "Chemical engineers", add
-
-. label define nocprng 53 "Civil and architectural engineers", add
-
-. label define nocprng 54 "Electrical and related engineers", add
-
-. label define nocprng 55 "Industrial engineers", add
-
-. label define nocprng 56 "Mechanical engineers", add
-
-. label define nocprng 57 "Other engineers", add
-
-. label define nocprng 58 "Postsecondary teachers - engineering", add
-
-. label define nocprng 61 "Health-related occupations", add
-
-. label define nocprng 62 "S and E managers", add
-
-. label define nocprng 63 "S and E Pre-college Teachers", add
-
-. label define nocprng 64 "S and E technicians and technologists", add
-
-. label define nocprng 65 "Other S and E-related occupations", add
-
-. label define nocprng 71 "Non-S and E Managers", add
-
-. label define nocprng 72 "Management-related occupations", add
-
-. label define nocprng 73 "Non-S and E precollege teachers", add
-
-. label define nocprng 74 "Non-S and E postsecondary teachers", add
-
-. label define nocprng 75 "Social services and related occupations", add
-
-. label define nocprng 76 "Sales and marketing occupations", add
-
-. label define nocprng 77 "Art, humanties and related occupations", add
-
-. label define nocprng 78 "Other non-S and E occupations", add
-
-. label values nocprng nocprng
-
-. 
-. *waprsm = Summarized primary work activity
-. *wascsm = Summarized secondary work activity
-. *wapri = work activity spent most hours on
-. label var wapri "Primary Work Activity"
-
-. label define wapri 1 "Accounting, finance, contracts", add
-
-. label define wapri 2 "Basic Research", add
-
-. label define wapri 3 "Applied Research", add
-
-. label define wapri 4 "Computer applications, programming, systems development", add
-
-. label define wapri 5 "Development", add
-
-. label define wapri 6 "Design of equipment, processes, structures, models", add
-
-. label define wapri 7 "Employee relations", add
-
-. label define wapri 8 "Management and Administration", add
-
-. label define wapri 9 "Production, operations, maintenance", add
-
-. label define wapri 10 "Prof. services", add
-
-. label define wapri 11 "Sales, purchasing, marketing", add
-
-. label define wapri 12 "Quality or productivity management", add
-
-. label define wapri 13 "Teaching", add
-
-. label define wapri 14 "Other work activity", add
-
-. label value wapri wapri
-
-. 
-. *wasec = work activity spent second most hours on
-. 
-. // gen var indicating years of working experience = 2003 - t(most recent degree)
-. gen workexp = 2003 - mrdacyr if mrdacyr <= 2003
-(300 missing values generated)
-
-. replace workexp = 0 if mrdacyr > 2003 // 400 graduates in 2004 (expected graduation in 2004, but academic year 03-04)
-(300 real changes made)
-
-. 
-. //generate dummies for work activities
-. foreach i in waacc waaprsh wabrsh wacom wadev wadsn waemrl wamgmt waot waprod waqm wasale wasvc watea {
-  2. gen `i'_dum = .
-  3. replace `i'_dum = 1 if `i' == "Y"
-  4. replace `i'_dum = 0 if `i' == "N"
-  5. drop `i'
-  6. rename `i'_dum `i'
-  7. }
-(100,402 missing values generated)
-(25,451 real changes made)
-(57,573 real changes made)
-(100,402 missing values generated)
-(24,848 real changes made)
-(58,176 real changes made)
-(100,402 missing values generated)
-(17,216 real changes made)
-(65,808 real changes made)
-(100,402 missing values generated)
-(30,390 real changes made)
-(52,634 real changes made)
-(100,402 missing values generated)
-(24,434 real changes made)
-(58,590 real changes made)
-(100,402 missing values generated)
-(21,484 real changes made)
-(61,540 real changes made)
-(100,402 missing values generated)
-(28,436 real changes made)
-(54,588 real changes made)
-(100,402 missing values generated)
-(48,598 real changes made)
-(34,426 real changes made)
-(100,402 missing values generated)
-(5,446 real changes made)
-(77,578 real changes made)
-(100,402 missing values generated)
-(12,373 real changes made)
-(70,651 real changes made)
-(100,402 missing values generated)
-(20,049 real changes made)
-(62,975 real changes made)
-(100,402 missing values generated)
-(25,782 real changes made)
-(57,242 real changes made)
-(100,402 missing values generated)
-(25,189 real changes made)
-(57,835 real changes made)
-(100,402 missing values generated)
-(26,897 real changes made)
-(56,127 real changes made)
-
-. 
-. //commercial work activities (cf. Elfenbein et al 2010)
-. *waacc = accounting, finance, contracts
-. label var waacc "Accounting, Finance, Contracts"
-
-. *waemrl = employee relations
-. label var waemrl "Employee Relations"
-
-. *wamgmt = managing or supervising people/projects
-. label var wamgmt "Managing or Supervising"
-
-. *waprod = production, operations, maintenance
-. label var waprod "Production, Operations, Maintenance"
-
-. *waqm = quality or productivity management
-. label var waqm "Quality or Productivity Management"
-
-. *wasale = sales, purchasing, marketing
-. label var wasale "Sales, Purchasing, Marketing"
-
-. *wasvc = professional services
-. label var wasvc "Professional Services"
-
-. 
-. //research activities (cf. Elfenbein et al. 2010)
-. *waaprsh = applied research
-. label var waaprsh "Applied Research"
-
-. *wabrsh = basich research
-. label var wabrsh "Basic Research"
-
-. *wacom = computer applications
-. label var wacom "Computer Applications"
-
-. *wadev = development
-. label var wadev "Development"
-
-. *wadsn = design
-. label var wadsn "Design"
-
-. 
-. *waot = Other
-. label var waot "Other"
-
-. *watea = Teaching
-. label var watea "Teaching"
-
-. 
-. //generate count of all work activities
-. gen wan = waacc + waaprsh + wabrsh + wacom + wadev + wadsn + waemrl + wamgmt + waot + waprod + waqm + wasale + wasvc + wa
-> tea
-(17,378 missing values generated)
-
-. label var wan "Number of Work Activities"
-
-. 
-. //gen count of commercial activities (cf. Elfenbein)  
-. gen cmrcn = waacc + waemrl + wamgmt + waprod + waqm + wasale + wasvc
-(17,378 missing values generated)
-
-. label var cmrcn "Number of Commercial Activities"
-
-. 
-. //gen count of research activities (cf. Elfenbein)
-. gen resn = waaprsh + wabrsh + wacom + wadev + wadsn
-(17,378 missing values generated)
-
-. label var resn "Number of Research Activities"
-
-. 
-. 
-. //create variable employer type: 1= startup, 2 = small established firm, 3 = large established firms
-. gen emplr = .
-(100,402 missing values generated)
-
-. replace emplr = 1 if nedtp > 2 & newbus == 1 & emsize < 4
-(1,741 real changes made)
-
-. replace emplr = 2 if nedtp > 2 & newbus == 0 & emsize < 4
-(11,187 real changes made)
-
-. replace emplr = 3 if nedtp > 2 & newbus == 0 & emsize >= 4
-(55,330 real changes made)
-
-. 
-. label var emplr "Employer Type"
-
-. label define emplr 1 "Startup" 2 "Small Established" 3 "Large Established"
-
-. label values emplr emplr
-
-. 
-. /* SALARY */
-. 
-. // put incorrect wages to missing
-. foreach i in wage03 wage06 wage08 wage10 {
-  2.         replace `i' = . if `i' >= 999998
-  3. }
-(17,378 real changes made, 17,378 to missing)
-(7,802 real changes made, 7,802 to missing)
-(7,937 real changes made, 7,937 to missing)
-(4,607 real changes made, 4,607 to missing)
-
-. 
-. //generate lnwage
-. foreach i in wage03 wage06 wage08 wage10 {
-  2.         gen ln`i' = log(`i') if `i' > 0
-  3.         replace ln`i' = 0 if `i' == 0
-  4. }
-(18,095 missing values generated)
-(717 real changes made)
-(57,725 missing values generated)
-(177 real changes made)
-(63,662 missing values generated)
-(172 real changes made)
-(83,276 missing values generated)
-(134 real changes made)
-
-. 
-. //gen log yearly wage growth
-. 
-. gen dlnwage = (lnwage10 - lnwage03)/7 if wage10 != .
-(84,071 missing values generated)
-
-. replace dlnwage = (lnwage08 - lnwage03)/5 if dlnwage == . & wage08 != .
-(19,212 real changes made)
-
-. replace dlnwage = (lnwage06 - lnwage03)/3 if dlnwage == . & wage06 != .
-(6,350 real changes made)
-
-. 
-. 
-. save joinersc.dta, replace
-file joinersc.dta saved
-
-. 
-. 
-. 
-. 
-. 
-. 
 . 
 end of do-file
 
-. browse refid lfstat emplr newbus emsize nedtp wage*
+. sum race*
 
-. do "C:\Users\Jeroen\Desktop\joiners\analysis.do"
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+     racethm |          0
+    racethmp |          0
+       racem |          0
+        race |    100,402    3.600088    1.038308          1          6
+       race1 |    100,402    .1179757     .322581          0          1
+-------------+---------------------------------------------------------
+       race2 |    100,402    .0061553     .078214          0          1
+       race3 |    100,402    .0742117    .2621164          0          1
+       race4 |    100,402    .7795462    .4145547          0          1
+       race5 |    100,402    .0036852    .0605941          0          1
+       race6 |    100,402    .0184259    .1344864          0          1
 
-.                                                 *SESTAT 2003-2010*
-.                                                         *ANALYSIS*
-.                                                         
-. cd "C:\Users\Jeroen\Desktop\joiners\"
-C:\Users\Jeroen\Desktop\joiners
+. help summarize
 
-.                           
-. clear all 
+. fsum race*
 
-. log close _all
-      name:  Cleaning
-       log:  C:\Users\Jeroen\Desktop\joiners\joiners_cleaning.log
-  log type:  text
- closed on:  15 Nov 2016, 14:36:13
----------------------------------------------------------------------------------------------------------------------------
+ Variable |        N     Mean       SD      Min      Max                                                                                                                              
+----------+---------------------------------------------
+     race |   100402     3.60     1.04     1.00     6.00  
+    race1 |   100402     0.12     0.32     0.00     1.00  
+    race2 |   100402     0.01     0.08     0.00     1.00  
+    race3 |   100402     0.07     0.26     0.00     1.00  
+    race4 |   100402     0.78     0.41     0.00     1.00  
+    race5 |   100402     0.00     0.06     0.00     1.00  
+    race6 |   100402     0.02     0.13     0.00     1.00  
+
+. help fsum
+
+. fsum race*, label
+
+ Variable |        N     Mean       SD      Min      Max                                                                                                                              
+----------+---------------------------------------------
+     race |   100402     3.60     1.04     1.00     6.00  Race
+    race1 |   100402     0.12     0.32     0.00     1.00  Asian
+    race2 |   100402     0.01     0.08     0.00     1.00  American Indian/Alaska Native
+    race3 |   100402     0.07     0.26     0.00     1.00  Black
+    race4 |   100402     0.78     0.41     0.00     1.00  White
+    race5 |   100402     0.00     0.06     0.00     1.00  Native Hawaiian/Other Pacific Islander
+    race6 |   100402     0.02     0.13     0.00     1.00  Multiple
+
+. help fsum
+
+. fsum race*, varname
+
+ Variable |        N     Mean       SD      Min      Max                                                                                                                              
+----------+---------------------------------------------
+     race |   100402     3.60     1.04     1.00     6.00  race
+    race1 |   100402     0.12     0.32     0.00     1.00  race1
+    race2 |   100402     0.01     0.08     0.00     1.00  race2
+    race3 |   100402     0.07     0.26     0.00     1.00  race3
+    race4 |   100402     0.78     0.41     0.00     1.00  race4
+    race5 |   100402     0.00     0.06     0.00     1.00  race5
+    race6 |   100402     0.02     0.13     0.00     1.00  race6
+
+. fsum race*, label
+
+ Variable |        N     Mean       SD      Min      Max                                                                                                                              
+----------+---------------------------------------------
+     race |   100402     3.60     1.04     1.00     6.00  Race
+    race1 |   100402     0.12     0.32     0.00     1.00  Asian
+    race2 |   100402     0.01     0.08     0.00     1.00  American Indian/Alaska Native
+    race3 |   100402     0.07     0.26     0.00     1.00  Black
+    race4 |   100402     0.78     0.41     0.00     1.00  White
+    race5 |   100402     0.00     0.06     0.00     1.00  Native Hawaiian/Other Pacific Islander
+    race6 |   100402     0.02     0.13     0.00     1.00  Multiple
+
+. sum ibn.race
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+        race |
+      Asian  |    100,402    .1179757     .322581          0          1
+American ..  |    100,402    .0061553     .078214          0          1
+      Black  |    100,402    .0742117    .2621164          0          1
+      White  |    100,402    .7795462    .4145547          0          1
+Native Ha..  |    100,402    .0036852    .0605941          0          1
+-------------+---------------------------------------------------------
+   Multiple  |    100,402    .0184259    .1344864          0          1
+
+. help logout
+
+. ssc install logout
+checking logout consistency and verifying not already installed...
+installing into c:\ado\plus\...
+installation complete.
+
+. help logout
+

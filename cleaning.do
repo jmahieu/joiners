@@ -1,7 +1,7 @@
 						*SESTAT 2003-2010*
 							*CLEANING*
 							
-cd "C:\Users\Jeroen\Desktop\joiners\"
+cd "C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\"
 			  
 clear all 
 log close _all
@@ -40,6 +40,13 @@ gen race = real(racem)
 label var race "Race"
 label define race 1 "Asian" 2 "American Indian/Alaska Native" 3 "Black" 4 "White" 5 "Native Hawaiian/Other Pacific Islander" 6 "Multiple"
 label values race race
+qui tab race, gen (race)
+label var race1 "Asian"
+label var race2 "American Indian/Alaska Native"
+label var race3 "Black"
+label var race4 "White"
+label var race5 "Native Hawaiian/Other Pacific Islander"
+label var race6 "Multiple"
 
 /*	EDUCATION */
 
