@@ -389,6 +389,23 @@ label values nocprng nocprng
 *waprsm = Summarized primary work activity
 *wascsm = Summarized secondary work activity
 *wapri = work activity spent most hours on
+label var wapri "Primary Work Activity"
+label define wapri 1 "Accounting, finance, contracts", add
+label define wapri 2 "Basic Research", add
+label define wapri 3 "Applied Research", add
+label define wapri 4 "Computer applications, programming, systems development", add
+label define wapri 5 "Development", add
+label define wapri 6 "Design of equipment, processes, structures, models", add
+label define wapri 7 "Employee relations", add
+label define wapri 8 "Management and Administration", add
+label define wapri 9 "Production, operations, maintenance", add
+label define wapri 10 "Prof. services", add
+label define wapri 11 "Sales, purchasing, marketing", add
+label define wapri 12 "Quality or productivity management", add
+label define wapri 13 "Teaching", add
+label define wapri 14 "Other work activity", add
+label value wapri wapri
+
 *wasec = work activity spent second most hours on
 
 // gen var indicating years of working experience = 2003 - t(most recent degree)

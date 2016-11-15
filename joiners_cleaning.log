@@ -1,8 +1,8 @@
----------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------
       name:  Cleaning
        log:  C:\Users\Jeroen\Desktop\joiners\joiners_cleaning.log
   log type:  text
- opened on:  15 Nov 2016, 10:54:31
+ opened on:  15 Nov 2016, 11:29:51
 
 . 
 . use joiners.dta
@@ -51,7 +51,8 @@
 
 . label var race "Race"
 
-. label define race 1 "Asian" 2 "American Indian/Alaska Native" 3 "Black" 4 "White" 5 "Native Hawaiian/Other Pacific Islander" 6 "Multiple"
+. label define race 1 "Asian" 2 "American Indian/Alaska Native" 3 "Black" 4 "White" 5 "Native Hawaiian/Other Pacific Island
+> er" 6 "Multiple"
 
 . label values race race
 
@@ -156,8 +157,8 @@
 
 . 
 . //make numeric vars
-. foreach i in emsize emtp ndgmemg ndgmeng emsmi emrg emsecdt facadv facben facchal facind facloc facresp facsal facsoc fptind indcode lfstat
->  nedtp nocpr nocprng nocprmg waprsm wascsm wapri wasec jobsatis{
+. foreach i in emsize emtp ndgmemg ndgmeng emsmi emrg emsecdt facadv facben facchal facind facloc facresp facsal facsoc fpt
+> ind indcode lfstat nedtp nocpr nocprng nocprmg waprsm wascsm wapri wasec jobsatis{
   2.  gen `i'_n = real(`i')
   3.  drop `i'
   4.  rename `i'_n `i'
@@ -187,7 +188,8 @@
 . *emsize = employer size 
 . label var emsize "Employer Size"
 
-. label define emsize 1 "<10" 2 "10-24" 3 "25 - 99" 4 "100 - 499" 5 "500 - 999" 5 "500 - 999" 6 "1000 - 4999" 7 "5000 - 24999" 8 ">25000"
+. label define emsize 1 "<10" 2 "10-24" 3 "25 - 99" 4 "100 - 499" 5 "500 - 999" 5 "500 - 999" 6 "1000 - 4999" 7 "5000 - 249
+> 99" 8 ">25000"
 
 . label values emsize emsize
 
@@ -546,9 +548,9 @@
 
 . 
 . // gen var covering broad industry classes using NAICS 2002
-. recode industry (170/290=1) (370/490=2) (570/690=3) (770=4) (1070/3990=5) (4070/4590=6) (4670/5790=7) (6070/6390=8) (6470/6780=9) (6870/699
-> 0=10) (7070/7190=11) (7270/7490=12) (7570=13) (7580/7790=14) (7860/7890=15) (7970/8470=16) (8560/8590=17) (8660/8690=18) (8770/9290=19) (93
-> 00=20) , gen(bindustry)
+. recode industry (170/290=1) (370/490=2) (570/690=3) (770=4) (1070/3990=5) (4070/4590=6) (4670/5790=7) (6070/6390=8) (6470
+> /6780=9) (6870/6990=10) (7070/7190=11) (7270/7490=12) (7570=13) (7580/7790=14) (7860/7890=15) (7970/8470=16) (8560/8590=1
+> 7) (8660/8690=18) (8770/9290=19) (9300=20) , gen(bindustry)
 (82861 differences between industry and bindustry)
 
 . label var bindustry "Industry"
@@ -721,6 +723,39 @@
 . *waprsm = Summarized primary work activity
 . *wascsm = Summarized secondary work activity
 . *wapri = work activity spent most hours on
+. label var wapri "Primary Work Activity"
+
+. label define wapri 1 "Accounting, finance, contracts", add
+
+. label define wapri 2 "Basic Research", add
+
+. label define wapri 3 "Applied Research", add
+
+. label define wapri 4 "Computer applications, programming, systems development", add
+
+. label define wapri 5 "Development", add
+
+. label define wapri 6 "Design of equipment, processes, structures, models", add
+
+. label define wapri 7 "Employee relations", add
+
+. label define wapri 8 "Management and Administration", add
+
+. label define wapri 9 "Production, operations, maintenance", add
+
+. label define wapri 10 "Prof. services", add
+
+. label define wapri 11 "Sales, purchasing, marketing", add
+
+. label define wapri 12 "Quality or productivity management", add
+
+. label define wapri 13 "Teaching", add
+
+. label define wapri 14 "Other work activity", add
+
+. label value wapri wapri
+
+. 
 . *wasec = work activity spent second most hours on
 . 
 . // gen var indicating years of working experience = 2003 - t(most recent degree)
@@ -802,7 +837,8 @@
 
 . 
 . //generate count of all work activities
-. gen wan = waacc + waaprsh + wabrsh + wacom + wadev + wadsn + waemrl + wamgmt + waot + waprod + waqm + wasale + wasvc + watea
+. gen wan = waacc + waaprsh + wabrsh + wacom + wadev + wadsn + waemrl + wamgmt + waot + waprod + waqm + wasale + wasvc + wa
+> tea
 
 . label var wan "Number of Work Activities"
 
@@ -893,3 +929,20 @@ file joinersc.dta saved
 . 
 end of do-file
 
+. do "C:\Users\Jeroen\Desktop\joiners\analysis.do"
+
+.                                                 *SESTAT 2003-2010*
+.                                                         *ANALYSIS*
+.                                                         
+. cd "C:\Users\Jeroen\Desktop\joiners\"
+C:\Users\Jeroen\Desktop\joiners
+
+.                           
+. clear all 
+
+. log close _all
+      name:  Cleaning
+       log:  C:\Users\Jeroen\Desktop\joiners\joiners_cleaning.log
+  log type:  text
+ closed on:  15 Nov 2016, 11:33:04
+---------------------------------------------------------------------------------------------------------------------------
