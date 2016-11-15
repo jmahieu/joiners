@@ -87,12 +87,14 @@ label values hdclas hdclas
 /* EMPLOYMENT */
 
 //gen tenure var
+replace strtyr = . if strtyr == 9998
 gen tenure = refyr - strtyr
 label var tenure "Tenure"
 
 //generate dummy for newbus
-gen nb = 0
+gen nb = .
 replace nb = 1 if newbus == "Y"
+replace nb = 0 if newbus == "N"
 drop newbus
 rename nb newbus
 label var newbus "Young Firm"
@@ -414,7 +416,8 @@ replace workexp = 0 if mrdacyr > 2003 // 400 graduates in 2004 (expected graduat
 
 //generate dummies for work activities
 foreach i in waacc waaprsh wabrsh wacom wadev wadsn waemrl wamgmt waot waprod waqm wasale wasvc watea {
-gen `i'_dum = 1
+gen `i'_dum = .
+replace `i'_dum = 1 if `i' == "Y"
 replace `i'_dum = 0 if `i' == "N"
 drop `i'
 rename `i'_dum `i'
