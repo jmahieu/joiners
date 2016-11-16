@@ -107,7 +107,7 @@ rename nb newbus
 label var newbus "Young Firm"
 
 //make numeric vars
-foreach i in emsize emtp ndgmemg ndgmeng emsmi emrg emsecdt facadv facben facchal facind facloc facresp facsal facsoc fptind indcode lfstat nedtp nocpr nocprng nocprmg waprsm wascsm wapri wasec jobsatis{
+foreach i in emsize emtp ndgmemg ndgmeng emsmi emrg emsecdt facadv facben facchal facind facloc facresp facsal facsec facsoc fptind indcode lfstat nedtp nocpr nocprng nocprmg waprsm wascsm wapri wasec jobsatis{
  gen `i'_n = real(`i')
  drop `i'
  rename `i'_n `i'
@@ -153,6 +153,16 @@ label define emsecdt 31 "Federal government", add
 label define emsecdt 32 "State/Local government", add
 label values emsecdt emsecdt
 
+//reshape values for fac* variables so that value 1 corresponds with "Not important at all" 4 corresponds with "Very Important" --> for ordered logit
+foreach i in facadv facben facchal facind facloc facresp facsal facsec facsoc {
+	gen `i'_n = 1 if `i' == 4
+	replace `i'_n = 2 if `i' == 3
+	replace `i'_n = 3 if `i' == 2
+	replace `i'_n = 4 if `i' == 1
+	drop `i'
+	rename `i'_n `i'
+}
+
 *facadv = Importance of job"s opportunities for advancement
 label var facadv "Importance of job's opportunities for advancement"
 *facben = Importance of job"s benefits
@@ -167,16 +177,11 @@ label var facloc "Importance of job's location"
 label var facresp "Importance of job's level of responsibility"
 *facsal = Importance of job's salary
 label var facsal "Importance of job's salary"
+*facsec = Importance of job"s security
+label var facsec "Importance of job's security"
 *facsoc = Importance of job's contribution to society
 label var facsoc "Importance of job's contribution to society"
 
-//reshape values for fac* variables so that value 1 corresponds with "Not important at all" 4 corresponds with "Very Important" --> for ordered logit
-foreach i in facadv facben facchal facind facloc facresp facsal facsoc {
-	replace `i' = 1 if `i' == 4
-	replace `i' = 2 if `i' == 3
-	replace `i' = 3 if `i' == 2
-	replace `i' = 4 if `i' == 1
-}
 
 foreach i in facadv facben facchal facind facloc facresp facsal facsoc {
 	label define `i' 4 "Very important" 3 "Somewhat important" 2 "Somewhat unimportant" 1 "Not important at all"

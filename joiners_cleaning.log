@@ -2,7 +2,7 @@
       name:  Cleaning
        log:  C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\joiners_cleaning.log
   log type:  text
- opened on:  16 Nov 2016, 14:59:36
+ opened on:  16 Nov 2016, 16:00:18
 
 . 
 . use joiners.dta
@@ -180,8 +180,8 @@
 . 
 . //make numeric vars
 . foreach i in emsize emtp ndgmemg ndgmeng emsmi emrg emsecdt facadv facben facchal facind facloc 
-> facresp facsal facsoc fptind indcode lfstat nedtp nocpr nocprng nocprmg waprsm wascsm wapri wase
-> c jobsatis{
+> facresp facsal facsec facsoc fptind indcode lfstat nedtp nocpr nocprng nocprmg waprsm wascsm wap
+> ri wasec jobsatis{
   2.  gen `i'_n = real(`i')
   3.  drop `i'
   4.  rename `i'_n `i'
@@ -191,6 +191,7 @@
 (22,379 missing values generated)
 (17,383 missing values generated)
 (17,378 missing values generated)
+(181 missing values generated)
 (181 missing values generated)
 (181 missing values generated)
 (181 missing values generated)
@@ -280,6 +281,54 @@
 . label values emsecdt emsecdt
 
 . 
+. //reshape values for fac* variables so that value 1 corresponds with "Not important at all" 4 co
+> rresponds with "Very Important" --> for ordered logit
+. foreach i in facadv facben facchal facind facloc facresp facsal facsec facsoc {
+  2.         gen `i'_n = 1 if `i' == 4
+  3.         replace `i'_n = 2 if `i' == 3
+  4.         replace `i'_n = 3 if `i' == 2
+  5.         replace `i'_n = 4 if `i' == 1
+  6.         drop `i'
+  7.         rename `i'_n `i'
+  8. }
+(96,392 missing values generated)
+(9,643 real changes made)
+(45,472 real changes made)
+(41,096 real changes made)
+(98,123 missing values generated)
+(3,380 real changes made)
+(31,635 real changes made)
+(62,927 real changes made)
+(99,499 missing values generated)
+(2,371 real changes made)
+(32,800 real changes made)
+(64,147 real changes made)
+(99,671 missing values generated)
+(2,921 real changes made)
+(34,763 real changes made)
+(61,806 real changes made)
+(99,159 missing values generated)
+(4,561 real changes made)
+(41,564 real changes made)
+(52,853 real changes made)
+(98,927 missing values generated)
+(6,172 real changes made)
+(47,012 real changes made)
+(45,562 real changes made)
+(99,416 missing values generated)
+(2,203 real changes made)
+(42,212 real changes made)
+(54,820 real changes made)
+(98,077 missing values generated)
+(4,709 real changes made)
+(33,057 real changes made)
+(60,130 real changes made)
+(98,293 missing values generated)
+(8,255 real changes made)
+(40,182 real changes made)
+(49,675 real changes made)
+
+. 
 . *facadv = Importance of job"s opportunities for advancement
 . label var facadv "Importance of job's opportunities for advancement"
 
@@ -301,51 +350,13 @@
 . *facsal = Importance of job's salary
 . label var facsal "Importance of job's salary"
 
+. *facsec = Importance of job"s security
+. label var facsec "Importance of job's security"
+
 . *facsoc = Importance of job's contribution to society
 . label var facsoc "Importance of job's contribution to society"
 
 . 
-. //reshape values for fac* variables so that value 1 corresponds with "Not important at all" 4 co
-> rresponds with "Very Important" --> for ordered logit
-. foreach i in facadv facben facchal facind facloc facresp facsal facsoc {
-  2.         replace `i' = 1 if `i' == 4
-  3.         replace `i' = 2 if `i' == 3
-  4.         replace `i' = 3 if `i' == 2
-  5.         replace `i' = 4 if `i' == 1
-  6. }
-(4,010 real changes made)
-(9,643 real changes made)
-(55,115 real changes made)
-(45,106 real changes made)
-(2,279 real changes made)
-(3,380 real changes made)
-(35,015 real changes made)
-(65,206 real changes made)
-(903 real changes made)
-(2,371 real changes made)
-(35,171 real changes made)
-(65,050 real changes made)
-(731 real changes made)
-(2,921 real changes made)
-(37,684 real changes made)
-(62,537 real changes made)
-(1,243 real changes made)
-(4,561 real changes made)
-(46,125 real changes made)
-(54,096 real changes made)
-(1,475 real changes made)
-(6,172 real changes made)
-(53,184 real changes made)
-(47,037 real changes made)
-(986 real changes made)
-(2,203 real changes made)
-(44,415 real changes made)
-(55,806 real changes made)
-(2,109 real changes made)
-(8,255 real changes made)
-(48,437 real changes made)
-(51,784 real changes made)
-
 . 
 . foreach i in facadv facben facchal facind facloc facresp facsal facsoc {
   2.         label define `i' 4 "Very important" 3 "Somewhat important" 2 "Somewhat unimportant" 1
@@ -1048,4 +1059,15 @@ file joinersc.dta saved
 . 
 . 
 end of do-file
+
+. help ologit
+
+. help ivnbreg
+
+. ssc install ivpois
+checking ivpois consistency and verifying not already installed...
+installing into c:\ado\plus\...
+installation complete.
+
+. help ivpois
 
