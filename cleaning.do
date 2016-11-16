@@ -96,7 +96,7 @@ label values hdclas hdclas
 //gen tenure var
 replace strtyr = . if strtyr == 9998
 gen tenure = refyr - strtyr
-label var tenure "Tenure"
+label var tenure "Tenure (years)"
 
 //generate dummy for newbus
 gen nb = .
@@ -170,8 +170,16 @@ label var facsal "Importance of job's salary"
 *facsoc = Importance of job's contribution to society
 label var facsoc "Importance of job's contribution to society"
 
+//reshape values for fac* variables so that value 1 corresponds with "Not important at all" 4 corresponds with "Very Important" --> for ordered logit
 foreach i in facadv facben facchal facind facloc facresp facsal facsoc {
-	label define `i' 1 "Very important" 2 "Somewhat important" 3 "Somewhat unimportant" 4 "Not important at all"
+	replace `i' = 1 if `i' == 4
+	replace `i' = 2 if `i' == 3
+	replace `i' = 3 if `i' == 2
+	replace `i' = 4 if `i' == 1
+}
+
+foreach i in facadv facben facchal facind facloc facresp facsal facsoc {
+	label define `i' 4 "Very important" 3 "Somewhat important" 2 "Somewhat unimportant" 1 "Not important at all"
 	label values `i' `i'
 }
 
@@ -420,6 +428,7 @@ label value wapri wapri
 // gen var indicating years of working experience = 2003 - t(most recent degree)
 gen workexp = 2003 - mrdacyr if mrdacyr <= 2003
 replace workexp = 0 if mrdacyr > 2003 // 400 graduates in 2004 (expected graduation in 2004, but academic year 03-04)
+label var workexp "Work experience (years)"
 
 //generate dummies for work activities
 foreach i in waacc waaprsh wabrsh wacom wadev wadsn waemrl wamgmt waot waprod waqm wasale wasvc watea {

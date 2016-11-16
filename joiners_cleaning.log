@@ -2,7 +2,7 @@
       name:  Cleaning
        log:  C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\joiners_cleaning.log
   log type:  text
- opened on:  15 Nov 2016, 17:33:02
+ opened on:  16 Nov 2016, 14:59:36
 
 . 
 . use joiners.dta
@@ -158,7 +158,7 @@
 . gen tenure = refyr - strtyr
 (17,378 missing values generated)
 
-. label var tenure "Tenure"
+. label var tenure "Tenure (years)"
 
 . 
 . //generate dummy for newbus
@@ -305,8 +305,50 @@
 . label var facsoc "Importance of job's contribution to society"
 
 . 
+. //reshape values for fac* variables so that value 1 corresponds with "Not important at all" 4 co
+> rresponds with "Very Important" --> for ordered logit
 . foreach i in facadv facben facchal facind facloc facresp facsal facsoc {
-  2.         label define `i' 1 "Very important" 2 "Somewhat important" 3 "Somewhat unimportant" 4
+  2.         replace `i' = 1 if `i' == 4
+  3.         replace `i' = 2 if `i' == 3
+  4.         replace `i' = 3 if `i' == 2
+  5.         replace `i' = 4 if `i' == 1
+  6. }
+(4,010 real changes made)
+(9,643 real changes made)
+(55,115 real changes made)
+(45,106 real changes made)
+(2,279 real changes made)
+(3,380 real changes made)
+(35,015 real changes made)
+(65,206 real changes made)
+(903 real changes made)
+(2,371 real changes made)
+(35,171 real changes made)
+(65,050 real changes made)
+(731 real changes made)
+(2,921 real changes made)
+(37,684 real changes made)
+(62,537 real changes made)
+(1,243 real changes made)
+(4,561 real changes made)
+(46,125 real changes made)
+(54,096 real changes made)
+(1,475 real changes made)
+(6,172 real changes made)
+(53,184 real changes made)
+(47,037 real changes made)
+(986 real changes made)
+(2,203 real changes made)
+(44,415 real changes made)
+(55,806 real changes made)
+(2,109 real changes made)
+(8,255 real changes made)
+(48,437 real changes made)
+(51,784 real changes made)
+
+. 
+. foreach i in facadv facben facchal facind facloc facresp facsal facsoc {
+  2.         label define `i' 4 "Very important" 3 "Somewhat important" 2 "Somewhat unimportant" 1
 >  "Not important at all"
   3.         label values `i' `i'
   4. }
@@ -796,6 +838,8 @@
 >  academic year 03-04)
 (300 real changes made)
 
+. label var workexp "Work experience (years)"
+
 . 
 . //generate dummies for work activities
 . foreach i in waacc waaprsh wabrsh wacom wadev wadsn waemrl wamgmt waot waprod waqm wasale wasvc 
@@ -1005,6 +1049,3 @@ file joinersc.dta saved
 . 
 end of do-file
 
-. help fsum
-
-. exit, clear
