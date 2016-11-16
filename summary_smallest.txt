@@ -1,0 +1,222 @@
+
+                                                                      Variable |        N     Mean       SD      Min      Max                                                                                                                              
+-------------------------------------------------------------------------------+---------------------------------------------
+                                                                 Employer_Type |    11187     2.00     0.00     2.00     2.00  
+                                                        Small Established (%)  |    11187   100.00
+                                                                     2003_wage |    11187 54174.58 36549.58     0.00 1.50e+05  
+                                                                     2006_wage |     4679 67416.11 38731.40     0.00 1.50e+05  
+                                                                     2008_wage |     4011 74495.14 40185.27     0.00 1.50e+05  
+                                                                     2010_wage |     2032 74800.69 42036.12     0.00 1.50e+05  
+                                                                 log_2003_wage |    11187    10.54     1.32     0.00    11.92  
+                                                                 log_2006_wage |     4679    10.87     1.01     0.00    11.92  
+                                                                 log_2008_wage |     4011    10.98     0.98     0.00    11.92  
+                                                                 log_2010_wage |     2032    10.93     1.22     0.00    11.92  
+                                                        yearly_growth_log_wage |     4815     0.04     0.29    -3.49     3.97  
+                                                                           Age |    11187    45.20    10.99    24.00    76.00  
+                                                                          Age² |    11187  2163.59  1034.38   576.00  5776.00  
+                                                                       workexp |    11187    17.06    10.88     0.00    55.00  
+                                                                          Male |    11187     0.55     0.50     0.00     1.00  
+                                                                        0 (%)  |     5019    44.86
+                                                                        1 (%)  |     6168    55.14
+                                                                          Race |    11187     3.64     0.99     1.00     6.00  
+                                                                    Asian (%)  |     1163    10.40
+                                            American Indian/Alaska Native (%)  |       86     0.77
+                                                                    Black (%)  |      743     6.64
+                                                                    White (%)  |     8959    80.08
+                                   Native Hawaiian/Other Pacific Islander (%)  |       44     0.39
+                                                                 Multiple (%)  |      192     1.72
+                                                                       Married |    11187     0.74     0.44     0.00     1.00  
+                                                                        0 (%)  |     2945    26.33
+                                                                        1 (%)  |     8242    73.67
+                                                                Highest_degree |    11187     1.63     0.89     1.00     4.00  
+                                                               Bachelor's (%)  |     6477    57.90
+                                                                 Master's (%)  |     3259    29.13
+                                                                Doctorate (%)  |      593     5.30
+                                                             Professional (%)  |      858     7.67
+                                                                   Major_Field |    11187     5.71     1.79     1.00     7.00  
+                                       Computer and mathematical sciences (%)  |      529     4.73
+                                                Life and related sciences (%)  |      530     4.74
+                                            Physical and related sciences (%)  |      334     2.99
+                                              Social and related sciences (%)  |     1168    10.44
+                                                              Engineering (%)  |     1228    10.98
+                                                   S and E-Related Fields (%)  |     1361    12.17
+                                                       Non-S and E Fields (%)  |     6037    53.96
+                                                       Carnegie_Classification |     9749    19.41    11.30    11.00    60.00  
+                                                    Research University I (%)  |     2949    30.25
+                                                   Research University II (%)  |      760     7.80
+                                                     Doctorate Granting I (%)  |      753     7.72
+                                                    Doctorate Granting II (%)  |      690     7.08
+                                                          Comprehensive I (%)  |     2853    29.26
+                                                         Comprehensive II (%)  |      180     1.85
+                                                           Liberal Arts I (%)  |      277     2.84
+                                                          Liberal Arts II (%)  |      604     6.20
+                                                    Two-year institutions (%)  |       34     0.35
+                                   Theological seminaries, bible colleges (%)  |      206     2.11
+                                      Medical schools and medical centers (%)  |      127     1.30
+                               Other separate health professional schools (%)  |       33     0.34
+                                    Schools of engineering and technology (%)  |       47     0.48
+                                        Schools of art, music, and design (%)  |       42     0.43
+                                                           Schools of law (%)  |       50     0.51
+                                           Other specialized institutions (%)  |      143     1.47
+                                               Indian Tribal Institutions (%)  |        1     0.01
+                                                                Full/Part-time |    11187     1.14     0.35     1.00     2.00  
+                                                                Full-Time (%)  |     9603    85.84
+                                                                Part-time (%)  |     1584    14.16
+                                                                        Tenure |    11187     7.42     7.86     0.00    49.00  
+                                                                 Employer_Size |    11187     2.31     0.83     1.00     3.00  
+                                                                      <10 (%)  |     2666    23.83
+                                                                    10-24 (%)  |     2379    21.27
+                                                                  25 - 99 (%)  |     6142    54.90
+                                                               Employer_Region |    11187     4.99     2.71     1.00    50.00  
+                                                              New England (%)  |      826     7.38
+                                                          Middle Atlantic (%)  |     1716    15.34
+                                                       East North Central (%)  |     1766    15.79
+                                                       West North Central (%)  |      790     7.06
+                                                           South Atlantic (%)  |     1925    17.21
+                                                       East South Central (%)  |      499     4.46
+                                                       West South Central (%)  |      996     8.90
+                                                                 Mountain (%)  |      627     5.60
+                                                                  Pacific (%)  |     2036    18.20
+                                                                   Europe (%)  |        3     0.03
+                                                                     Asia (%)  |        1     0.01
+                                                            North America (%)  |        1     0.01
+                                                                  Oceania (%)  |        1     0.01
+                                                               Employer_Sector |    11187    20.04     5.02    11.00    32.00  
+                               4-yr coll/univ; med schl; univ. res. inst. (%)  |      415     3.71
+                                       2-yr coll/pre-college institutions (%)  |     1971    17.62
+                                                      Bus/Ind, for-profit (%)  |     6378    57.01
+                                                      Bus/Ind, non-profit (%)  |     1728    15.45
+                                                   State/Local government (%)  |      695     6.21
+                                                                      Industry |    11152    13.03     4.57     1.00    20.00  
+                               Agriculture, Forestry, Fishing and Hunting (%)  |       47     0.42
+                                                                   Mining (%)  |       28     0.25
+                                                                Utilities (%)  |       26     0.23
+                                                             Construction (%)  |      303     2.72
+                                                            Manufacturing (%)  |      775     6.95
+                                                          Wholesale Trade (%)  |      405     3.63
+                                                             Retail Trade (%)  |      418     3.75
+                                           Transportation and Warehousing (%)  |       93     0.83
+                                                              Information (%)  |      269     2.41
+                                                    Finance and Insurance (%)  |      408     3.66
+                                       Real Estate and Rental and Leasing (%)  |      188     1.69
+                         Professional, Scientific, and Technical Services (%)  |     2291    20.54
+                                  Management of Companies and Enterprises (%)  |        3     0.03
+ Administrative and Support and Waste Management and Remediation Services (%)  |      189     1.69
+                                                     Educational Services (%)  |     2294    20.57
+                                        Health Care and Social Assistance (%)  |     1475    13.23
+                                      Arts, Entertainment, and Recreation (%)  |      136     1.22
+                                          Accommodation and Food Services (%)  |      127     1.14
+                            Other Services (except Public Administration) (%)  |      952     8.54
+                                                    Public Administration (%)  |      725     6.50
+                                                      Occupation_(minor_group) |    11187    64.90    18.14    11.00    78.00  
+                                      Computer and information scientists (%)  |      690     6.17
+                                                  Mathematical scientists (%)  |       20     0.18
+                      Postsecondary teachers - computer and math sciences (%)  |       27     0.24
+                                         Agricultural and food scientists (%)  |       27     0.24
+                                        Biological and medical scientists (%)  |      152     1.36
+                                            Environmental life scientists (%)  |       21     0.19
+                       Postsecondary teachers - life and related sciences (%)  |        9     0.08
+                                             Chemists, except biochemists (%)  |       78     0.70
+                          Earth scientists, geologists and oceanographers (%)  |       49     0.44
+                                               Physicists and astronomers (%)  |       14     0.13
+                                    Other physical and related scientists (%)  |       25     0.22
+                   Postsecondary teachers - physical and related sciences (%)  |       10     0.09
+                                                               Economists (%)  |       19     0.17
+                                                     Political scientists (%)  |        8     0.07
+                                                            Psychologists (%)  |      113     1.01
+                                         Sociologists and anthropologists (%)  |       20     0.18
+                                      Other social and related scientists (%)  |       65     0.58
+                     Postsecondary teachers - social and related sciences (%)  |       15     0.13
+                                          Aerospace and related engineers (%)  |       21     0.19
+                                                       Chemical engineers (%)  |       24     0.21
+                                        Civil and architectural engineers (%)  |      255     2.28
+                                         Electrical and related engineers (%)  |      193     1.73
+                                                     Industrial engineers (%)  |       36     0.32
+                                                     Mechanical engineers (%)  |      156     1.39
+                                                          Other engineers (%)  |      188     1.68
+                                     Postsecondary teachers - engineering (%)  |        3     0.03
+                                               Health-related occupations (%)  |      919     8.21
+                                                         S and E managers (%)  |       68     0.61
+                                             S and E Pre-college Teachers (%)  |      340     3.04
+                                    S and E technicians and technologists (%)  |      218     1.95
+                                        Other S and E-related occupations (%)  |      115     1.03
+                                                     Non-S and E Managers (%)  |      703     6.28
+                                           Management-related occupations (%)  |     1059     9.47
+                                          Non-S and E precollege teachers (%)  |     1214    10.85
+                                       Non-S and E postsecondary teachers (%)  |      165     1.47
+                                  Social services and related occupations (%)  |      810     7.24
+                                          Sales and marketing occupations (%)  |      949     8.48
+                                   Art, humanties and related occupations (%)  |      347     3.10
+                                            Other non-S and E occupations (%)  |     2042    18.25
+                                                         Primary_Work_Activity |    11187     8.64     3.76     1.00    14.00  
+                                           Accounting, finance, contracts (%)  |      916     8.19
+                                                           Basic Research (%)  |      202     1.81
+                                                         Applied Research (%)  |      392     3.50
+                  Computer applications, programming, systems development (%)  |      337     3.01
+                                                              Development (%)  |      473     4.23
+                       Design of equipment, processes, structures, models (%)  |      768     6.87
+                                                       Employee relations (%)  |      247     2.21
+                                            Management and Administration (%)  |     1701    15.21
+                                      Production, operations, maintenance (%)  |      361     3.23
+                                                           Prof. services (%)  |     1901    16.99
+                                             Sales, purchasing, marketing (%)  |     1311    11.72
+                                       Quality or productivity management (%)  |      165     1.47
+                                                                 Teaching (%)  |     1918    17.14
+                                                      Other work activity (%)  |      495     4.42
+                                                Accounting,_Finance,_Contracts |    11187     0.33     0.47     0.00     1.00  
+                                                            Employee_Relations |    11187     0.36     0.48     0.00     1.00  
+                                                       Managing_or_Supervising |    11187     0.60     0.49     0.00     1.00  
+                                           Production,_Operations,_Maintenance |    11187     0.14     0.35     0.00     1.00  
+                                            Quality_or_Productivity_Management |    11187     0.23     0.42     0.00     1.00  
+                                                  Sales,_Purchasing,_Marketing |    11187     0.38     0.49     0.00     1.00  
+                                                         Professional_Services |    11187     0.33     0.47     0.00     1.00  
+                                                              Applied_Research |    11187     0.25     0.43     0.00     1.00  
+                                                                Basic_Research |    11187     0.17     0.38     0.00     1.00  
+                                                         Computer_Applications |    11187     0.32     0.47     0.00     1.00  
+                                                                   Development |    11187     0.25     0.44     0.00     1.00  
+                                                                        Design |    11187     0.20     0.40     0.00     1.00  
+                                                                         Other |    11187     0.08     0.27     0.00     1.00  
+                                                                      Teaching |    11187     0.34     0.48     0.00     1.00  
+                                                     Number_of_Work_Activities |    11187     3.99     2.43     1.00    14.00  
+                                               Number_of_Commercial_Activities |    11187     2.37     1.73     0.00     7.00  
+                                                 Number_of_Research_Activities |    11187     1.20     1.37     0.00     5.00  
+                             Importance_of_job's_opportunities_for_advancement |    11187     1.79     0.79     1.00     4.00  
+                                                           Very important (%)  |     4374    39.10
+                                                       Somewhat important (%)  |     5200    46.48
+                                                     Somewhat unimportant (%)  |     1153    10.31
+                                                     Not important at all (%)  |      460     4.11
+                                                  Importance_of_job's_benefits |    11187     1.50     0.68     1.00     4.00  
+                                                           Very important (%)  |     6591    58.92
+                                                       Somewhat important (%)  |     3910    34.95
+                                                     Somewhat unimportant (%)  |      424     3.79
+                                                     Not important at all (%)  |      262     2.34
+                                    Importance_of_job's_intellectual_challenge |    11187     1.41     0.59     1.00     4.00  
+                                                           Very important (%)  |     7116    63.61
+                                                       Somewhat important (%)  |     3695    33.03
+                                                     Somewhat unimportant (%)  |      278     2.49
+                                                     Not important at all (%)  |       98     0.88
+                                    Importance_of_job's_degree_of_independence |    11187     1.40     0.57     1.00     4.00  
+                                                           Very important (%)  |     7174    64.13
+                                                       Somewhat important (%)  |     3672    32.82
+                                                     Somewhat unimportant (%)  |      273     2.44
+                                                     Not important at all (%)  |       68     0.61
+                                                  Importance_of_job's_location |    11187     1.55     0.64     1.00     4.00  
+                                                           Very important (%)  |     5794    51.79
+                                                       Somewhat important (%)  |     4718    42.17
+                                                     Somewhat unimportant (%)  |      540     4.83
+                                                     Not important at all (%)  |      135     1.21
+                                   Importance_of_job's_level_of_responsibility |    11187     1.59     0.65     1.00     4.00  
+                                                           Very important (%)  |     5421    48.46
+                                                       Somewhat important (%)  |     5047    45.11
+                                                     Somewhat unimportant (%)  |      575     5.14
+                                                     Not important at all (%)  |      144     1.29
+                                                    Importance_of_job's_salary |    11187     1.53     0.61     1.00     4.00  
+                                                           Very important (%)  |     5819    52.02
+                                                       Somewhat important (%)  |     4947    44.22
+                                                     Somewhat unimportant (%)  |      303     2.71
+                                                     Not important at all (%)  |      118     1.05
+                                   Importance_of_job's_contribution_to_society |    11187     1.55     0.69     1.00     4.00  
+                                                           Very important (%)  |     6129    54.79
+                                                       Somewhat important (%)  |     4150    37.10
+                                                     Somewhat unimportant (%)  |      723     6.46
+                                                     Not important at all (%)  |      185     1.65
