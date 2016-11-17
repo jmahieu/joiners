@@ -428,7 +428,26 @@ label define wapri 13 "Teaching", add
 label define wapri 14 "Other work activity", add
 label value wapri wapri
 
+
 *wasec = work activity spent second most hours on
+label var wasec "Secondary Work Activity"
+label define wasec 0 "No secondary work activity", add
+label define wasec 1 "Accounting, finance, contracts", add
+label define wasec 2 "Basic Research", add
+label define wasec 3 "Applied Research", add
+label define wasec 4 "Computer applications, programming, systems development", add
+label define wasec 5 "Development", add
+label define wasec 6 "Design of equipment, processes, structures, models", add
+label define wasec 7 "Employee relations", add
+label define wasec 8 "Management and Administration", add
+label define wasec 9 "Production, operations, maintenance", add
+label define wasec 10 "Prof. services", add
+label define wasec 11 "Sales, purchasing, marketing", add
+label define wasec 12 "Quality or productivity management", add
+label define wasec 13 "Teaching", add
+label define wasec 14 "Other work activity", add
+label value wasec wasec
+
 
 // gen var indicating years of working experience = 2003 - t(most recent degree)
 gen workexp = 2003 - mrdacyr if mrdacyr <= 2003
@@ -482,13 +501,24 @@ gen wan = waacc + waaprsh + wabrsh + wacom + wadev + wadsn + waemrl + wamgmt + w
 label var wan "Number of Work Activities"
 
 //gen count of commercial activities (cf. Elfenbein)  
-gen cmrcn = waacc + waemrl + wamgmt + waprod + waqm + wasale + wasvc
+gen cmrcn = waacc + waemrl + wamgmt + waprod + waqm + wasale + wasvc 
 label var cmrcn "Number of Commercial Activities"
 
 //gen count of research activities (cf. Elfenbein)
 gen resn = waaprsh + wabrsh + wacom + wadev + wadsn
 label var resn "Number of Research Activities"
 
+//gen variable indicating the weight put on research tasks (cf. beta of Gathmann & Schönberg 2010 / Lazear 2009
+gen wres = resn/(resn+cmrcn) // wres lies in the interval [0;1]
+
+gen wres0 = 1 if wres == 0 //beta_research = 0
+replace wres0 = 0 if wres > 0
+
+gen wres1 = 1 if wres == 1 //beta_research = 1
+replace wres1 = 0 if wres < 1
+
+//gen variable indicating the weight put on commercial tasks
+gen wcmrc = cmrcn/(cmrcn+resn)
 
 //create variable employer type: 1= startup, 2 = small established firm, 3 = large established firms
 gen emplr = .

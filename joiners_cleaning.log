@@ -1,8 +1,8 @@
---------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
       name:  Cleaning
        log:  C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\joiners_cleaning.log
   log type:  text
- opened on:  16 Nov 2016, 16:00:18
+ opened on:  17 Nov 2016, 20:20:36
 
 . 
 . use joiners.dta
@@ -51,8 +51,7 @@
 
 . label var race "Race"
 
-. label define race 1 "Asian" 2 "American Indian/Alaska Native" 3 "Black" 4 "White" 5 "Native Hawa
-> iian/Other Pacific Islander" 6 "Multiple"
+. label define race 1 "Asian" 2 "American Indian/Alaska Native" 3 "Black" 4 "White" 5 "Native Hawaiian/Other Pacific Islander" 6 "Multiple"
 
 . label values race race
 
@@ -179,9 +178,7 @@
 
 . 
 . //make numeric vars
-. foreach i in emsize emtp ndgmemg ndgmeng emsmi emrg emsecdt facadv facben facchal facind facloc 
-> facresp facsal facsec facsoc fptind indcode lfstat nedtp nocpr nocprng nocprmg waprsm wascsm wap
-> ri wasec jobsatis{
+. foreach i in emsize emtp ndgmemg ndgmeng emsmi emrg emsecdt facadv facben facchal facind facloc facresp facsal facsec facsoc fptind indcode lfstat nedtp nocpr nocprng nocprmg waprsm wascsm wapri wasec jobsatis{
   2.  gen `i'_n = real(`i')
   3.  drop `i'
   4.  rename `i'_n `i'
@@ -212,8 +209,7 @@
 . *emsize = employer size 
 . label var emsize "Employer Size"
 
-. label define emsize 1 "<10" 2 "10-24" 3 "25 - 99" 4 "100 - 499" 5 "500 - 999" 5 "500 - 999" 6 "1
-> 000 - 4999" 7 "5000 - 24999" 8 ">25000"
+. label define emsize 1 "<10" 2 "10-24" 3 "25 - 99" 4 "100 - 499" 5 "500 - 999" 5 "500 - 999" 6 "1000 - 4999" 7 "5000 - 24999" 8 ">25000"
 
 . label values emsize emsize
 
@@ -281,8 +277,7 @@
 . label values emsecdt emsecdt
 
 . 
-. //reshape values for fac* variables so that value 1 corresponds with "Not important at all" 4 co
-> rresponds with "Very Important" --> for ordered logit
+. //reshape values for fac* variables so that value 1 corresponds with "Not important at all" 4 corresponds with "Very Important" --> for ordered logit
 . foreach i in facadv facben facchal facind facloc facresp facsal facsec facsoc {
   2.         gen `i'_n = 1 if `i' == 4
   3.         replace `i'_n = 2 if `i' == 3
@@ -359,8 +354,7 @@
 . 
 . 
 . foreach i in facadv facben facchal facind facloc facresp facsal facsoc {
-  2.         label define `i' 4 "Very important" 3 "Somewhat important" 2 "Somewhat unimportant" 1
->  "Not important at all"
+  2.         label define `i' 4 "Very important" 3 "Somewhat important" 2 "Somewhat unimportant" 1 "Not important at all"
   3.         label values `i' `i'
   4. }
 
@@ -533,8 +527,7 @@
 
 . label define industry 3170 "Metalworking machinery manufacturing", add
 
-. label define industry 3180 "Engines, turbines, and power transmission equipment manufacturing", 
-> add
+. label define industry 3180 "Engines, turbines, and power transmission equipment manufacturing", add
 
 . label define industry 3190 "Machinery manufacturing, n.e.c.", add
 
@@ -588,15 +581,13 @@
 
 . label define industry 4090 "Lumber and other construction materials, merchant wholesalers", add
 
-. label define industry 4170 "Professional and commercial equipment and supplies, merchant wholesa
-> lers", add
+. label define industry 4170 "Professional and commercial equipment and supplies, merchant wholesalers", add
 
 . label define industry 4180 "Metals and minerals, except petroleum, merchant wholesalers", add
 
 . label define industry 4190 "Electrical goods, merchant wholesalers", add
 
-. label define industry 4260 "Hardware, plumbing and heating equipment, and supplies merchants who
-> lesalers", add
+. label define industry 4260 "Hardware, plumbing and heating equipment, and supplies merchants wholesalers", add
 
 . label define industry 4270 "Machinery, equipment, and supplies, merchant wholesalers", add
 
@@ -606,8 +597,7 @@
 
 . label define industry 4370 "Paper and paper products, merchant wholesalers", add
 
-. label define industry 4380 "Drugs, sundries, and chemical and allied products, merchant wholesal
-> ers", add
+. label define industry 4380 "Drugs, sundries, and chemical and allied products, merchant wholesalers", add
 
 . label define industry 4390 "Apparel, fabrics, and notions, merchant wholesalers", add
 
@@ -629,10 +619,8 @@
 
 . 
 . // gen var covering broad industry classes using NAICS 2002
-. recode industry (170/290=1) (370/490=2) (570/690=3) (770=4) (1070/3990=5) (4070/4590=6) (4670/57
-> 90=7) (6070/6390=8) (6470/6780=9) (6870/6990=10) (7070/7190=11) (7270/7490=12) (7570=13) (7580/7
-> 790=14) (7860/7890=15) (7970/8470=16) (8560/8590=17) (8660/8690=18) (8770/9290=19) (9300=20) , g
-> en(bindustry)
+. recode industry (170/290=1) (370/490=2) (570/690=3) (770=4) (1070/3990=5) (4070/4590=6) (4670/5790=7) (6070/6390=8) (6470/6780=9) (6870/6990=10) (7070/7190=11) (7270/7490=12) (7570=13) (7580/7790=14) (7860/7890=15) (7970/8
+> 470=16) (8560/8590=17) (8660/8690=18) (8770/9290=19) (9300=20) , gen(bindustry)
 (82861 differences between industry and bindustry)
 
 . label var bindustry "Industry"
@@ -663,8 +651,7 @@
 
 . label define bindustry 13 "Management of Companies and Enterprises", add
 
-. label define bindustry 14 "Administrative and Support and Waste Management and Remediation Servi
-> ces", add
+. label define bindustry 14 "Administrative and Support and Waste Management and Remediation Services", add
 
 . label define bindustry 15 "Educational Services", add
 
@@ -840,21 +827,54 @@
 
 . 
 . *wasec = work activity spent second most hours on
+. label var wasec "Secondary Work Activity"
+
+. label define wasec 0 "No secondary work activity", add
+
+. label define wasec 1 "Accounting, finance, contracts", add
+
+. label define wasec 2 "Basic Research", add
+
+. label define wasec 3 "Applied Research", add
+
+. label define wasec 4 "Computer applications, programming, systems development", add
+
+. label define wasec 5 "Development", add
+
+. label define wasec 6 "Design of equipment, processes, structures, models", add
+
+. label define wasec 7 "Employee relations", add
+
+. label define wasec 8 "Management and Administration", add
+
+. label define wasec 9 "Production, operations, maintenance", add
+
+. label define wasec 10 "Prof. services", add
+
+. label define wasec 11 "Sales, purchasing, marketing", add
+
+. label define wasec 12 "Quality or productivity management", add
+
+. label define wasec 13 "Teaching", add
+
+. label define wasec 14 "Other work activity", add
+
+. label value wasec wasec
+
+. 
 . 
 . // gen var indicating years of working experience = 2003 - t(most recent degree)
 . gen workexp = 2003 - mrdacyr if mrdacyr <= 2003
 (300 missing values generated)
 
-. replace workexp = 0 if mrdacyr > 2003 // 400 graduates in 2004 (expected graduation in 2004, but
->  academic year 03-04)
+. replace workexp = 0 if mrdacyr > 2003 // 400 graduates in 2004 (expected graduation in 2004, but academic year 03-04)
 (300 real changes made)
 
 . label var workexp "Work experience (years)"
 
 . 
 . //generate dummies for work activities
-. foreach i in waacc waaprsh wabrsh wacom wadev wadsn waemrl wamgmt waot waprod waqm wasale wasvc 
-> watea {
+. foreach i in waacc waaprsh wabrsh wacom wadev wadsn waemrl wamgmt waot waprod waqm wasale wasvc watea {
   2. gen `i'_dum = .
   3. replace `i'_dum = 1 if `i' == "Y"
   4. replace `i'_dum = 0 if `i' == "N"
@@ -953,15 +973,14 @@
 
 . 
 . //generate count of all work activities
-. gen wan = waacc + waaprsh + wabrsh + wacom + wadev + wadsn + waemrl + wamgmt + waot + waprod + w
-> aqm + wasale + wasvc + watea
+. gen wan = waacc + waaprsh + wabrsh + wacom + wadev + wadsn + waemrl + wamgmt + waot + waprod + waqm + wasale + wasvc + watea
 (17,378 missing values generated)
 
 . label var wan "Number of Work Activities"
 
 . 
 . //gen count of commercial activities (cf. Elfenbein)  
-. gen cmrcn = waacc + waemrl + wamgmt + waprod + waqm + wasale + wasvc
+. gen cmrcn = waacc + waemrl + wamgmt + waprod + waqm + wasale + wasvc 
 (17,378 missing values generated)
 
 . label var cmrcn "Number of Commercial Activities"
@@ -974,9 +993,31 @@
 . label var resn "Number of Research Activities"
 
 . 
+. //gen variable indicating the weight put on research tasks (cf. beta of Gathmann & Schönberg 2010 / Lazear 2009
+. gen wres = resn/(resn+cmrcn) // wres lies in the interval [0;1]
+(22,292 missing values generated)
+
 . 
-. //create variable employer type: 1= startup, 2 = small established firm, 3 = large established f
-> irms
+. gen wres0 = 1 if wres == 0 //beta_research = 0
+(75,644 missing values generated)
+
+. replace wres0 = 0 if wres > 0
+(75,644 real changes made)
+
+. 
+. gen wres1 = 1 if wres == 1 //beta_research = 1
+(92,478 missing values generated)
+
+. replace wres1 = 0 if wres < 1
+(70,186 real changes made)
+
+. 
+. //gen variable indicating the weight put on commercial tasks
+. gen wcmrc = cmrcn/(cmrcn+resn)
+(22,292 missing values generated)
+
+. 
+. //create variable employer type: 1= startup, 2 = small established firm, 3 = large established firms
 . gen emplr = .
 (100,402 missing values generated)
 
@@ -1059,16 +1100,5 @@ file joinersc.dta saved
 . 
 . 
 end of do-file
-
-. help ologit
-
-. help ivnbreg
-
-. ssc install ivpois
-checking ivpois consistency and verifying not already installed...
-installing into c:\ado\plus\...
-installation complete.
-
-. help ivpois
 
 . exit, clear

@@ -37,6 +37,20 @@ logout, save (summary_smallest) fix excel replace: fsum emplr wage* lnwage* dlnw
 //summary statistics for large established firm employees
 logout, save (summary_largeest) fix excel replace: fsum emplr wage* lnwage* dlnwage age age2 workexp male race mar degree major hdclas fptind tenure emsize emrg emsecdt bindustry nocprng wapri waacc waemrl wamgmt waprod waqm wasale wasvc waaprsh wabrsh wacom wadev wadsn waot watea wan cmrcn resn facadv facben facchal facind facloc facres facsal facsec  facsoc if emplr == 3, catvar(emplr male race mar degree major hdclas fptind emsize emrg emsecdt bindustry nocprng wapri facadv facben facchal facind facloc facres facsal facsoc) uselabel  
 
+
+/*------------------------------------------------------------------------------
+
+			MEASURING JOB TASK EXPERIMENTATION 
+			
+-------------------------------------------------------------------------------*/
+foreach i in 1 2 3 {
+tabstat wan if emplr == `i' & nedtp == 3, by(nocprng) stat(n mean sem) labelwidth(32) longstub
+}
+
+nbreg wan i.emplr i.degree i.major i.hdclas i.bindustry i.nocprmg i.fptind i.emsecdt age age2 tenure male i.race mar, vce(robust) nolog
+
+
+/*
 /*-----------------------------------------------------------------------------
 
 			ORDERED OUTCOME REGRESSION FOR FAC* VARIABLES
@@ -78,8 +92,21 @@ ologit facsal i.emplr i.degree i.major i.hdclas i.bindustry i.nocprng i.fptind i
 
 //Importance of job's contribution to society
 ologit facsoc i.emplr i.degree i.major i.hdclas i.bindustry i.nocprng i.fptind i.emsecdt age age2 tenure male i.race mar, vce(cluster bindustry) nolog
+*/
 
+/*------------------------------------------------------------------------------
+
+					REGRESSIONS ON SALARY (GROWTH)
+					
+------------------------------------------------------------------------------*/
 
 //correlations for lnwage03 and independent vars
-pwcorr lnwage03 age age2 male mar race emplr degree major hdclas tenure emsecdt bindustry nocprng cmrcn resn, star(0.01)
+pwcorr lnwage03 age age2 male mar race emplr degree major hdclas tenure emsecdt bindustry nocprng wan, star(0.05)
+
+reg lnwage03 i.emplr i.degree i.major i.hdclas i.bindustry i.nocprmg i.fptind i.emsecdt age age2 tenure male i.race mar, vce(robust)
+reg lnwage03 i.emplr i.degree i.major i.hdclas i.bindustry i.nocprmg wan i.fptind i.emsecdt age age2 tenure male i.race mar, vce(robust)
+ivregress 2sls lnwage03 i.degree i.major i.hdclas i.bindustry i.nocprmg wan i.fptind i.emsecdt age age2 tenure male i.race mar (1.emplr 2.emplr 3.emplr = 4.facind 4.facsec 1.facsal), vce(cluster bindustry) first 
+
+ivregress 2sls dlnwage i.degree i.major i.hdclas i.bindustry i.nocprmg i.fptind i.emsecdt age age2 tenure male i.race mar (1.emplr = 4.facsec), vce(robust) first 
+ivregress 2sls dlnwage i.degree i.major i.hdclas i.bindustry i.nocprmg wan i.fptind i.emsecdt age age2 tenure male i.race mar (1.emplr = 4.facsec), vce(robust) first 
 
