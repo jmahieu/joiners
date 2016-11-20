@@ -551,6 +551,12 @@ foreach i in 03 06 08 10 {
 	label var lnwage`i' "log 20`i' wage"
 }
 
+//generate yearly wage growth [(wage_j - wage_i)/(j-i)]
+gen dwage = (wage10 - wage03)/7 if wage10 != .
+replace dwage = (wage08 - wage03)/5 if dwage == . & wage08 != .
+replace dwage = (wage06 - wage03)/3 if dwage == . & wage06 != .
+label var dwage "yearly growth wage"
+
 //gen log yearly wage growth
 
 gen dlnwage = (lnwage10 - lnwage03)/7 if wage10 != .
