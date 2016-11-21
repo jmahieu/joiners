@@ -1,8 +1,8 @@
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------
       name:  Cleaning
        log:  C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\joiners_cleaning.log
   log type:  text
- opened on:  18 Nov 2016, 15:54:40
+ opened on:  21 Nov 2016, 16:25:48
 
 . 
 . use joiners.dta
@@ -51,7 +51,8 @@
 
 . label var race "Race"
 
-. label define race 1 "Asian" 2 "American Indian/Alaska Native" 3 "Black" 4 "White" 5 "Native Hawaiian/Other Pacific Islander" 6 "Multiple"
+. label define race 1 "Asian" 2 "American Indian/Alaska Native" 3 "Black" 4 "White" 5 "Native Hawaiian/Other Pacific Islander" 6
+>  "Multiple"
 
 . label values race race
 
@@ -178,7 +179,8 @@
 
 . 
 . //make numeric vars
-. foreach i in emsize emtp ndgmemg ndgmeng emsmi emrg emsecdt facadv facben facchal facind facloc facresp facsal facsec facsoc fptind indcode lfstat nedtp nocpr nocprng nocprmg waprsm wascsm wapri wasec jobsatis{
+. foreach i in emsize emtp ndgmemg ndgmeng emsmi emrg emsecdt facadv facben facchal facind facloc facresp facsal facsec facsoc f
+> ptind indcode lfstat nedtp nocpr nocprng nocprmg waprsm wascsm wapri wasec jobsatis{
   2.  gen `i'_n = real(`i')
   3.  drop `i'
   4.  rename `i'_n `i'
@@ -209,7 +211,8 @@
 . *emsize = employer size 
 . label var emsize "Employer Size"
 
-. label define emsize 1 "<10" 2 "10-24" 3 "25 - 99" 4 "100 - 499" 5 "500 - 999" 5 "500 - 999" 6 "1000 - 4999" 7 "5000 - 24999" 8 ">25000"
+. label define emsize 1 "<10" 2 "10-24" 3 "25 - 99" 4 "100 - 499" 5 "500 - 999" 5 "500 - 999" 6 "1000 - 4999" 7 "5000 - 24999" 8
+>  ">25000"
 
 . label values emsize emsize
 
@@ -277,7 +280,8 @@
 . label values emsecdt emsecdt
 
 . 
-. //reshape values for fac* variables so that value 1 corresponds with "Not important at all" 4 corresponds with "Very Important" --> for ordered logit
+. //reshape values for fac* variables so that value 1 corresponds with "Not important at all" 4 corresponds with "Very Important
+> " --> for ordered logit
 . foreach i in facadv facben facchal facind facloc facresp facsal facsec facsoc {
   2.         gen `i'_n = 1 if `i' == 4
   3.         replace `i'_n = 2 if `i' == 3
@@ -619,8 +623,9 @@
 
 . 
 . // gen var covering broad industry classes using NAICS 2002
-. recode industry (170/290=1) (370/490=2) (570/690=3) (770=4) (1070/3990=5) (4070/4590=6) (4670/5790=7) (6070/6390=8) (6470/6780=9) (6870/6990=10) (7070/7190=11) (7270/7490=12) (7570=13) (7580/7790=14) (7860/7890=15) (7970/8
-> 470=16) (8560/8590=17) (8660/8690=18) (8770/9290=19) (9300=20) , gen(bindustry)
+. recode industry (170/290=1) (370/490=2) (570/690=3) (770=4) (1070/3990=5) (4070/4590=6) (4670/5790=7) (6070/6390=8) (6470/6780
+> =9) (6870/6990=10) (7070/7190=11) (7270/7490=12) (7570=13) (7580/7790=14) (7860/7890=15) (7970/8470=16) (8560/8590=17) (8660/8
+> 690=18) (8770/9290=19) (9300=20) , gen(bindustry)
 (82861 differences between industry and bindustry)
 
 . label var bindustry "Industry"
@@ -979,6 +984,11 @@
 
 . label var wan "Number of Work Activities"
 
+. gen wan2 = wan^2
+(17,378 missing values generated)
+
+. label var wan2 "Number of Work Activities squared"
+
 . 
 . //gen count of commercial activities (cf. Elfenbein)  
 . gen cmrcn = waacc + waemrl + wamgmt + waprod + waqm + wasale + wasvc 
@@ -1039,6 +1049,29 @@
 . label values emplr emplr
 
 . 
+. tab emplr, gen(emplr)
+
+    Employer Type |      Freq.     Percent        Cum.
+------------------+-----------------------------------
+          Startup |      1,741        2.55        2.55
+Small Established |     11,187       16.39       18.94
+Large Established |     55,330       81.06      100.00
+------------------+-----------------------------------
+            Total |     68,258      100.00
+
+. rename emplr1 startup
+
+. label var startup "Startup"
+
+. rename emplr2 small 
+
+. label var small "Small Established" 
+
+. rename emplr3 large 
+
+. label var large "Large Established"
+
+. 
 . /* SALARY */
 . 
 . // put incorrect wages to missing
@@ -1091,14 +1124,16 @@
 . 
 . //gen log yearly wage growth
 . 
-. gen dlnwage = (lnwage10 - lnwage03)/7 if wage10 != .
-(84,071 missing values generated)
+. gen e = 2.71828
 
-. replace dlnwage = (lnwage08 - lnwage03)/5 if dlnwage == . & wage08 != .
-(19,212 real changes made)
+. gen dlnwage = e^(log(wage10/wage03)/7) - 1  if wage10 != .
+(84,273 missing values generated)
 
-. replace dlnwage = (lnwage06 - lnwage03)/3 if dlnwage == . & wage06 != .
-(6,350 real changes made)
+. replace dlnwage = e^(log(wage08/wage03)/5) - 1 if dlnwage == . & wage08 != .
+(19,113 real changes made)
+
+. replace dlnwage = e^(log(wage06/wage03)/3) - 1 if dlnwage == . & wage06 != .
+(6,327 real changes made)
 
 . label var dlnwage "yearly growth log wage"
 
@@ -1115,254 +1150,5 @@ file joinersc.dta saved
 . 
 end of do-file
 
-. hist dwage, discrete
-(start=-50000, width=28.571289)
+. browse dlnwage wage* refid refyr
 
-. sum dwage, d
-
-                     yearly growth wage
--------------------------------------------------------------
-      Percentiles      Smallest
- 1%       -16800         -50000
- 5%        -7000      -49666.67
-10%    -2857.143      -49333.33       Obs              41,893
-25%          200      -49333.33       Sum of Wgt.      41,893
-
-50%     2428.572                      Mean           2411.401
-                        Largest       Std. Dev.      5906.642
-75%     4666.667          49000
-90%         7800          50000       Variance       3.49e+07
-95%        10600          50000       Skewness      -.3969158
-99%        20400          50000       Kurtosis       12.07374
-
-. tobit dwage i.emplr i.degree i.major i.hdclas i.bindustry i.nocprmg i.fptind i.emsecdt age age2 tenure male i.race mar, ll(-50000) ul(50000) vce(robust)
-
-Tobit regression                                Number of obs     =     29,747
-                                                F(  67,  29680)   =      25.20
-                                                Prob > F          =     0.0000
-Log pseudolikelihood = -296799.78               Pseudo R2         =     0.0034
-
--------------------------------------------------------------------------------------------------------------------------------------------
-                                                                          |               Robust
-                                                                    dwage |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
---------------------------------------------------------------------------+----------------------------------------------------------------
-                                                                    emplr |
-                                                       Small Established  |   194.0526   275.0988     0.71   0.481    -345.1531    733.2582
-                                                       Large Established  |   540.2045   262.4998     2.06   0.040     25.69342    1054.716
-                                                                          |
-                                                                   degree |
-                                                                Master's  |   453.0241   69.88115     6.48   0.000      316.054    589.9942
-                                                               Doctorate  |   304.3904   317.0554     0.96   0.337     -317.052    925.8328
-                                                            Professional  |   772.0251   203.5955     3.79   0.000     372.9689    1171.081
-                                                                          |
-                                                                    major |
-                                               Life and related sciences  |   64.53303   152.0792     0.42   0.671     -233.549     362.615
-                                           Physical and related sciences  |   191.7609   193.7014     0.99   0.322    -187.9023    571.4242
-                                             Social and related sciences  |  -70.69489   136.3756    -0.52   0.604     -337.997    196.6072
-                                                             Engineering  |   489.4847   131.6512     3.72   0.000     231.4425    747.5269
-                                                  S and E-Related Fields  |  -58.31568    130.932    -0.45   0.656    -314.9482    198.3168
-                                                      Non-S and E Fields  |   42.17328   116.1566     0.36   0.717    -185.4987    269.8453
-                                                                          |
-                                                                   hdclas |
-                                                  Research University II  |  -25.14887   107.4242    -0.23   0.815    -235.7051    185.4074
-                                                    Doctorate Granting I  |  -25.44313   121.9309    -0.21   0.835     -264.433    213.5468
-                                                   Doctorate Granting II  |   149.9414   121.1029     1.24   0.216    -87.42568    387.3085
-                                                         Comprehensive I  |  -68.06478   80.01008    -0.85   0.395     -224.888    88.75848
-                                                        Comprehensive II  |  -202.4761   214.4913    -0.94   0.345    -622.8885    217.9364
-                                                          Liberal Arts I  |  -30.02212   217.6352    -0.14   0.890    -456.5967    396.5525
-                                                         Liberal Arts II  |  -90.37222   138.6585    -0.65   0.515    -362.1489    181.4045
-                                                   Two-year institutions  |   768.7768   483.7699     1.59   0.112    -179.4333    1716.987
-                                  Theological seminaries, bible colleges  |  -578.9086   487.2541    -1.19   0.235    -1533.948    376.1309
-                                     Medical schools and medical centers  |   956.2655   384.0167     2.49   0.013     203.5758    1708.955
-                              Other separate health professional schools  |   101.2206   708.6348     0.14   0.886    -1287.735    1490.176
-                                   Schools of engineering and technology  |  -662.4312   282.5501    -2.34   0.019    -1216.242   -108.6206
-                                       Schools of art, music, and design  |  -174.1845   684.8244    -0.25   0.799     -1516.47    1168.101
-                                                          Schools of law  |   1032.589   862.2779     1.20   0.231    -657.5132    2722.692
-                                          Other specialized institutions  |  -354.8113    273.928    -1.30   0.195    -891.7222    182.0996
-                                                                          |
-                                                                bindustry |
-                                                                  Mining  |   998.6241   985.0105     1.01   0.311    -932.0398    2929.288
-                                                               Utilities  |  -786.5644   888.4973    -0.89   0.376    -2528.058    954.9293
-                                                            Construction  |  -1136.757   930.7528    -1.22   0.222    -2961.073    687.5598
-                                                           Manufacturing  |  -1068.097   867.4488    -1.23   0.218    -2768.335    632.1409
-                                                         Wholesale Trade  |  -825.0833   885.5438    -0.93   0.351    -2560.788    910.6215
-                                                            Retail Trade  |  -1131.333   888.0243    -1.27   0.203    -2871.899    609.2338
-                                          Transportation and Warehousing  |  -1492.891   910.6391    -1.64   0.101    -3277.784    292.0012
-                                                             Information  |  -2132.046   884.0456    -2.41   0.016    -3864.814   -399.2777
-                                                   Finance and Insurance  |  -1211.903   879.2247    -1.38   0.168    -2935.222    511.4161
-                                      Real Estate and Rental and Leasing  |  -2740.405   1057.196    -2.59   0.010    -4812.556   -668.2533
-                        Professional, Scientific, and Technical Services  |  -1066.343   867.6603    -1.23   0.219    -2766.995    634.3096
-                                 Management of Companies and Enterprises  |  -1265.964   1194.184    -1.06   0.289    -3606.618    1074.689
-Administrative and Support and Waste Management and Remediation Services  |  -1285.125   946.4362    -1.36   0.175    -3140.181    569.9319
-                                                    Educational Services  |  -2269.118   912.3413    -2.49   0.013    -4057.347   -480.8885
-                                       Health Care and Social Assistance  |  -1684.671   877.6227    -1.92   0.055     -3404.85    35.50808
-                                     Arts, Entertainment, and Recreation  |   -2268.73   990.0163    -2.29   0.022    -4209.205   -328.2543
-                                         Accommodation and Food Services  |  -1152.833   975.7519    -1.18   0.237    -3065.349    759.6837
-                           Other Services (except Public Administration)  |  -1695.292   900.4532    -1.88   0.060     -3460.22    69.63594
-                                                   Public Administration  |  -1140.231   961.3887    -1.19   0.236    -3024.595    744.1334
-                                                                          |
-                                                                  nocprmg |
-                      Biological, agricultural and other life scientists  |  -432.3562   201.7993    -2.14   0.032    -827.8918   -36.82067
-                                         Physical and related scientists  |  -166.6419   201.0128    -0.83   0.407    -560.6359    227.3521
-                                           Social and related scientists  |   147.3383    189.197     0.78   0.436    -223.4961    518.1726
-                                                               Engineers  |   373.7598   117.8165     3.17   0.002     142.8342    604.6853
-                                             S and E related occupations  |   330.7434   104.9977     3.15   0.002     124.9433    536.5435
-                                                 Non-S and E Occupations  |   -260.715   103.2291    -2.53   0.012    -463.0485   -58.38152
-                                                                          |
-                                                                   fptind |
-                                                               Part-time  |   1073.296    141.475     7.59   0.000     795.9983    1350.593
-                                                                          |
-                                                                  emsecdt |
-                                      2-yr coll/pre-college institutions  |  -609.4717   139.7505    -4.36   0.000    -883.3887   -335.5546
-                                                     Bus/Ind, for-profit  |  -1559.934   284.7915    -5.48   0.000    -2118.138    -1001.73
-                                                     Bus/Ind, non-profit  |  -1063.151   277.0663    -3.84   0.000    -1606.213   -520.0889
-                                                      Federal government  |  -345.7883    507.824    -0.68   0.496    -1341.146    649.5689
-                                                  State/Local government  |  -1340.557   502.2902    -2.67   0.008    -2325.067   -356.0458
-                                                                          |
-                                                                      age |   138.3661   32.63915     4.24   0.000     74.39197    202.3403
-                                                                     age2 |  -2.724322   .3705258    -7.35   0.000    -3.450569   -1.998075
-                                                                   tenure |  -32.76732    4.74763    -6.90   0.000    -42.07288   -23.46176
-                                                                     male |   343.8118   72.79289     4.72   0.000     201.1345     486.489
-                                                                          |
-                                                                     race |
-                                           American Indian/Alaska Native  |    395.012    367.135     1.08   0.282    -324.5887    1114.613
-                                                                   Black  |  -290.2108   155.0355    -1.87   0.061    -594.0872    13.66561
-                                                                   White  |  -218.8978   112.6198    -1.94   0.052    -439.6377    1.842017
-                                  Native Hawaiian/Other Pacific Islander  |   738.2668   545.7722     1.35   0.176    -331.4708    1808.004
-                                                                Multiple  |  -111.3959   238.0769    -0.47   0.640     -578.037    355.2452
-                                                                          |
-                                                                      mar |  -126.4163   71.34913    -1.77   0.076    -266.2638     13.4311
-                                                                    _cons |   3985.368   1179.557     3.38   0.001     1673.384    6297.352
---------------------------------------------------------------------------+----------------------------------------------------------------
-                                                                   /sigma |   5213.569   51.68366                      5112.267    5314.872
--------------------------------------------------------------------------------------------------------------------------------------------
-             1  left-censored observation  at dwage <= -50000
-        29,745     uncensored observations
-             1 right-censored observation  at dwage >= 50000
-
-. reg dwage i.emplr i.degree i.major i.hdclas i.bindustry i.nocprmg i.fptind i.emsecdt age age2 tenure male i.race mar, vce(robust)
-
-Linear regression                               Number of obs     =     29,747
-                                                F(67, 29679)      =      25.14
-                                                Prob > F          =     0.0000
-                                                R-squared         =     0.0657
-                                                Root MSE          =     5219.2
-
--------------------------------------------------------------------------------------------------------------------------------------------
-                                                                          |               Robust
-                                                                    dwage |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
---------------------------------------------------------------------------+----------------------------------------------------------------
-                                                                    emplr |
-                                                       Small Established  |   193.9055   275.4013     0.70   0.481    -345.8932    733.7041
-                                                       Large Established  |   540.2279   262.7957     2.06   0.040     25.13678    1055.319
-                                                                          |
-                                                                   degree |
-                                                                Master's  |   453.0201   69.95625     6.48   0.000     315.9028    590.1375
-                                                               Doctorate  |   304.4032   317.4104     0.96   0.338    -317.7353    926.5416
-                                                            Professional  |   772.0556   203.8237     3.79   0.000     372.5523    1171.559
-                                                                          |
-                                                                    major |
-                                               Life and related sciences  |   64.52678   152.2507     0.42   0.672    -233.8914    362.9449
-                                           Physical and related sciences  |   191.7695   193.9198     0.99   0.323    -188.3218    571.8608
-                                             Social and related sciences  |  -70.69658   136.5282    -0.52   0.605    -338.2978    196.9046
-                                                             Engineering  |   489.4944   131.7994     3.71   0.000     231.1617    747.8271
-                                                  S and E-Related Fields  |  -58.32719   131.0793    -0.44   0.656    -315.2484     198.594
-                                                      Non-S and E Fields  |   42.16591   116.2805     0.36   0.717    -185.7489    270.0807
-                                                                          |
-                                                                   hdclas |
-                                                  Research University II  |  -25.14471   107.5408    -0.23   0.815    -235.9294      185.64
-                                                    Doctorate Granting I  |  -25.44056   122.0625    -0.21   0.835    -264.6885    213.8074
-                                                   Doctorate Granting II  |   149.9424   121.2349     1.24   0.216    -87.68324     387.568
-                                                         Comprehensive I  |  -68.06216    80.0917    -0.85   0.395    -225.0454     88.9211
-                                                        Comprehensive II  |  -202.4766   214.7312    -0.94   0.346    -623.3592     218.406
-                                                          Liberal Arts I  |  -30.02021   217.8773    -0.14   0.890    -457.0692    397.0288
-                                                         Liberal Arts II  |  -90.37155   138.8116    -0.65   0.515    -362.4483    181.7052
-                                                   Two-year institutions  |   768.8109   484.3129     1.59   0.112    -180.4637    1718.086
-                                  Theological seminaries, bible colleges  |  -578.8462   487.7967    -1.19   0.235    -1534.949    377.2567
-                                     Medical schools and medical centers  |   956.2649   384.4497     2.49   0.013     202.7266    1709.803
-                              Other separate health professional schools  |   101.2397   709.4333     0.14   0.887    -1289.281     1491.76
-                                   Schools of engineering and technology  |  -662.4213   282.8679    -2.34   0.019    -1216.855   -107.9878
-                                       Schools of art, music, and design  |  -174.1671   685.5967    -0.25   0.799    -1517.967    1169.633
-                                                          Schools of law  |   1032.588   863.2471     1.20   0.232    -659.4139    2724.591
-                                          Other specialized institutions  |  -354.8108   274.2337    -1.29   0.196    -892.3208    182.6992
-                                                                          |
-                                                                bindustry |
-                                                                  Mining  |   998.5342   986.1209     1.01   0.311    -934.3061    2931.375
-                                                               Utilities  |  -786.6607   889.4986    -0.88   0.376    -2530.117    956.7956
-                                                            Construction  |  -1136.793   931.8024    -1.22   0.222    -2963.167    689.5805
-                                                           Manufacturing  |  -1068.185   868.4265    -1.23   0.219    -2770.339    633.9689
-                                                         Wholesale Trade  |  -825.1418   886.5425    -0.93   0.352    -2562.804    912.5203
-                                                            Retail Trade  |  -1131.414   889.0252    -1.27   0.203    -2873.943     611.114
-                                          Transportation and Warehousing  |  -1492.979   911.6656    -1.64   0.102    -3279.883    293.9256
-                                                             Information  |   -2132.14   885.0417    -2.41   0.016    -3866.861   -397.4196
-                                                   Finance and Insurance  |  -1212.021   880.1752    -1.38   0.169    -2937.203    513.1613
-                                      Real Estate and Rental and Leasing  |  -2740.447   1058.389    -2.59   0.010    -4814.936   -665.9584
-                        Professional, Scientific, and Technical Services  |  -1066.401   868.6385    -1.23   0.220    -2768.971    636.1685
-                                 Management of Companies and Enterprises  |  -1266.058   1195.529    -1.06   0.290    -3609.348    1077.232
-Administrative and Support and Waste Management and Remediation Services  |  -1285.191   947.5036    -1.36   0.175    -3142.339    571.9579
-                                                    Educational Services  |  -2269.184   913.3701    -2.48   0.013    -4059.429   -478.9381
-                                       Health Care and Social Assistance  |  -1684.755   878.6116    -1.92   0.055    -3406.872    37.36257
-                                     Arts, Entertainment, and Recreation  |   -2268.77   991.1328    -2.29   0.022    -4211.434    -326.106
-                                         Accommodation and Food Services  |  -1152.911   976.8517    -1.18   0.238    -3067.583    761.7616
-                           Other Services (except Public Administration)  |  -1695.305   901.4686    -1.88   0.060    -3462.223    71.61313
-                                                   Public Administration  |  -1140.322    962.472    -1.18   0.236    -3026.809    746.1654
-                                                                          |
-                                                                  nocprmg |
-                      Biological, agricultural and other life scientists  |  -432.3556   202.0263    -2.14   0.032     -828.336   -36.37529
-                                         Physical and related scientists  |  -166.6421   201.2388    -0.83   0.408    -561.0789    227.7948
-                                           Social and related scientists  |   147.3415   189.4088     0.78   0.437    -223.9081    518.5911
-                                                               Engineers  |   373.7685    117.948     3.17   0.002     142.5851    604.9518
-                                             S and E related occupations  |   330.7441   105.1154     3.15   0.002     124.7133    536.7749
-                                                 Non-S and E Occupations  |  -260.7048   103.3357    -2.52   0.012    -463.2474   -58.16225
-                                                                          |
-                                                                   fptind |
-                                                               Part-time  |   1073.283   141.6335     7.58   0.000     795.6755    1350.891
-                                                                          |
-                                                                  emsecdt |
-                                      2-yr coll/pre-college institutions  |  -609.4584   139.9072    -4.36   0.000    -883.6826   -335.2342
-                                                     Bus/Ind, for-profit  |  -1559.886   285.1123    -5.47   0.000    -2118.719   -1001.054
-                                                     Bus/Ind, non-profit  |  -1063.126   277.3773    -3.83   0.000    -1606.798   -519.4544
-                                                      Federal government  |  -345.7587   508.3958    -0.68   0.496    -1342.237    650.7193
-                                                  State/Local government  |  -1340.516   502.8556    -2.67   0.008    -2326.135   -354.8972
-                                                                          |
-                                                                      age |   138.3661   32.67534     4.23   0.000     74.32098    202.4112
-                                                                     age2 |  -2.724329   .3709382    -7.34   0.000    -3.451384   -1.997273
-                                                                   tenure |  -32.76598   4.752962    -6.89   0.000      -42.082   -23.44997
-                                                                     male |   343.7184   72.86824     4.72   0.000     200.8934    486.5433
-                                                                          |
-                                                                     race |
-                                           American Indian/Alaska Native  |   395.0113   367.5495     1.07   0.283     -325.402    1115.425
-                                                                   Black  |  -290.2213   155.2101    -1.87   0.062      -594.44    13.99739
-                                                                   White  |  -218.8934    112.745    -1.94   0.052    -439.8785     2.09174
-                                  Native Hawaiian/Other Pacific Islander  |   738.2811   546.3878     1.35   0.177     -332.663    1809.225
-                                                                Multiple  |  -111.3983   238.3451    -0.47   0.640    -578.5652    355.7687
-                                                                          |
-                                                                      mar |  -126.4053    71.4283    -1.77   0.077    -266.4079    13.59734
-                                                                    _cons |   3985.457   1180.867     3.38   0.001     1670.906    6300.009
--------------------------------------------------------------------------------------------------------------------------------------------
-
-. sum dlnwage, d
-
-                   yearly growth log wage
--------------------------------------------------------------
-      Percentiles      Smallest
- 1%    -.5972531      -3.972797
- 5%    -.1524279      -3.898416
-10%    -.0548874      -3.847495       Obs              41,893
-25%     .0036697      -3.837642       Sum of Wgt.      41,893
-
-50%      .035902                      Mean           .0346293
-                        Largest       Std. Dev.      .2693801
-75%     .0636908       3.949799
-90%     .1121575       3.972797       Variance       .0725657
-95%     .1856119       3.972797       Skewness       .9496866
-99%     .7110697       3.972797       Kurtosis       81.79112
-
-. hist dlnwage, discrete
-(start=-3.9727967, width=4.470e-08)
-
-. browse wage* refid refyr emplr
-
-. browse wage* refid refyr emplr dwage dlnwage
-
-. exit, clear

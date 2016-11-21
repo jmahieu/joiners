@@ -499,6 +499,8 @@ label var watea "Teaching"
 //generate count of all work activities
 gen wan = waacc + waaprsh + wabrsh + wacom + wadev + wadsn + waemrl + wamgmt + waot + waprod + waqm + wasale + wasvc + watea
 label var wan "Number of Work Activities"
+gen wan2 = wan^2
+label var wan2 "Number of Work Activities squared"
 
 //gen count of commercial activities (cf. Elfenbein)  
 gen cmrcn = waacc + waemrl + wamgmt + waprod + waqm + wasale + wasvc 
