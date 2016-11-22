@@ -1,13 +1,17 @@
---------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
       name:  SESTAT_2003_2013_Joiners_setup
        log:  C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\joiners_setup.log
   log type:  text
- opened on:  12 Nov 2016, 18:18:06
+ opened on:  22 Nov 2016, 15:24:19
 
 . 
 . use "C:\Users\u0091183\Desktop\Phd\Datasets\SESTAT\sestat06.dta"
 
 . rename salarp wage06
+
+. rename nocprpb nocprpb06
+
+. rename nocprmg nocprmg06
 
 . save sestat06, replace
 file sestat06.dta saved
@@ -17,6 +21,10 @@ file sestat06.dta saved
 
 . rename salarp wage08
 
+. rename nocprpb nocprpb08
+
+. rename nocprmg nocprmg08
+
 . save sestat08, replace
 file sestat08.dta saved
 
@@ -24,6 +32,10 @@ file sestat08.dta saved
 . use "C:\Users\u0091183\Desktop\Phd\Datasets\SESTAT\sestat10.dta"
 
 . rename salarp wage10
+
+. rename n2ocprmg nocprmg10
+
+. rename n2ocprpb nocprpb10
 
 . save sestat10, replace
 file sestat10.dta saved
@@ -37,8 +49,14 @@ file sestat10.dta saved
 . 
 . rename salarp wage03
 
+. rename nocpr nocpr03
+
+. rename nocprng nocprng03
+
+. rename nocprmg nocprmg03
+
 . 
-. merge 1:1 refid using sestat06.dta, keepus(wage06)
+. merge 1:1 refid using sestat06.dta, keepus(wage06 nocprmg06 nocprpb06)
 
     Result                           # of obs.
     -----------------------------------------
@@ -54,7 +72,7 @@ file sestat10.dta saved
 
 . drop _merge
 
-. merge 1:1 refid using sestat08.dta, keepus(wage08)
+. merge 1:1 refid using sestat08.dta, keepus(wage08 nocprmg08 nocprpb08)
 
     Result                           # of obs.
     -----------------------------------------
@@ -70,7 +88,7 @@ file sestat10.dta saved
 
 . drop _merge
 
-. merge 1:1 refid using sestat10.dta, keepus(wage10)
+. merge 1:1 refid using sestat10.dta, keepus(wage10 nocprmg10 nocprpb10)
 
     Result                           # of obs.
     -----------------------------------------
@@ -97,4 +115,7 @@ file joiners.dta saved
 . 
 end of do-file
 
-. exit, clear
+. browse refid refyr nocpr*
+
+. browse nocpr*
+
