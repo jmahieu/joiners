@@ -128,8 +128,13 @@ pwcorr lnwage03 age age2 male mar race startup small large degree major hdclas t
 reg lnwage03 startup small i.degree i.major i.hdclas i.bindustry i.nocprmg i.fptind i.emsecdt age age2 tenure male i.race mar, vce(robust)
 reg lnwage03 startup small i.degree i.major i.hdclas i.bindustry i.nocprmg wan i.fptind i.emsecdt age age2 tenure male i.race mar, vce(robust)
 
-ivreg2 lnwage03 i.degree i.major i.hdclas i.bindustry i.nocprmg wan i.fptind i.emsecdt age age2 tenure male i.race mar (startup = i.facsec), robust first 
+ivreg2 lnwage03 i.degree i.major i.hdclas i.bindustry i.nocprmg wan i.fptind i.emsecdt age age2 tenure male i.race mar (startup = i.facsec), robust first endogtest(startup)
+*endogeneity test for startup: reject H0 that the specified endogenous regressors can actually be treated as exogenous
 *startup is instrumented by importance of job security (1 = not important, 4 = very important)
+*1st stage: "rule of thumb" F test of excluded instruments has value 18.10 (> 10) - Kleibergen-Paap rk Wald statistics (Cragg Donald F statistic = 38.78)
+*Kleibergen Paap rk Wald stat rejects 5% relative IV bias critical value of Stock and Yogo
+*1st stage:  Kleibergen Paap underidentification rejects H0 = full rank and identification
+*Hansen J: strong rejection of H0 that all instruments are uncorrelated with the error term - doubt validity of the estimates
 
 reg dlnwage b3.emplr i.degree i.major i.hdclas i.bindustry i.nocprmg i.fptind i.emsecdt age age2 tenure male i.race mar, vce(robust)
 reg dlnwage b3.emplr i.wan i.degree i.major i.hdclas i.bindustry i.nocprmg i.fptind i.emsecdt age age2 tenure male i.race mar, vce(robust)
