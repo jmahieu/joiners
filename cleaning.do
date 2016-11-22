@@ -532,6 +532,14 @@ label var emplr "Employer Type"
 label define emplr 1 "Startup" 2 "Small Established" 3 "Large Established"
 label values emplr emplr
 
+tab emplr, gen(emplr)
+rename emplr1 startup
+label var startup "Startup"
+rename emplr2 small 
+label var small "Small Established" 
+rename emplr3 large 
+label var large "Large Established"
+
 /* SALARY */
 
 // put incorrect wages to missing
@@ -559,11 +567,12 @@ replace dwage = (wage08 - wage03)/5 if dwage == . & wage08 != .
 replace dwage = (wage06 - wage03)/3 if dwage == . & wage06 != .
 label var dwage "yearly growth wage"
 
-//gen log yearly wage growth
+//gen log yearly wage growth = e^log(wage_t/wage03)/t-3-1) - 1
 
-gen dlnwage = (lnwage10 - lnwage03)/7 if wage10 != .
-replace dlnwage = (lnwage08 - lnwage03)/5 if dlnwage == . & wage08 != .
-replace dlnwage = (lnwage06 - lnwage03)/3 if dlnwage == . & wage06 != .
+gen e = 2.71828
+gen dlnwage = e^(log(wage10/wage03)/6) - 1  if wage10 != .
+replace dlnwage = e^(log(wage08/wage03)/4) - 1 if dlnwage == . & wage08 != .
+replace dlnwage = e^(log(wage06/wage03)/2) - 1 if dlnwage == . & wage06 != .
 label var dlnwage "yearly growth log wage"
 
 save joinersc.dta, replace

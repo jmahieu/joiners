@@ -26,16 +26,16 @@ lnwage03	lnwage06	lnwage08	lnwage10		dlnwage
 
 
 // summary statistics for full dataset
-logout, save (summary_full) fix excel replace: fsum emplr wage* lnwage* dlnwage age age2 workexp male race mar degree major hdclas fptind tenure emsize emrg emsecdt bindustry nocprng wapri waacc waemrl wamgmt waprod waqm wasale wasvc waaprsh wabrsh wacom wadev wadsn waot watea wan cmrcn resn facadv facben facchal facind facloc facres facsal facsec facsoc, catvar(emplr male race mar degree major hdclas fptind emsize emrg emsecdt bindustry nocprng wapri facadv facben facchal facind facloc facres facsal facsec facsoc) uselabel  
+fsum emplr wage* lnwage* dlnwage age age2 workexp male race mar degree major hdclas fptind tenure emsize emrg emsecdt bindustry nocprng wapri waacc waemrl wamgmt waprod waqm wasale wasvc waaprsh wabrsh wacom wadev wadsn waot watea wan cmrcn resn facadv facben facchal facind facloc facres facsal facsec facsoc, catvar(emplr male race mar degree major hdclas fptind emsize emrg emsecdt bindustry nocprng wapri facadv facben facchal facind facloc facres facsal facsec facsoc) uselabel  
 
 //summary statistics for startup employees
-logout, save (summary_startup) fix excel replace: fsum emplr wage* lnwage* dlnwage age age2 workexp male race mar degree major hdclas fptind tenure emsize emrg emsecdt bindustry nocprng wapri waacc waemrl wamgmt waprod waqm wasale wasvc waaprsh wabrsh wacom wadev wadsn waot watea wan cmrcn resn facadv facben facchal facind facloc facres facsal facsec  facsoc if emplr == 1, catvar(emplr male race mar degree major hdclas fptind emsize emrg emsecdt bindustry nocprng wapri facadv facben facchal facind facloc facres facsal facsec facsoc) uselabel  
+fsum emplr wage* lnwage* dlnwage age age2 workexp male race mar degree major hdclas fptind tenure emsize emrg emsecdt bindustry nocprng wapri waacc waemrl wamgmt waprod waqm wasale wasvc waaprsh wabrsh wacom wadev wadsn waot watea wan cmrcn resn facadv facben facchal facind facloc facres facsal facsec  facsoc if emplr == 1, catvar(emplr male race mar degree major hdclas fptind emsize emrg emsecdt bindustry nocprng wapri facadv facben facchal facind facloc facres facsal facsec facsoc) uselabel  
 
 //summary statistics for small established firm employees
-logout, save (summary_smallest) fix excel replace: fsum emplr wage* lnwage* dlnwage age age2 workexp male race mar degree major hdclas fptind tenure emsize emrg emsecdt bindustry nocprng wapri waacc waemrl wamgmt waprod waqm wasale wasvc waaprsh wabrsh wacom wadev wadsn waot watea wan cmrcn resn facadv facben facchal facind facloc facres facsal facsec  facsoc if emplr == 2, catvar(emplr male race mar degree major hdclas fptind emsize emrg emsecdt bindustry nocprng wapri facadv facben facchal facind facloc facres facsal facsec facsoc) uselabel  
+fsum emplr wage* lnwage* dlnwage age age2 workexp male race mar degree major hdclas fptind tenure emsize emrg emsecdt bindustry nocprng wapri waacc waemrl wamgmt waprod waqm wasale wasvc waaprsh wabrsh wacom wadev wadsn waot watea wan cmrcn resn facadv facben facchal facind facloc facres facsal facsec  facsoc if emplr == 2, catvar(emplr male race mar degree major hdclas fptind emsize emrg emsecdt bindustry nocprng wapri facadv facben facchal facind facloc facres facsal facsec facsoc) uselabel  
 
 //summary statistics for large established firm employees
-logout, save (summary_largeest) fix excel replace: fsum emplr wage* lnwage* dlnwage age age2 workexp male race mar degree major hdclas fptind tenure emsize emrg emsecdt bindustry nocprng wapri waacc waemrl wamgmt waprod waqm wasale wasvc waaprsh wabrsh wacom wadev wadsn waot watea wan cmrcn resn facadv facben facchal facind facloc facres facsal facsec  facsoc if emplr == 3, catvar(emplr male race mar degree major hdclas fptind emsize emrg emsecdt bindustry nocprng wapri facadv facben facchal facind facloc facres facsal facsoc) uselabel  
+fsum emplr wage* lnwage* dlnwage age age2 workexp male race mar degree major hdclas fptind tenure emsize emrg emsecdt bindustry nocprng wapri waacc waemrl wamgmt waprod waqm wasale wasvc waaprsh wabrsh wacom wadev wadsn waot watea wan cmrcn resn facadv facben facchal facind facloc facres facsal facsec  facsoc if emplr == 3, catvar(emplr male race mar degree major hdclas fptind emsize emrg emsecdt bindustry nocprng wapri facadv facben facchal facind facloc facres facsal facsoc) uselabel  
 
 
 /*------------------------------------------------------------------------------
@@ -124,13 +124,12 @@ ologit facsoc i.emplr i.degree i.major i.hdclas i.bindustry i.nocprng i.fptind i
 //correlations for lnwage03 and independent vars
 pwcorr lnwage03 age age2 male mar race startup small large degree major hdclas tenure emsecdt bindustry nocprng wan, star(0.05)
 
+//OLS and 2SLS IV regression on log wage
 reg lnwage03 startup small i.degree i.major i.hdclas i.bindustry i.nocprmg i.fptind i.emsecdt age age2 tenure male i.race mar, vce(robust)
 reg lnwage03 startup small i.degree i.major i.hdclas i.bindustry i.nocprmg wan i.fptind i.emsecdt age age2 tenure male i.race mar, vce(robust)
 
-*ivregress 2sls lnwage03 i.degree i.major i.hdclas i.bindustry i.nocprmg wan i.fptind i.emsecdt age age2 tenure male i.race mar (startup = i.facsec), vce(robust) first 
-*estat firststage, forcenonrobust all
-
 ivreg2 lnwage03 i.degree i.major i.hdclas i.bindustry i.nocprmg wan i.fptind i.emsecdt age age2 tenure male i.race mar (startup = i.facsec), robust first 
+*startup is instrumented by importance of job security (1 = not important, 4 = very important)
 
 reg dlnwage b3.emplr i.degree i.major i.hdclas i.bindustry i.nocprmg i.fptind i.emsecdt age age2 tenure male i.race mar, vce(robust)
 reg dlnwage b3.emplr i.wan i.degree i.major i.hdclas i.bindustry i.nocprmg i.fptind i.emsecdt age age2 tenure male i.race mar, vce(robust)
