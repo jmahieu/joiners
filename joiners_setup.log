@@ -119,3 +119,4 @@ end of do-file
 
 . browse nocpr*
 
+. exit, clear

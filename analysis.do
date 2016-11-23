@@ -20,22 +20,69 @@ bindustry	lfstat	nocpr		nocprmg	nocprng		waprsm		wascsm	  wapri
 wasec	workexp		waacc		waemrl	wamgmt		waprod		waqm	  wasale
 wasvc	waaprsh		wabrsh		wacom	wadev		wadsn		waot	  watea
 wan		cmrcn		resn		emplr	wage03		wage06		wage08	  wage10
-lnwage03	lnwage06	lnwage08	lnwage10		dlnwage
+lnwage03	lnwage06	lnwage08	lnwage10		dlnwage		stay
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
+/* SUMMARY STATISTICS */
 
-// summary statistics for full dataset
-fsum emplr wage* lnwage* dlnwage age age2 workexp male race mar degree major hdclas fptind tenure emsize emrg emsecdt bindustry nocprng wapri waacc waemrl wamgmt waprod waqm wasale wasvc waaprsh wabrsh wacom wadev wadsn waot watea wan cmrcn resn facadv facben facchal facind facloc facres facsal facsec facsoc, catvar(emplr male race mar degree major hdclas fptind emsize emrg emsecdt bindustry nocprng wapri facadv facben facchal facind facloc facres facsal facsec facsoc) uselabel  
+//generate dummies 
+qui tab race, gen(dum_race)
+qui tab degree, gen(dum_degree)
+qui tab major, gen(dum_major)
+qui tab hdclas, gen(dum_hdclas)
+qui tab emsize, gen(dum_emsize)
+qui tab emsecdt, gen(dum_emsecdt)
+qui tab bindustry, gen(dum_bindustry)
+qui tab nocprmg03, gen(dum_nocprmg03)
 
-//summary statistics for startup employees
-fsum emplr wage* lnwage* dlnwage age age2 workexp male race mar degree major hdclas fptind tenure emsize emrg emsecdt bindustry nocprng wapri waacc waemrl wamgmt waprod waqm wasale wasvc waaprsh wabrsh wacom wadev wadsn waot watea wan cmrcn resn facadv facben facchal facind facloc facres facsal facsec  facsoc if emplr == 1, catvar(emplr male race mar degree major hdclas fptind emsize emrg emsecdt bindustry nocprng wapri facadv facben facchal facind facloc facres facsal facsec facsoc) uselabel  
+eststo clear
+//full sample
+eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar /// 
+dum_degree* dum_hdclas* fptind tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
+dum_nocprmg03* stay wan cmrcn resn 
+//startup
+eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar /// 
+dum_degree* dum_hdclas* fptind tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
+dum_nocprmg03* stay wan cmrcn resn if emplr == 1
+//small established
+eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar /// 
+dum_degree* dum_hdclas* fptind tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
+dum_nocprmg03* stay wan cmrcn resn if emplr == 2
+//large established
+eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar /// 
+dum_degree* dum_hdclas* fptind tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
+dum_nocprmg03* stay wan cmrcn resn if emplr == 3
 
-//summary statistics for small established firm employees
-fsum emplr wage* lnwage* dlnwage age age2 workexp male race mar degree major hdclas fptind tenure emsize emrg emsecdt bindustry nocprng wapri waacc waemrl wamgmt waprod waqm wasale wasvc waaprsh wabrsh wacom wadev wadsn waot watea wan cmrcn resn facadv facben facchal facind facloc facres facsal facsec  facsoc if emplr == 2, catvar(emplr male race mar degree major hdclas fptind emsize emrg emsecdt bindustry nocprng wapri facadv facben facchal facind facloc facres facsal facsec facsoc) uselabel  
+esttab using summary, replace rtf main(mean %6.2f) aux(sd) label ///
+ti("summary statistics") mtitles("Full Sample" "Startup" "Small Established Firms" "Large Established Firms") ///
+refcat(dum_race1 "Race" dum_degree1 "Highest Degree" dum_hdclas1 "Carnegie Classification" dum_emsize1 "Employer Size" dum_emsecdt1 "Employer Sector" dum_bindustry1 "Employer Industry" dum_nocprmg031 "Occupation") ///
+nonotes addn(Standard deviations in parentheses.)
 
-//summary statistics for large established firm employees
-fsum emplr wage* lnwage* dlnwage age age2 workexp male race mar degree major hdclas fptind tenure emsize emrg emsecdt bindustry nocprng wapri waacc waemrl wamgmt waprod waqm wasale wasvc waaprsh wabrsh wacom wadev wadsn waot watea wan cmrcn resn facadv facben facchal facind facloc facres facsal facsec  facsoc if emplr == 3, catvar(emplr male race mar degree major hdclas fptind emsize emrg emsecdt bindustry nocprng wapri facadv facben facchal facind facloc facres facsal facsoc) uselabel  
+
+/* only for employees in for-profit companies */
+eststo clear
+//full sample
+eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar /// 
+dum_degree* dum_hdclas* fptind tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
+dum_nocprmg03* stay wan cmrcn resn if emsecdt == 21
+//startup
+eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar /// 
+dum_degree* dum_hdclas* fptind tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
+dum_nocprmg03* stay wan cmrcn resn if emplr == 1 & emsecdt == 21
+//small established
+eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar /// 
+dum_degree* dum_hdclas* fptind tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
+dum_nocprmg03* stay wan cmrcn resn if emplr == 2 & emsecdt == 21
+//large established
+eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar /// 
+dum_degree* dum_hdclas* fptind tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
+dum_nocprmg03* stay wan cmrcn resn if emplr == 3  &emsecdt == 21
+
+esttab using summary_forprofit, replace rtf main(mean %6.2f) aux(sd) label ///
+ti("summary statistics") mtitles("Full Sample" "Startup" "Small Established Firms" "Large Established Firms") ///
+refcat(dum_race1 "Race" dum_degree1 "Highest Degree" dum_hdclas1 "Carnegie Classification" dum_emsize1 "Employer Size" dum_emsecdt1 "Employer Sector" dum_bindustry1 "Employer Industry" dum_nocprmg031 "Occupation") ///
+nonotes addn(Standard deviations in parentheses.)
 
 
 /*------------------------------------------------------------------------------
@@ -144,3 +191,6 @@ ivreg2 dlnwage i.degree i.major i.hdclas i.bindustry i.nocprmg wan i.fptind i.em
 
 ivreg2 dlnwage lnwage03 i.degree i.major i.hdclas i.bindustry i.nocprmg wan i.fptind i.emsecdt age age2 tenure male i.race mar (startup = i.facsec), robust first 
 * !! inconsistent estimator of lnwage03 - endogenous
+
+probit stay startup small lnwage03 i.degree i.major i.hdclas i.bindustry i.nocprmg03 i.fptind i.emsecdt age age2 tenure male i.race mar
+
