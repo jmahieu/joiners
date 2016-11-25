@@ -190,7 +190,8 @@ foreach i in facadv facben facchal facind facloc facresp facsal facsoc {
 
 *fptind = Full-time/part-time status counting all jobs during reference week
 label var fptind "Full/Part-time"
-label define fptind 1 "Full-Time" 2 "Part-time"
+replace fptind = 0 if fptind == 2
+label define fptind 1 "Full-Time" 0 "Part-time"
 label values fptind fptind
 
 *indcode = Census industry code for employer
@@ -556,27 +557,37 @@ foreach i in 03 06 08 10 {
 
 //generate lnwage
 foreach i in wage03 wage06 wage08 wage10 {
-	gen ln`i' = log(`i') if `i' > 0
-	replace ln`i' = 0 if `i' == 0
+	gen ln`i' = log(`i') 
 }
 
 foreach i in 03 06 08 10 {
 	label var lnwage`i' "log 20`i' wage"
 }
 
-//generate yearly wage growth [(wage_j - wage_i)/(j-i)]
-gen dwage = (wage10 - wage03)/7 if wage10 != .
-replace dwage = (wage08 - wage03)/5 if dwage == . & wage08 != .
-replace dwage = (wage06 - wage03)/3 if dwage == . & wage06 != .
+//generate yearly wage growth [(wage_t - wage03)/(t-3)]
+gen dwage = (wage10 - wage03)/6 if wage10 != . & wage03 != .
+replace dwage = (wage08 - wage03)/4 if dwage == . & wage08 != . & wage03 != .
+replace dwage = (wage06 - wage03)/2 if dwage == . & wage06 != . & wage03 != .
 label var dwage "yearly growth wage"
 
-//gen log yearly wage growth = e^log(wage_t/wage03)/t-3-1) - 1
-
-gen e = 2.71828
-gen dlnwage = e^(log(wage10/wage03)/6) - 1  if wage10 != .
-replace dlnwage = e^(log(wage08/wage03)/4) - 1 if dlnwage == . & wage08 != .
-replace dlnwage = e^(log(wage06/wage03)/2) - 1 if dlnwage == . & wage06 != .
+//gen log yearly wage growth = e^log(wage_t/wage03)/t-3) - 1
+gen dlnwage = (lnwage10-lnwage03)/7 if wage10 != . & wage03 != .
+gen y10 = 0 
+replace y10 = 1 if dlnwage != .
+*16 129 values created
+gen y8 = 0 
+replace y8 = 1 if lnwage08 != . & dlnwage == . & lnwage03 != .
+replace dlnwage = (lnwage08-lnwage03)/5 if dlnwage == . & lnwage08 != .
+* 19 113 values created
+gen y6 = 0 
+replace y6 = 1 if lnwage06 != . & dlnwage == . & lnwage03 != .
+replace dlnwage = (lnwage06-lnwage03)/3 if dlnwage == . & lnwage06 != .
+* 6 327 values created
 label var dlnwage "yearly growth log wage"
+
+egen test = rsum(y10 y8 y6)
+tab test 
+drop test
 
 /* occupation stayers */
 *this coding allows that even those who are not observed in 2008 or 2010 but consecutively between '03-06 or '03-08 also are assigned a value
@@ -588,6 +599,8 @@ foreach i in 06 08 10 {
 replace stay = 0 if nocprmg03 != nocprmg`i' & nocprmg`i' != .
 replace stay = . if nocprmg03 == .
 }
+
+label var stay "No change of occupation"
 
 save joinersc.dta, replace
 

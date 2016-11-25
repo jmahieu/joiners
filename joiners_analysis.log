@@ -2,7 +2,7 @@
       name:  Analysis
        log:  C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\joiners_analysis.log
   log type:  text
- opened on:  23 Nov 2016, 15:29:09
+ opened on:  25 Nov 2016, 16:30:36
 
 . 
 . use joinersc.dta
@@ -43,77 +43,841 @@
 . qui tab nocprmg03, gen(dum_nocprmg03)
 
 . 
-. eststo clear
+end of do-file
 
-. //full sample
-. eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar /// 
-> dum_degree* dum_hdclas* fptind tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
-> dum_nocprmg03* stay wan cmrcn resn 
-(est1 stored)
-
-. //startup
-. eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar /// 
-> dum_degree* dum_hdclas* fptind tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
-> dum_nocprmg03* stay wan cmrcn resn if emplr == 1
-(est2 stored)
-
-. //small established
-. eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar /// 
-> dum_degree* dum_hdclas* fptind tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
-> dum_nocprmg03* stay wan cmrcn resn if emplr == 2
-(est3 stored)
-
-. //large established
-. eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar /// 
-> dum_degree* dum_hdclas* fptind tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
-> dum_nocprmg03* stay wan cmrcn resn if emplr == 3
-(est4 stored)
+. do "C:\Users\u0091183\AppData\Local\Temp\STD02000000.tmp"
 
 . 
-. esttab using summary, replace rtf main(mean %6.2f) aux(sd) label ///
-> ti("summary statistics") mtitles("Full Sample" "Startup" "Small Established Firms" "Large Established Firms") ///
-> refcat(dum_race1 "Race" dum_degree1 "Highest Degree" dum_hdclas1 "Carnegie Classification" dum_emsize1 "Employer Size" dum_ems
-> ecdt1 "Employer Sector" dum_bindustry1 "Employer Industry" dum_nocprmg031 "Occupation") ///
-> nonotes addn(Standard deviations in parentheses.)
-(output written to summary.rtf)
+. reg dlnwage b3.emplr i.degree i.major i.hdclas i.bindustry i.nocprmg03 i.emsecdt fptind age age2 tenure male i.race mar y8 y10
+> , vce(robust)
 
-. 
-. 
-. /* only for employees in for-profit companies */
-. eststo clear
+Linear regression                               Number of obs     =     29,596
+                                                F(69, 29526)      =      14.84
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.0534
+                                                Root MSE          =     .12434
 
-. //full sample
-. eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar /// 
-> dum_degree* dum_hdclas* fptind tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
-> dum_nocprmg03* stay wan cmrcn resn if emsecdt == 21
-(est1 stored)
-
-. //startup
-. eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar /// 
-> dum_degree* dum_hdclas* fptind tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
-> dum_nocprmg03* stay wan cmrcn resn if emplr == 1 & emsecdt == 21
-(est2 stored)
-
-. //small established
-. eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar /// 
-> dum_degree* dum_hdclas* fptind tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
-> dum_nocprmg03* stay wan cmrcn resn if emplr == 2 & emsecdt == 21
-(est3 stored)
-
-. //large established
-. eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar /// 
-> dum_degree* dum_hdclas* fptind tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
-> dum_nocprmg03* stay wan cmrcn resn if emplr == 3  &emsecdt == 21
-(est4 stored)
-
-. 
-. esttab using summary_forprofit, replace rtf main(mean %6.2f) aux(sd) label ///
-> ti("summary statistics") mtitles("Full Sample" "Startup" "Small Established Firms" "Large Established Firms") ///
-> refcat(dum_race1 "Race" dum_degree1 "Highest Degree" dum_hdclas1 "Carnegie Classification" dum_emsize1 "Employer Size" dum_ems
-> ecdt1 "Employer Sector" dum_bindustry1 "Employer Industry" dum_nocprmg031 "Occupation") ///
-> nonotes addn(Standard deviations in parentheses.)
-(output written to summary_forprofit.rtf)
+-------------------------------------------------------------------------------------------------------------------------------
+                                                              |               Robust
+                                                      dlnwage |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------------------------------------------------------+----------------------------------------------------------------
+                                                        emplr |
+                                                     Startup  |  -.0027531   .0056376    -0.49   0.625     -.013803    .0082968
+                                           Small Established  |  -.0020651   .0024573    -0.84   0.401    -.0068814    .0027513
+                                                              |
+                                                       degree |
+                                                    Master's  |   .0018815   .0017008     1.11   0.269    -.0014521    .0052151
+                                                   Doctorate  |  -.0134144   .0085906    -1.56   0.118    -.0302524    .0034236
+                                                Professional  |   .0041029   .0038199     1.07   0.283    -.0033843    .0115902
+                                                              |
+                                                        major |
+                                   Life and related sciences  |   .0091587   .0039495     2.32   0.020     .0014175    .0168999
+                               Physical and related sciences  |   .0047175   .0044361     1.06   0.288    -.0039774    .0134125
+                                 Social and related sciences  |   .0030015   .0034511     0.87   0.384    -.0037628    .0097658
+                                                 Engineering  |   .0081676   .0028748     2.84   0.004     .0025329    .0138023
+                                      S and E-Related Fields  |   .0028402   .0032722     0.87   0.385    -.0035735    .0092539
+                                          Non-S and E Fields  |   .0028857   .0026976     1.07   0.285    -.0024017    .0081732
+                                                              |
+                                                       hdclas |
+                                      Research University II  |   .0024445   .0025276     0.97   0.333    -.0025098    .0073987
+                                        Doctorate Granting I  |   .0010485   .0030279     0.35   0.729    -.0048864    .0069834
+                                       Doctorate Granting II  |   .0014403   .0028866     0.50   0.618    -.0042176    .0070983
+                                             Comprehensive I  |   .0018856   .0019988     0.94   0.345    -.0020321    .0058033
+                                            Comprehensive II  |   .0020891    .006135     0.34   0.733    -.0099357    .0141139
+                                              Liberal Arts I  |  -.0000472   .0049143    -0.01   0.992    -.0096795    .0095851
+                                             Liberal Arts II  |   .0043815    .003611     1.21   0.225    -.0026962    .0114592
+                                       Two-year institutions  |   .0076542    .009093     0.84   0.400    -.0101684    .0254768
+                      Theological seminaries, bible colleges  |   .0041573   .0104896     0.40   0.692    -.0164027    .0247174
+                         Medical schools and medical centers  |   .0104683   .0069588     1.50   0.133    -.0031713    .0241079
+                  Other separate health professional schools  |   .0092434   .0142042     0.65   0.515    -.0185976    .0370843
+                       Schools of engineering and technology  |  -.0010656   .0063495    -0.17   0.867     -.013511    .0113798
+                           Schools of art, music, and design  |   .0159916   .0159938     1.00   0.317    -.0153569    .0473401
+                                              Schools of law  |   .0122069   .0189493     0.64   0.519    -.0249346    .0493483
+                              Other specialized institutions  |  -.0076448    .005446    -1.40   0.160    -.0183192    .0030297
+                                                              |
+                                                    bindustry |
+                                                      Mining  |   .0115683   .0147307     0.79   0.432    -.0173046    .0404411
+                                                   Utilities  |  -.0081328   .0123629    -0.66   0.511    -.0323647    .0160991
+                                                Construction  |  -.0182695   .0133669    -1.37   0.172    -.0444692    .0079301
+                                               Manufacturing  |   -.013445   .0120386    -1.12   0.264    -.0370411    .0101512
+                                             Wholesale Trade  |  -.0054883   .0125269    -0.44   0.661    -.0300415    .0190649
+                                                Retail Trade  |  -.0058349   .0131713    -0.44   0.658    -.0316513    .0199815
+                              Transportation and Warehousing  |  -.0098617   .0136632    -0.72   0.470    -.0366421    .0169187
+                                                 Information  |  -.0270574   .0125422    -2.16   0.031    -.0516406   -.0024742
+                                       Finance and Insurance  |  -.0129172   .0123738    -1.04   0.297    -.0371703    .0113359
+                          Real Estate and Rental and Leasing  |  -.0382562    .017283    -2.21   0.027    -.0721316   -.0043808
+            Professional, Scientific, and Technical Services  |  -.0137791    .012038    -1.14   0.252    -.0373741    .0098159
+                     Management of Companies and Enterprises  |  -.0086118   .0146933    -0.59   0.558    -.0374112    .0201877
+Administrative and Support and Waste Management and Remedi..  |  -.0086476   .0154893    -0.56   0.577    -.0390074    .0217122
+                                        Educational Services  |  -.0202357    .013621    -1.49   0.137    -.0469336    .0064621
+                           Health Care and Social Assistance  |  -.0169893   .0124913    -1.36   0.174    -.0414728    .0074942
+                         Arts, Entertainment, and Recreation  |  -.0118549   .0230134    -0.52   0.606    -.0569621    .0332523
+                             Accommodation and Food Services  |   .0089881   .0210395     0.43   0.669    -.0322502    .0502263
+               Other Services (except Public Administration)  |  -.0133488   .0137702    -0.97   0.332     -.040339    .0136414
+                                       Public Administration  |  -.0083972   .0142427    -0.59   0.555    -.0363135     .019519
+                                                              |
+                                                    nocprmg03 |
+          Biological, agricultural and other life scientists  |   -.000592   .0057471    -0.10   0.918    -.0118565    .0106725
+                             Physical and related scientists  |   .0072912   .0048317     1.51   0.131    -.0021791    .0167615
+                               Social and related scientists  |   .0102285   .0052199     1.96   0.050    -2.71e-06    .0204597
+                                                   Engineers  |    .009023   .0025376     3.56   0.000     .0040493    .0139968
+                                 S and E related occupations  |   .0073042   .0026493     2.76   0.006     .0021114     .012497
+                                     Non-S and E Occupations  |    .001468   .0024892     0.59   0.555    -.0034109    .0063469
+                                                              |
+                                                      emsecdt |
+                          2-yr coll/pre-college institutions  |  -.0100833   .0042264    -2.39   0.017    -.0183673   -.0017993
+                                         Bus/Ind, for-profit  |  -.0291061   .0061949    -4.70   0.000    -.0412485   -.0169638
+                                         Bus/Ind, non-profit  |  -.0200932   .0061931    -3.24   0.001     -.032232   -.0079544
+                                          Federal government  |  -.0146436    .009989    -1.47   0.143    -.0342224    .0049352
+                                      State/Local government  |  -.0192624     .00992    -1.94   0.052     -.038706    .0001812
+                                                              |
+                                                       fptind |  -.0635912   .0048905   -13.00   0.000    -.0731768   -.0540056
+                                                          age |   .0042917   .0008516     5.04   0.000     .0026225    .0059608
+                                                         age2 |  -.0000703   9.83e-06    -7.15   0.000    -.0000896    -.000051
+                                                       tenure |   -.000903   .0001185    -7.62   0.000    -.0011354   -.0006707
+                                                         male |    .006519   .0017981     3.63   0.000     .0029946    .0100433
+                                                              |
+                                                         race |
+                               American Indian/Alaska Native  |   .0112455   .0074628     1.51   0.132     -.003382     .025873
+                                                       Black  |  -.0020089   .0038179    -0.53   0.599    -.0094922    .0054743
+                                                       White  |  -.0026533   .0025414    -1.04   0.296    -.0076345    .0023279
+                      Native Hawaiian/Other Pacific Islander  |    .027318   .0148325     1.84   0.066    -.0017544    .0563903
+                                                    Multiple  |  -.0006218   .0050754    -0.12   0.902    -.0105698    .0093262
+                                                              |
+                                                          mar |  -.0036943   .0018084    -2.04   0.041    -.0072389   -.0001497
+                                                           y8 |   .0050183   .0030641     1.64   0.101    -.0009874     .011024
+                                                          y10 |  -.0026289   .0030617    -0.86   0.391      -.00863    .0033722
+                                                        _cons |   .0778243   .0227343     3.42   0.001     .0332641    .1223845
+-------------------------------------------------------------------------------------------------------------------------------
 
 . 
 end of do-file
 
+. do "C:\Users\u0091183\AppData\Local\Temp\STD02000000.tmp"
+
+. 
+. ivreg2 dlnwage i.degree i.major i.hdclas i.bindustry i.nocprmg wan i.fptind i.emsecdt age age2 tenure male i.race mar (startup
+>  = i.facsec), robust first 
+nocprmg ambiguous abbreviation
+r(111);
+
+end of do-file
+
+r(111);
+
+. do "C:\Users\u0091183\AppData\Local\Temp\STD02000000.tmp"
+
+. 
+. ivreg2 dlnwage i.degree i.major i.hdclas i.bindustry i.nocprmg03 wan i.fptind i.emsecdt age age2 tenure male i.race mar y8 y10
+>  (startup = i.facsec), robust first 
+
+First-stage regressions
+-----------------------
+
+
+First-stage regression of startup:
+
+Statistics robust to heteroskedasticity
+Number of obs =                  29596
+-------------------------------------------------------------------------------------------------------------------------------
+                                                              |               Robust
+                                                      startup |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------------------------------------------------------+----------------------------------------------------------------
+                                                       facsec |
+                                                           2  |   .0214765   .0183936     1.17   0.243    -.0145758    .0575287
+                                                           3  |  -.0151752   .0161754    -0.94   0.348    -.0468797    .0165293
+                                                           4  |  -.0228605   .0161165    -1.42   0.156    -.0544495    .0087286
+                                                              |
+                                                       degree |
+                                                    Master's  |   .0015775   .0020833     0.76   0.449    -.0025059    .0056609
+                                                   Doctorate  |   .0010323   .0058657     0.18   0.860    -.0104646    .0125292
+                                                Professional  |  -.0010295   .0043353    -0.24   0.812    -.0095268    .0074679
+                                                              |
+                                                        major |
+                                   Life and related sciences  |  -.0035643   .0048926    -0.73   0.466    -.0131541    .0060255
+                               Physical and related sciences  |   .0070847   .0063356     1.12   0.263    -.0053334    .0195028
+                                 Social and related sciences  |  -.0052605   .0045008    -1.17   0.242    -.0140823    .0035613
+                                                 Engineering  |   .0004287    .004677     0.09   0.927    -.0087385    .0095959
+                                      S and E-Related Fields  |  -.0046904   .0041257    -1.14   0.256     -.012777    .0033963
+                                          Non-S and E Fields  |  -.0071546   .0038806    -1.84   0.065    -.0147607    .0004514
+                                                              |
+                                                       hdclas |
+                                      Research University II  |  -.0034021   .0032675    -1.04   0.298    -.0098066    .0030024
+                                        Doctorate Granting I  |  -.0026769   .0035323    -0.76   0.449    -.0096002    .0042465
+                                       Doctorate Granting II  |  -.0064278   .0033574    -1.91   0.056    -.0130085    .0001529
+                                             Comprehensive I  |  -.0029535   .0023751    -1.24   0.214    -.0076089    .0017019
+                                            Comprehensive II  |  -.0069307   .0061967    -1.12   0.263    -.0190765    .0052151
+                                              Liberal Arts I  |  -.0050392   .0064254    -0.78   0.433    -.0176333    .0075549
+                                             Liberal Arts II  |  -.0059295   .0039654    -1.50   0.135    -.0137019    .0018429
+                                       Two-year institutions  |   .0180331   .0231514     0.78   0.436    -.0273447    .0634108
+                      Theological seminaries, bible colleges  |   -.020848   .0094052    -2.22   0.027    -.0392826   -.0024133
+                         Medical schools and medical centers  |   .0145915   .0080668     1.81   0.070    -.0012198    .0304027
+                  Other separate health professional schools  |  -.0134175   .0108152    -1.24   0.215    -.0346157    .0077808
+                       Schools of engineering and technology  |  -.0053395   .0093694    -0.57   0.569    -.0237038    .0130249
+                           Schools of art, music, and design  |  -.0224182   .0050762    -4.42   0.000    -.0323677   -.0124687
+                                              Schools of law  |   .0251151   .0275932     0.91   0.363    -.0289688     .079199
+                              Other specialized institutions  |    .000648   .0084025     0.08   0.939    -.0158213    .0171172
+                                                              |
+                                                    bindustry |
+                                                      Mining  |  -.0115078   .0338858    -0.34   0.734    -.0779254    .0549098
+                                                   Utilities  |  -.0309055   .0316939    -0.98   0.330    -.0930269    .0312159
+                                                Construction  |  -.0106095   .0334492    -0.32   0.751    -.0761714    .0549524
+                                               Manufacturing  |  -.0278199   .0315579    -0.88   0.378    -.0896748     .034035
+                                             Wholesale Trade  |  -.0199123   .0323368    -0.62   0.538    -.0832938    .0434692
+                                                Retail Trade  |  -.0152138   .0321256    -0.47   0.636    -.0781814    .0477539
+                              Transportation and Warehousing  |  -.0335167   .0322247    -1.04   0.298    -.0966786    .0296451
+                                                 Information  |  -.0153591   .0321486    -0.48   0.633    -.0783717    .0476536
+                                       Finance and Insurance  |  -.0172113   .0318841    -0.54   0.589    -.0797056    .0452831
+                          Real Estate and Rental and Leasing  |   .0447132   .0413022     1.08   0.279     -.036241    .1256674
+            Professional, Scientific, and Technical Services  |   .0198479   .0317241     0.63   0.532    -.0423328    .0820285
+                     Management of Companies and Enterprises  |  -.0482632   .0317088    -1.52   0.128    -.1104139    .0138875
+Administrative and Support and Waste Management and Remedi..  |   .0088922   .0343108     0.26   0.796    -.0583584    .0761429
+                                        Educational Services  |   .0071667   .0326572     0.22   0.826     -.056843    .0711763
+                           Health Care and Social Assistance  |   .0003913     .03183     0.01   0.990    -.0619968    .0627795
+                         Arts, Entertainment, and Recreation  |  -.0196833    .036025    -0.55   0.585     -.090294    .0509274
+                             Accommodation and Food Services  |  -.0091682   .0378033    -0.24   0.808    -.0832643    .0649279
+               Other Services (except Public Administration)  |  -.0009417   .0326437    -0.03   0.977    -.0649247    .0630413
+                                       Public Administration  |  -.0053458   .0391439    -0.14   0.891    -.0820696    .0713781
+                                                              |
+                                                    nocprmg03 |
+          Biological, agricultural and other life scientists  |  -.0032548   .0048983    -0.66   0.506    -.0128556     .006346
+                             Physical and related scientists  |  -.0104711   .0057631    -1.82   0.069     -.021767    .0008249
+                               Social and related scientists  |     .00872    .006293     1.39   0.166    -.0036144    .0210545
+                                                   Engineers  |  -.0096401   .0038655    -2.49   0.013    -.0172166   -.0020636
+                                 S and E related occupations  |  -.0033994   .0031279    -1.09   0.277    -.0095302    .0027313
+                                     Non-S and E Occupations  |   .0055058   .0033259     1.66   0.098     -.001013    .0120247
+                                                              |
+                                                          wan |    .002572   .0004256     6.04   0.000     .0017379    .0034062
+                                                              |
+                                                       fptind |
+                                                   Full-Time  |  -.0073278   .0040156    -1.82   0.068    -.0151984    .0005429
+                                                              |
+                                                      emsecdt |
+                          2-yr coll/pre-college institutions  |   .0126776   .0027834     4.55   0.000      .007222    .0181331
+                                         Bus/Ind, for-profit  |     .04753   .0078467     6.06   0.000     .0321502    .0629099
+                                         Bus/Ind, non-profit  |   .0199199   .0072089     2.76   0.006     .0057902    .0340497
+                                          Federal government  |   .0147653   .0240496     0.61   0.539    -.0323731    .0619037
+                                      State/Local government  |   .0132128   .0240227     0.55   0.582    -.0338728    .0602984
+                                                              |
+                                                          age |   .0001768   .0007941     0.22   0.824    -.0013797    .0017334
+                                                         age2 |  -7.07e-07   8.57e-06    -0.08   0.934    -.0000175    .0000161
+                                                       tenure |  -.0019767   .0001002   -19.73   0.000    -.0021731   -.0017804
+                                                         male |   .0092242   .0018082     5.10   0.000       .00568    .0127684
+                                                              |
+                                                         race |
+                               American Indian/Alaska Native  |  -.0034702   .0125323    -0.28   0.782     -.028034    .0210936
+                                                       Black  |  -.0127847   .0043906    -2.91   0.004    -.0213904    -.004179
+                                                       White  |  -.0088646   .0037499    -2.36   0.018    -.0162146   -.0015145
+                      Native Hawaiian/Other Pacific Islander  |  -.0092736   .0151318    -0.61   0.540    -.0389326    .0203855
+                                                    Multiple  |  -.0078019   .0073002    -1.07   0.285    -.0221107    .0065069
+                                                              |
+                                                          mar |   -.002598   .0020576    -1.26   0.207    -.0066309    .0014349
+                                                           y8 |  -.0062386   .0027512    -2.27   0.023    -.0116311   -.0008461
+                                                          y10 |  -.0059162   .0028925    -2.05   0.041    -.0115855   -.0002468
+                                                        _cons |   .0370238   .0401945     0.92   0.357    -.0417593    .1158069
+-------------------------------------------------------------------------------------------------------------------------------
+F test of excluded instruments:
+  F(  3, 29524) =    12.96
+  Prob > F      =   0.0000
+Sanderson-Windmeijer multivariate F test of excluded instruments:
+  F(  3, 29524) =    12.96
+  Prob > F      =   0.0000
+
+
+
+Summary results for first-stage regressions
+-------------------------------------------
+
+                                           (Underid)            (Weak id)
+Variable     | F(  3, 29524)  P-val | SW Chi-sq(  3) P-val | SW F(  3, 29524)
+startup      |      12.96    0.0000 |       38.97   0.0000 |       12.96
+
+NB: first-stage test statistics heteroskedasticity-robust
+
+Stock-Yogo weak ID F test critical values for single endogenous regressor:
+                                    5% maximal IV relative bias    13.91
+                                   10% maximal IV relative bias     9.08
+                                   20% maximal IV relative bias     6.46
+                                   30% maximal IV relative bias     5.39
+                                   10% maximal IV size             22.30
+                                   15% maximal IV size             12.83
+                                   20% maximal IV size              9.54
+                                   25% maximal IV size              7.80
+Source: Stock-Yogo (2005).  Reproduced by permission.
+NB: Critical values are for i.i.d. errors only.
+
+Underidentification test
+Ho: matrix of reduced form coefficients has rank=K1-1 (underidentified)
+Ha: matrix has rank=K1 (identified)
+Kleibergen-Paap rk LM statistic          Chi-sq(3)=38.52    P-val=0.0000
+
+Weak identification test
+Ho: equation is weakly identified
+Cragg-Donald Wald F statistic                                      26.28
+Kleibergen-Paap Wald rk F statistic                                12.96
+
+Stock-Yogo weak ID test critical values for K1=1 and L1=3:
+                                    5% maximal IV relative bias    13.91
+                                   10% maximal IV relative bias     9.08
+                                   20% maximal IV relative bias     6.46
+                                   30% maximal IV relative bias     5.39
+                                   10% maximal IV size             22.30
+                                   15% maximal IV size             12.83
+                                   20% maximal IV size              9.54
+                                   25% maximal IV size              7.80
+Source: Stock-Yogo (2005).  Reproduced by permission.
+NB: Critical values are for Cragg-Donald F statistic and i.i.d. errors.
+
+Weak-instrument-robust inference
+Tests of joint significance of endogenous regressors B1 in main equation
+Ho: B1=0 and orthogonality conditions are valid
+Anderson-Rubin Wald test           F(3,29524)=     5.95     P-val=0.0005
+Anderson-Rubin Wald test           Chi-sq(3)=     17.90     P-val=0.0005
+Stock-Wright LM S statistic        Chi-sq(3)=     18.63     P-val=0.0003
+
+NB: Underidentification, weak identification and weak-identification-robust
+    test statistics heteroskedasticity-robust
+
+Number of observations               N  =      29596
+Number of regressors                 K  =         70
+Number of endogenous regressors      K1 =          1
+Number of instruments                L  =         72
+Number of excluded instruments       L1 =          3
+
+IV (2SLS) estimation
+--------------------
+
+Estimates efficient for homoskedasticity only
+Statistics robust to heteroskedasticity
+
+                                                      Number of obs =    29596
+                                                      F( 69, 29526) =    13.56
+                                                      Prob > F      =   0.0000
+Total (centered) SS     =  482.2665404                Centered R2   =  -0.0896
+Total (uncentered) SS   =  513.9122032                Uncentered R2 =  -0.0225
+Residual SS             =   525.473691                Root MSE      =    .1332
+
+-------------------------------------------------------------------------------------------------------------------------------
+                                                              |               Robust
+                                                      dlnwage |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+--------------------------------------------------------------+----------------------------------------------------------------
+                                                      startup |  -.3247839   .1339025    -2.43   0.015    -.5872279     -.06234
+                                                              |
+                                                       degree |
+                                                    Master's  |   .0026299    .001855     1.42   0.156    -.0010059    .0062657
+                                                   Doctorate  |  -.0132408   .0088044    -1.50   0.133    -.0304971    .0040154
+                                                Professional  |    .003174    .004111     0.77   0.440    -.0048834    .0112315
+                                                              |
+                                                        major |
+                                   Life and related sciences  |   .0082523   .0043241     1.91   0.056    -.0002227    .0167274
+                               Physical and related sciences  |   .0071414   .0048842     1.46   0.144    -.0024315    .0167144
+                                 Social and related sciences  |   .0013365   .0038115     0.35   0.726    -.0061339    .0088069
+                                                 Engineering  |   .0086454   .0032643     2.65   0.008     .0022475    .0150434
+                                      S and E-Related Fields  |   .0014584   .0036404     0.40   0.689    -.0056768    .0085935
+                                          Non-S and E Fields  |   .0008939   .0031817     0.28   0.779    -.0053421    .0071298
+                                                              |
+                                                       hdclas |
+                                      Research University II  |   .0012157   .0028154     0.43   0.666    -.0043024    .0067337
+                                        Doctorate Granting I  |  -.0000637   .0032727    -0.02   0.984     -.006478    .0063506
+                                       Doctorate Granting II  |  -.0008273   .0032078    -0.26   0.796    -.0071145      .00546
+                                             Comprehensive I  |   .0005564   .0022146     0.25   0.802    -.0037842    .0048969
+                                            Comprehensive II  |  -.0003244   .0063988    -0.05   0.960    -.0128658     .012217
+                                              Liberal Arts I  |  -.0015677   .0053431    -0.29   0.769      -.01204    .0089047
+                                             Liberal Arts II  |   .0021716     .00398     0.55   0.585     -.005629    .0099721
+                                       Two-year institutions  |   .0131222   .0117414     1.12   0.264    -.0098905    .0361349
+                      Theological seminaries, bible colleges  |  -.0027253   .0111426    -0.24   0.807    -.0245645    .0191138
+                         Medical schools and medical centers  |   .0149382   .0076271     1.96   0.050    -.0000106    .0298871
+                  Other separate health professional schools  |   .0050036   .0147581     0.34   0.735    -.0239218    .0339289
+                       Schools of engineering and technology  |  -.0031227   .0069909    -0.45   0.655    -.0168246    .0105792
+                           Schools of art, music, and design  |   .0084495   .0162001     0.52   0.602    -.0233022    .0402012
+                                              Schools of law  |   .0197684   .0213846     0.92   0.355    -.0221447    .0616815
+                              Other specialized institutions  |  -.0076923   .0062603    -1.23   0.219    -.0199623    .0045778
+                                                              |
+                                                    bindustry |
+                                                      Mining  |    .008807   .0195682     0.45   0.653     -.029546      .04716
+                                                   Utilities  |  -.0175778   .0178442    -0.99   0.325    -.0525519    .0173962
+                                                Construction  |  -.0209654   .0184889    -1.13   0.257    -.0572031    .0152722
+                                               Manufacturing  |  -.0212838   .0175248    -1.21   0.225    -.0556318    .0130642
+                                             Wholesale Trade  |  -.0110865   .0177942    -0.62   0.533    -.0459626    .0237895
+                                                Retail Trade  |  -.0100095   .0181301    -0.55   0.581    -.0455438    .0255248
+                              Transportation and Warehousing  |   -.019845   .0189792    -1.05   0.296    -.0570435    .0173535
+                                                 Information  |  -.0311343   .0177333    -1.76   0.079    -.0658909    .0036222
+                                       Finance and Insurance  |  -.0174913   .0175814    -0.99   0.320    -.0519501    .0169676
+                          Real Estate and Rental and Leasing  |  -.0228359   .0237059    -0.96   0.335    -.0692986    .0236267
+            Professional, Scientific, and Technical Services  |   -.006532   .0173822    -0.38   0.707    -.0406004    .0275363
+                     Management of Companies and Enterprises  |     -.0234   .0202507    -1.16   0.248    -.0630906    .0162907
+Administrative and Support and Waste Management and Remedi..  |  -.0052953   .0202033    -0.26   0.793    -.0448931    .0343024
+                                        Educational Services  |  -.0178135   .0184383    -0.97   0.334    -.0539518    .0183248
+                           Health Care and Social Assistance  |  -.0167878   .0175421    -0.96   0.339    -.0511698    .0175941
+                         Arts, Entertainment, and Recreation  |  -.0176646   .0275333    -0.64   0.521    -.0716288    .0362996
+                             Accommodation and Food Services  |   .0075452   .0249472     0.30   0.762    -.0413503    .0564407
+               Other Services (except Public Administration)  |  -.0130958    .018666    -0.70   0.483    -.0496805     .023489
+                                       Public Administration  |  -.0092563   .0202934    -0.46   0.648    -.0490307    .0305181
+                                                              |
+                                                    nocprmg03 |
+          Biological, agricultural and other life scientists  |   -.001233   .0060756    -0.20   0.839    -.0131409    .0106749
+                             Physical and related scientists  |   .0039385   .0053288     0.74   0.460    -.0065058    .0143828
+                               Social and related scientists  |   .0130445   .0057265     2.28   0.023     .0018209    .0242682
+                                                   Engineers  |   .0061612   .0031667     1.95   0.052    -.0000454    .0123677
+                                 S and E related occupations  |   .0062533   .0028726     2.18   0.029     .0006232    .0118835
+                                     Non-S and E Occupations  |   .0033244     .00282     1.18   0.238    -.0022027    .0088516
+                                                              |
+                                                          wan |  -.0001199   .0005044    -0.24   0.812    -.0011085    .0008687
+                                                              |
+                                                       fptind |
+                                                   Full-Time  |  -.0658139   .0052674   -12.49   0.000    -.0761377     -.05549
+                                                              |
+                                                      emsecdt |
+                          2-yr coll/pre-college institutions  |  -.0070996   .0046405    -1.53   0.126    -.0161947    .0019955
+                                         Bus/Ind, for-profit  |  -.0145961   .0090991    -1.60   0.109      -.03243    .0032377
+                                         Bus/Ind, non-profit  |  -.0141061   .0069102    -2.04   0.041    -.0276498   -.0005625
+                                          Federal government  |   -.010955   .0127872    -0.86   0.392    -.0360175    .0141074
+                                      State/Local government  |  -.0163699   .0127127    -1.29   0.198    -.0412862    .0085465
+                                                              |
+                                                          age |   .0043547   .0008812     4.94   0.000     .0026276    .0060819
+                                                         age2 |  -.0000704   .0000101    -6.96   0.000    -.0000903   -.0000506
+                                                       tenure |  -.0015712   .0002974    -5.28   0.000    -.0021541   -.0009882
+                                                         male |   .0098671   .0023253     4.24   0.000     .0053096    .0144246
+                                                              |
+                                                         race |
+                               American Indian/Alaska Native  |   .0107162   .0081255     1.32   0.187    -.0052095     .026642
+                                                       Black  |  -.0060132   .0045208    -1.33   0.183    -.0148739    .0028475
+                                                       White  |  -.0053606   .0030386    -1.76   0.078    -.0113162    .0005949
+                      Native Hawaiian/Other Pacific Islander  |   .0247304   .0152701     1.62   0.105    -.0051985    .0546593
+                                                    Multiple  |  -.0027316   .0057231    -0.48   0.633    -.0139486    .0084854
+                                                              |
+                                                          mar |  -.0044895   .0019463    -2.31   0.021    -.0083042   -.0006747
+                                                           y8 |   .0029315   .0032611     0.90   0.369    -.0034602    .0093232
+                                                          y10 |  -.0045979   .0032553    -1.41   0.158    -.0109783    .0017824
+                                                        _cons |   .0866441   .0265765     3.26   0.001     .0345552    .1387331
+-------------------------------------------------------------------------------------------------------------------------------
+Underidentification test (Kleibergen-Paap rk LM statistic):             38.521
+                                                   Chi-sq(3) P-val =    0.0000
+------------------------------------------------------------------------------
+Weak identification test (Cragg-Donald Wald F statistic):               26.277
+                         (Kleibergen-Paap rk Wald F statistic):         12.959
+Stock-Yogo weak ID test critical values:  5% maximal IV relative bias    13.91
+                                         10% maximal IV relative bias     9.08
+                                         20% maximal IV relative bias     6.46
+                                         30% maximal IV relative bias     5.39
+                                         10% maximal IV size             22.30
+                                         15% maximal IV size             12.83
+                                         20% maximal IV size              9.54
+                                         25% maximal IV size              7.80
+Source: Stock-Yogo (2005).  Reproduced by permission.
+NB: Critical values are for Cragg-Donald F statistic and i.i.d. errors.
+------------------------------------------------------------------------------
+Hansen J statistic (overidentification test of all instruments):         5.366
+                                                   Chi-sq(2) P-val =    0.0684
+------------------------------------------------------------------------------
+Instrumented:         startup
+Included instruments: 2.degree 3.degree 4.degree 2.major 3.major 4.major
+                      5.major 6.major 7.major 12.hdclas 13.hdclas 14.hdclas
+                      21.hdclas 22.hdclas 31.hdclas 32.hdclas 40.hdclas
+                      51.hdclas 52.hdclas 53.hdclas 54.hdclas 56.hdclas
+                      57.hdclas 59.hdclas 2.bindustry 3.bindustry 4.bindustry
+                      5.bindustry 6.bindustry 7.bindustry 8.bindustry
+                      9.bindustry 10.bindustry 11.bindustry 12.bindustry
+                      13.bindustry 14.bindustry 15.bindustry 16.bindustry
+                      17.bindustry 18.bindustry 19.bindustry 20.bindustry
+                      2.nocprmg03 3.nocprmg03 4.nocprmg03 5.nocprmg03
+                      6.nocprmg03 7.nocprmg03 wan 1.fptind 12.emsecdt 21.emsecdt
+                      23.emsecdt 31.emsecdt 32.emsecdt age age2 tenure male
+                      2.race 3.race 4.race 5.race 6.race mar y8 y10
+Excluded instruments: 2.facsec 3.facsec 4.facsec
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\u0091183\AppData\Local\Temp\STD02000000.tmp"
+
+. nbreg wan b3.emplr i.degree i.major i.hdclas i.bindustry i.nocprmg i.fptind i.emsecdt age age2 tenure male i.race mar, vce(rob
+> ust) nolog
+nocprmg ambiguous abbreviation
+r(111);
+
+end of do-file
+
+r(111);
+
+. do "C:\Users\u0091183\AppData\Local\Temp\STD02000000.tmp"
+
+. nbreg wan b3.emplr i.degree i.major i.hdclas i.bindustry i.nocprmg03 i.fptind i.emsecdt age age2 tenure male i.race mar, vce(r
+> obust) nolog
+
+Negative binomial regression                    Number of obs     =     60,713
+                                                Wald chi2(68)     =    4553.75
+Dispersion           = mean                     Prob > chi2       =     0.0000
+Log pseudolikelihood = -130934.59               Pseudo R2         =     0.0178
+
+-------------------------------------------------------------------------------------------------------------------------------
+                                                              |               Robust
+                                                          wan |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+--------------------------------------------------------------+----------------------------------------------------------------
+                                                        emplr |
+                                                     Startup  |   .1207268   .0141521     8.53   0.000     .0929893    .1484644
+                                           Small Established  |   .0249709   .0068079     3.67   0.000     .0116277    .0383141
+                                                              |
+                                                       degree |
+                                                    Master's  |    .022791   .0054579     4.18   0.000     .0120938    .0334883
+                                                   Doctorate  |   .0288794   .0092722     3.11   0.002     .0107063    .0470526
+                                                Professional  |  -.1701113   .0133349   -12.76   0.000    -.1962472   -.1439754
+                                                              |
+                                                        major |
+                                   Life and related sciences  |   .0515717   .0140472     3.67   0.000     .0240397    .0791037
+                               Physical and related sciences  |   .0222891   .0156485     1.42   0.154    -.0083815    .0529597
+                                 Social and related sciences  |    .037862   .0124135     3.05   0.002      .013532    .0621921
+                                                 Engineering  |   .0687559   .0112865     6.09   0.000     .0466346    .0908771
+                                      S and E-Related Fields  |   .0842292    .012491     6.74   0.000     .0597473     .108711
+                                          Non-S and E Fields  |   .0418181   .0101872     4.10   0.000     .0218516    .0617847
+                                                              |
+                                                       hdclas |
+                                      Research University II  |    .025476    .008221     3.10   0.002     .0093632    .0415887
+                                        Doctorate Granting I  |   .0172505   .0090861     1.90   0.058    -.0005581     .035059
+                                       Doctorate Granting II  |   .0050412     .00922     0.55   0.585    -.0130296    .0231121
+                                             Comprehensive I  |   .0205095   .0062837     3.26   0.001     .0081936    .0328254
+                                            Comprehensive II  |    .019368   .0180323     1.07   0.283    -.0159746    .0547107
+                                              Liberal Arts I  |    .007306   .0161462     0.45   0.651    -.0243401     .038952
+                                             Liberal Arts II  |   .0101036   .0118853     0.85   0.395    -.0131911    .0333984
+                                       Two-year institutions  |   .0666146   .0464232     1.43   0.151    -.0243732    .1576025
+                      Theological seminaries, bible colleges  |   .0007928   .0281585     0.03   0.978    -.0543969    .0559825
+                         Medical schools and medical centers  |  -.0306262   .0227691    -1.35   0.179    -.0752528    .0140004
+                  Other separate health professional schools  |   .1206139   .0556794     2.17   0.030     .0114844    .2297435
+                       Schools of engineering and technology  |   .0404507   .0262286     1.54   0.123    -.0109564    .0918578
+                           Schools of art, music, and design  |   .0851294   .0411565     2.07   0.039     .0044642    .1657946
+                                              Schools of law  |   .0153021   .0543946     0.28   0.778    -.0913094    .1219135
+                              Other specialized institutions  |    .023541   .0190155     1.24   0.216    -.0137286    .0608107
+                                  Indian Tribal Institutions  |   .5968129   .5010468     1.19   0.234    -.3852207    1.578846
+                                                              |
+                                                    bindustry |
+                                                      Mining  |  -.1444708   .0624327    -2.31   0.021    -.2668367   -.0221049
+                                                   Utilities  |  -.1834277   .0581779    -3.15   0.002    -.2974544    -.069401
+                                                Construction  |  -.0320674   .0578154    -0.55   0.579    -.1453835    .0812488
+                                               Manufacturing  |  -.0593117   .0546426    -1.09   0.278    -.1664092    .0477858
+                                             Wholesale Trade  |  -.0745055   .0562536    -1.32   0.185    -.1847605    .0357495
+                                                Retail Trade  |  -.1116329   .0558763    -2.00   0.046    -.2211485   -.0021173
+                              Transportation and Warehousing  |  -.1860885   .0591028    -3.15   0.002    -.3019278   -.0702492
+                                                 Information  |  -.1283214    .055806    -2.30   0.021    -.2376992   -.0189436
+                                       Finance and Insurance  |  -.0720978   .0550975    -1.31   0.191    -.1800869    .0358913
+                          Real Estate and Rental and Leasing  |  -.0847243   .0600472    -1.41   0.158    -.2024147     .032966
+            Professional, Scientific, and Technical Services  |  -.0788129   .0546249    -1.44   0.149    -.1858757      .02825
+                     Management of Companies and Enterprises  |  -.1683491   .0843183    -2.00   0.046    -.3336098   -.0030883
+Administrative and Support and Waste Management and Remedi..  |  -.1936017    .058695    -3.30   0.001    -.3086419   -.0785615
+                                        Educational Services  |  -.1955071   .0575766    -3.40   0.001    -.3083551   -.0826592
+                           Health Care and Social Assistance  |  -.1600959   .0555628    -2.88   0.004     -.268997   -.0511947
+                         Arts, Entertainment, and Recreation  |  -.1702187   .0639694    -2.66   0.008    -.2955963    -.044841
+                             Accommodation and Food Services  |   .0138498   .0614088     0.23   0.822    -.1065093    .1342089
+               Other Services (except Public Administration)  |  -.0690091   .0569309    -1.21   0.225    -.1805917    .0425735
+                                       Public Administration  |  -.0844286   .0704345    -1.20   0.231    -.2224778    .0536205
+                                                              |
+                                                    nocprmg03 |
+          Biological, agricultural and other life scientists  |   .0788246      .0157     5.02   0.000     .0480532    .1095959
+                             Physical and related scientists  |   .0983596   .0167417     5.88   0.000     .0655465    .1311727
+                               Social and related scientists  |  -.0284768   .0161219    -1.77   0.077    -.0600751    .0031214
+                                                   Engineers  |   .0942854   .0098438     9.58   0.000     .0749919     .113579
+                                 S and E related occupations  |   .0595828   .0101086     5.89   0.000     .0397704    .0793952
+                                     Non-S and E Occupations  |   .0472321   .0084259     5.61   0.000     .0307176    .0637466
+                                                              |
+                                                       fptind |
+                                                   Full-Time  |   .3427417   .0101035    33.92   0.000     .3229392    .3625442
+                                                              |
+                                                      emsecdt |
+                          2-yr coll/pre-college institutions  |  -.1879721   .0101758   -18.47   0.000    -.2079162   -.1680279
+                                         Bus/Ind, for-profit  |  -.0827901   .0190434    -4.35   0.000    -.1201145   -.0454657
+                                         Bus/Ind, non-profit  |   -.029826   .0188656    -1.58   0.114    -.0668019    .0071499
+                                          Federal government  |  -.1402203   .0486193    -2.88   0.004    -.2355124   -.0449282
+                                      State/Local government  |  -.1723096   .0484581    -3.56   0.000    -.2672857   -.0773335
+                                                              |
+                                                          age |   .0141112   .0018069     7.81   0.000     .0105697    .0176527
+                                                         age2 |  -.0001843   .0000198    -9.33   0.000     -.000223   -.0001456
+                                                       tenure |   .0002124   .0003152     0.67   0.500    -.0004053    .0008301
+                                                         male |   .0599753    .005249    11.43   0.000     .0496874    .0702631
+                                                              |
+                                                         race |
+                               American Indian/Alaska Native  |   .1351169   .0286144     4.72   0.000     .0790337    .1912001
+                                                       Black  |   .0556372   .0116705     4.77   0.000     .0327633     .078511
+                                                       White  |  -.0192664   .0081603    -2.36   0.018    -.0352603   -.0032726
+                      Native Hawaiian/Other Pacific Islander  |   .0887841   .0377825     2.35   0.019     .0147317    .1628365
+                                                    Multiple  |   .0616949   .0174825     3.53   0.000     .0274298    .0959601
+                                                              |
+                                                          mar |   .0224542   .0053948     4.16   0.000     .0118805    .0330278
+                                                        _cons |   .8872297   .0703598    12.61   0.000     .7493271    1.025132
+--------------------------------------------------------------+----------------------------------------------------------------
+                                                     /lnalpha |  -2.885752   .0287182                     -2.942039   -2.829465
+--------------------------------------------------------------+----------------------------------------------------------------
+                                                        alpha |   .0558128   .0016028                      .0527581    .0590444
+-------------------------------------------------------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\u0091183\AppData\Local\Temp\STD02000000.tmp"
+
+. reg dlnwage b3.emplr wan wan2 i.degree i.major i.hdclas i.bindustry i.nocprmg03 i.fptind i.emsecdt age age2 tenure male i.race
+>  mar, vce(robust)
+
+Linear regression                               Number of obs     =     29,596
+                                                F(69, 29526)      =      14.65
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.0530
+                                                Root MSE          =     .12437
+
+-------------------------------------------------------------------------------------------------------------------------------
+                                                              |               Robust
+                                                      dlnwage |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------------------------------------------------------+----------------------------------------------------------------
+                                                        emplr |
+                                                     Startup  |  -.0023316   .0056502    -0.41   0.680    -.0134064    .0087431
+                                           Small Established  |  -.0020668   .0024529    -0.84   0.399    -.0068745    .0027409
+                                                              |
+                                                          wan |  -.0025401   .0011956    -2.12   0.034    -.0048836   -.0001966
+                                                         wan2 |   .0001599   .0001151     1.39   0.165    -.0000657    .0003854
+                                                              |
+                                                       degree |
+                                                    Master's  |   .0019628   .0017039     1.15   0.249     -.001377    .0053025
+                                                   Doctorate  |  -.0153411   .0085402    -1.80   0.072    -.0320802     .001398
+                                                Professional  |   .0029502   .0038183     0.77   0.440    -.0045338    .0104342
+                                                              |
+                                                        major |
+                                   Life and related sciences  |   .0091315   .0039514     2.31   0.021     .0013866    .0168764
+                               Physical and related sciences  |   .0045056   .0044432     1.01   0.311    -.0042034    .0132145
+                                 Social and related sciences  |    .002772   .0034498     0.80   0.422    -.0039898    .0095338
+                                                 Engineering  |   .0086913   .0028752     3.02   0.003     .0030558    .0143267
+                                      S and E-Related Fields  |   .0029988   .0032748     0.92   0.360    -.0034199    .0094175
+                                          Non-S and E Fields  |   .0039263   .0026839     1.46   0.144    -.0013343    .0091869
+                                                              |
+                                                       hdclas |
+                                      Research University II  |   .0027243   .0025302     1.08   0.282    -.0022351    .0076837
+                                        Doctorate Granting I  |   .0011099   .0030265     0.37   0.714    -.0048222     .007042
+                                       Doctorate Granting II  |   .0014746   .0028881     0.51   0.610    -.0041862    .0071355
+                                             Comprehensive I  |   .0019564   .0019987     0.98   0.328    -.0019612     .005874
+                                            Comprehensive II  |   .0025051   .0061362     0.41   0.683    -.0095221    .0145324
+                                              Liberal Arts I  |  -.0002302   .0049115    -0.05   0.963     -.009857    .0093965
+                                             Liberal Arts II  |    .004536   .0036091     1.26   0.209    -.0025379      .01161
+                                       Two-year institutions  |   .0077604    .009023     0.86   0.390     -.009925    .0254458
+                      Theological seminaries, bible colleges  |   .0037359   .0104826     0.36   0.722    -.0168105    .0242823
+                         Medical schools and medical centers  |   .0107355    .006967     1.54   0.123      -.00292     .024391
+                  Other separate health professional schools  |   .0101459   .0141808     0.72   0.474    -.0176491    .0379409
+                       Schools of engineering and technology  |  -.0010789   .0063522    -0.17   0.865    -.0135295    .0113717
+                           Schools of art, music, and design  |   .0170579   .0160849     1.06   0.289    -.0144691     .048585
+                                              Schools of law  |   .0099607   .0188556     0.53   0.597    -.0269972    .0469186
+                              Other specialized institutions  |  -.0078063   .0054366    -1.44   0.151    -.0184623    .0028497
+                                                              |
+                                                    bindustry |
+                                                      Mining  |   .0119285   .0148416     0.80   0.422    -.0171617    .0410188
+                                                   Utilities  |  -.0080162    .012493    -0.64   0.521    -.0325031    .0164707
+                                                Construction  |  -.0176584   .0134765    -1.31   0.190     -.044073    .0087561
+                                               Manufacturing  |  -.0126243   .0121657    -1.04   0.299    -.0364696    .0112211
+                                             Wholesale Trade  |  -.0050541   .0126515    -0.40   0.690    -.0298516    .0197435
+                                                Retail Trade  |  -.0051322   .0132949    -0.39   0.699    -.0311909    .0209264
+                              Transportation and Warehousing  |  -.0093733   .0137706    -0.68   0.496    -.0363643    .0176177
+                                                 Information  |  -.0267787   .0126644    -2.11   0.034    -.0516014   -.0019559
+                                       Finance and Insurance  |  -.0125917   .0124998    -1.01   0.314    -.0370918    .0119085
+                          Real Estate and Rental and Leasing  |  -.0379618   .0173565    -2.19   0.029    -.0719813   -.0039423
+            Professional, Scientific, and Technical Services  |  -.0132837   .0121691    -1.09   0.275    -.0371357    .0105683
+                     Management of Companies and Enterprises  |  -.0081772   .0147409    -0.55   0.579      -.03707    .0207156
+Administrative and Support and Waste Management and Remedi..  |   -.008627   .0155812    -0.55   0.580    -.0391669    .0219129
+                                        Educational Services  |  -.0210304   .0137538    -1.53   0.126    -.0479885    .0059277
+                           Health Care and Social Assistance  |  -.0168338   .0126313    -1.33   0.183    -.0415918    .0079242
+                         Arts, Entertainment, and Recreation  |  -.0119202   .0231082    -0.52   0.606    -.0572133    .0333729
+                             Accommodation and Food Services  |   .0097527   .0211751     0.46   0.645    -.0317515    .0512569
+               Other Services (except Public Administration)  |  -.0128562   .0138832    -0.93   0.354    -.0400679    .0143556
+                                       Public Administration  |  -.0083375   .0143615    -0.58   0.562    -.0364866    .0198116
+                                                              |
+                                                    nocprmg03 |
+          Biological, agricultural and other life scientists  |  -.0009722   .0057352    -0.17   0.865    -.0122133     .010269
+                             Physical and related scientists  |   .0056257   .0048047     1.17   0.242    -.0037916    .0150431
+                               Social and related scientists  |   .0093167   .0052208     1.78   0.074    -.0009162    .0195497
+                                                   Engineers  |   .0086842   .0025343     3.43   0.001     .0037168    .0136516
+                                 S and E related occupations  |   .0070395   .0026501     2.66   0.008     .0018452    .0122339
+                                     Non-S and E Occupations  |  -.0001448   .0024441    -0.06   0.953    -.0049354    .0046457
+                                                              |
+                                                       fptind |
+                                                   Full-Time  |  -.0623169   .0049167   -12.67   0.000    -.0719538     -.05268
+                                                              |
+                                                      emsecdt |
+                          2-yr coll/pre-college institutions  |  -.0115222    .004256    -2.71   0.007    -.0198642   -.0031801
+                                         Bus/Ind, for-profit  |  -.0302249   .0062129    -4.86   0.000    -.0424024   -.0180473
+                                         Bus/Ind, non-profit  |  -.0209315   .0061947    -3.38   0.001    -.0330735   -.0087895
+                                          Federal government  |  -.0156552   .0099965    -1.57   0.117    -.0352487    .0039383
+                                      State/Local government  |  -.0204766   .0099307    -2.06   0.039    -.0399411   -.0010121
+                                                              |
+                                                          age |   .0043506   .0008514     5.11   0.000     .0026819    .0060193
+                                                         age2 |  -.0000708   9.84e-06    -7.20   0.000    -.0000901   -.0000515
+                                                       tenure |  -.0009072   .0001185    -7.65   0.000    -.0011395   -.0006749
+                                                         male |   .0065431   .0017993     3.64   0.000     .0030163    .0100698
+                                                              |
+                                                         race |
+                               American Indian/Alaska Native  |    .012508   .0075008     1.67   0.095    -.0021939    .0272099
+                                                       Black  |  -.0025712   .0038096    -0.67   0.500    -.0100382    .0048959
+                                                       White  |  -.0021603   .0025526    -0.85   0.397    -.0071636    .0028429
+                      Native Hawaiian/Other Pacific Islander  |   .0292201   .0148337     1.97   0.049     .0001455    .0582948
+                                                    Multiple  |   .0001979    .005077     0.04   0.969    -.0097533     .010149
+                                                              |
+                                                          mar |  -.0035227   .0018128    -1.94   0.052    -.0070759    .0000304
+                                                        _cons |   .0841932   .0229344     3.67   0.000     .0392407    .1291457
+-------------------------------------------------------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\u0091183\AppData\Local\Temp\STD02000000.tmp"
+
+. reg dlnwage b3.emplr wan wan2 i.degree i.major i.hdclas i.bindustry i.nocprmg03 i.fptind i.emsecdt age age2 tenure male i.race
+>  mar y8 y10, vce(robust)
+
+Linear regression                               Number of obs     =     29,596
+                                                F(71, 29524)      =      14.50
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.0537
+                                                Root MSE          =     .12433
+
+-------------------------------------------------------------------------------------------------------------------------------
+                                                              |               Robust
+                                                      dlnwage |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------------------------------------------------------+----------------------------------------------------------------
+                                                        emplr |
+                                                     Startup  |  -.0022149   .0056433    -0.39   0.695     -.013276    .0088462
+                                           Small Established  |  -.0019459   .0024526    -0.79   0.428    -.0067532    .0028613
+                                                              |
+                                                          wan |  -.0024662   .0011958    -2.06   0.039    -.0048101   -.0001224
+                                                         wan2 |   .0001528   .0001151     1.33   0.184    -.0000728    .0003784
+                                                              |
+                                                       degree |
+                                                    Master's  |   .0019631   .0017022     1.15   0.249    -.0013733    .0052994
+                                                   Doctorate  |  -.0133617   .0085871    -1.56   0.120    -.0301928    .0034694
+                                                Professional  |   .0032975   .0038229     0.86   0.388    -.0041955    .0107905
+                                                              |
+                                                        major |
+                                   Life and related sciences  |    .009435   .0039459     2.39   0.017     .0017008    .0171691
+                               Physical and related sciences  |   .0048382   .0044327     1.09   0.275      -.00385    .0135264
+                                 Social and related sciences  |   .0030707   .0034498     0.89   0.373     -.003691    .0098325
+                                                 Engineering  |    .008471   .0028746     2.95   0.003     .0028367    .0141053
+                                      S and E-Related Fields  |   .0031227   .0032735     0.95   0.340    -.0032934    .0095389
+                                          Non-S and E Fields  |   .0031748   .0026974     1.18   0.239    -.0021121    .0084617
+                                                              |
+                                                       hdclas |
+                                      Research University II  |   .0024895    .002528     0.98   0.325    -.0024655    .0074445
+                                        Doctorate Granting I  |   .0010792   .0030262     0.36   0.721    -.0048523    .0070107
+                                       Doctorate Granting II  |   .0014259   .0028861     0.49   0.621     -.004231    .0070828
+                                             Comprehensive I  |   .0019137   .0019994     0.96   0.339    -.0020052    .0058327
+                                            Comprehensive II  |   .0021953   .0061325     0.36   0.720    -.0098247    .0142152
+                                              Liberal Arts I  |   .0000114   .0049058     0.00   0.998    -.0096042     .009627
+                                             Liberal Arts II  |   .0044041   .0036104     1.22   0.223    -.0026725    .0114808
+                                       Two-year institutions  |   .0077736   .0090697     0.86   0.391    -.0100034    .0255505
+                      Theological seminaries, bible colleges  |   .0042206   .0105122     0.40   0.688    -.0163837    .0248249
+                         Medical schools and medical centers  |   .0102683   .0069584     1.48   0.140    -.0033704     .023907
+                  Other separate health professional schools  |   .0098174   .0141642     0.69   0.488     -.017945    .0375798
+                       Schools of engineering and technology  |  -.0010052   .0063452    -0.16   0.874    -.0134422    .0114318
+                           Schools of art, music, and design  |   .0161014   .0160407     1.00   0.315    -.0153391    .0475419
+                                              Schools of law  |   .0120291   .0189079     0.64   0.525    -.0250313    .0490895
+                              Other specialized institutions  |  -.0075247   .0054377    -1.38   0.166    -.0181828    .0031334
+                                                              |
+                                                    bindustry |
+                                                      Mining  |   .0111967   .0147731     0.76   0.449    -.0177593    .0401526
+                                                   Utilities  |  -.0086382   .0124265    -0.70   0.487    -.0329947    .0157184
+                                                Construction  |  -.0182644   .0134211    -1.36   0.174    -.0445704    .0080416
+                                               Manufacturing  |  -.0133579   .0120969    -1.10   0.269    -.0370684    .0103526
+                                             Wholesale Trade  |  -.0055655   .0125842    -0.44   0.658     -.030231       .0191
+                                                Retail Trade  |  -.0060241   .0132258    -0.46   0.649    -.0319472     .019899
+                              Transportation and Warehousing  |   -.010296   .0137127    -0.75   0.453    -.0371735    .0165815
+                                                 Information  |  -.0273131   .0126014    -2.17   0.030    -.0520123   -.0026139
+                                       Finance and Insurance  |  -.0130606   .0124321    -1.05   0.293    -.0374281     .011307
+                          Real Estate and Rental and Leasing  |  -.0383172   .0173249    -2.21   0.027    -.0722749   -.0043596
+            Professional, Scientific, and Technical Services  |  -.0138785   .0120992    -1.15   0.251    -.0375934    .0098365
+                     Management of Companies and Enterprises  |  -.0089855   .0147162    -0.61   0.541    -.0378298    .0198589
+Administrative and Support and Waste Management and Remedi..  |  -.0094264   .0155201    -0.61   0.544    -.0398464    .0209936
+                                        Educational Services  |  -.0211078   .0136867    -1.54   0.123    -.0479343    .0057187
+                           Health Care and Social Assistance  |  -.0176854   .0125631    -1.41   0.159    -.0423098    .0069389
+                         Arts, Entertainment, and Recreation  |  -.0126866   .0230167    -0.55   0.582    -.0578003    .0324271
+                             Accommodation and Food Services  |   .0092388      .0211     0.44   0.661     -.032118    .0505957
+               Other Services (except Public Administration)  |  -.0135697   .0138205    -0.98   0.326    -.0406585    .0135191
+                                       Public Administration  |  -.0088755   .0143475    -0.62   0.536    -.0369973    .0192463
+                                                              |
+                                                    nocprmg03 |
+          Biological, agricultural and other life scientists  |  -.0002251   .0057449    -0.04   0.969    -.0114854    .0110352
+                             Physical and related scientists  |   .0076769   .0048346     1.59   0.112    -.0017992     .017153
+                               Social and related scientists  |   .0102846   .0052191     1.97   0.049     .0000551    .0205142
+                                                   Engineers  |   .0094978   .0025398     3.74   0.000     .0045198    .0144759
+                                 S and E related occupations  |    .007494   .0026521     2.83   0.005     .0022958    .0126922
+                                     Non-S and E Occupations  |   .0017145   .0024906     0.69   0.491    -.0031673    .0065962
+                                                              |
+                                                       fptind |
+                                                   Full-Time  |  -.0623195   .0049091   -12.69   0.000    -.0719415   -.0526974
+                                                              |
+                                                      emsecdt |
+                          2-yr coll/pre-college institutions  |  -.0113577   .0042549    -2.67   0.008    -.0196974   -.0030179
+                                         Bus/Ind, for-profit  |  -.0298714   .0062103    -4.81   0.000    -.0420438    -.017699
+                                         Bus/Ind, non-profit  |  -.0205492   .0061984    -3.32   0.001    -.0326983      -.0084
+                                          Federal government  |  -.0152906    .010058    -1.52   0.128    -.0350048    .0044235
+                                      State/Local government  |  -.0200952   .0099931    -2.01   0.044    -.0396821   -.0005083
+                                                              |
+                                                          age |   .0043392    .000852     5.09   0.000     .0026693     .006009
+                                                         age2 |   -.000071   9.84e-06    -7.21   0.000    -.0000902   -.0000517
+                                                       tenure |  -.0009021   .0001186    -7.61   0.000    -.0011345   -.0006697
+                                                         male |   .0066874   .0017982     3.72   0.000     .0031629     .010212
+                                                              |
+                                                         race |
+                               American Indian/Alaska Native  |   .0117281   .0074779     1.57   0.117    -.0029289    .0263851
+                                                       Black  |  -.0017904   .0038145    -0.47   0.639     -.009267    .0056863
+                                                       White  |  -.0025611    .002549    -1.00   0.315    -.0075573    .0024351
+                      Native Hawaiian/Other Pacific Islander  |   .0279965   .0148423     1.89   0.059    -.0010951     .057088
+                                                    Multiple  |  -.0002817   .0050751    -0.06   0.956    -.0102291    .0096658
+                                                              |
+                                                          mar |  -.0035857   .0018105    -1.98   0.048    -.0071345   -.0000369
+                                                           y8 |   .0050057   .0030632     1.63   0.102    -.0009983    .0110098
+                                                          y10 |   -.002596    .003061    -0.85   0.396    -.0085957    .0034036
+                                                        _cons |   .0829932   .0229075     3.62   0.000     .0380934    .1278929
+-------------------------------------------------------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. tab wan
+
+  Number of |
+       Work |
+ Activities |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |     12,042       14.50       14.50
+          2 |     13,151       15.84       30.34
+          3 |     13,340       16.07       46.41
+          4 |     12,577       15.15       61.56
+          5 |     10,790       13.00       74.56
+          6 |      8,114        9.77       84.33
+          7 |      5,685        6.85       91.18
+          8 |      3,522        4.24       95.42
+          9 |      1,950        2.35       97.77
+         10 |      1,061        1.28       99.05
+         11 |        472        0.57       99.61
+         12 |        209        0.25       99.87
+         13 |         98        0.12       99.98
+         14 |         13        0.02      100.00
+------------+-----------------------------------
+      Total |     83,024      100.00
+
+. tab wan, sum(dlnwage)
+
+  Number of |
+       Work |  Summary of yearly growth log wage
+ Activities |        Mean   Std. Dev.       Freq.
+------------+------------------------------------
+          1 |    .0377265   .15879297       5,379
+          2 |   .03652641   .14343123       6,418
+          3 |   .03226819   .13102138       6,754
+          4 |   .03193174   .12858637       6,386
+          5 |   .03030978   .12153752       5,644
+          6 |   .02761256   .12403247       4,248
+          7 |   .02732156   .13356368       2,966
+          8 |   .02319138   .13140576       1,856
+          9 |   .03128128   .13867493         998
+         10 |   .02958078   .13105188         541
+         11 |   .02558906   .16265366         218
+         12 |   .03639763    .1479348         114
+         13 |   .01031997   .09801972          41
+         14 |   .03812026   .03081328           6
+------------+------------------------------------
+      Total |   .03197719   .13525444      41,569
+
+. exit, clear

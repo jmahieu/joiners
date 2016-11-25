@@ -1,8 +1,8 @@
-------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------
       name:  Cleaning
        log:  C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\joiners_cleaning.log
   log type:  text
- opened on:  23 Nov 2016, 15:28:48
+ opened on:  25 Nov 2016, 16:24:56
 
 . 
 . use joiners.dta
@@ -51,8 +51,8 @@
 
 . label var race "Race"
 
-. label define race 1 "Asian" 2 "American Indian/Alaska Native" 3 "Black" 4 "White" 5 "Native Ha
-> waiian/Other Pacific Islander" 6 "Multiple"
+. label define race 1 "Asian" 2 "American Indian/Alaska Native" 3 "Black" 4 "White" 5 "Native Hawaiian/Other Pacific Islander" 6
+>  "Multiple"
 
 . label values race race
 
@@ -179,9 +179,8 @@
 
 . 
 . //make numeric vars
-. foreach i in emsize emtp ndgmemg ndgmeng emsmi emrg emsecdt facadv facben facchal facind faclo
-> c facresp facsal facsec facsoc fptind indcode lfstat nedtp nocpr03 nocprng03 nocprmg03 nocprmg
-> 06 nocprmg08 nocprmg10 waprsm wascsm wapri wasec jobsatis{
+. foreach i in emsize emtp ndgmemg ndgmeng emsmi emrg emsecdt facadv facben facchal facind facloc facresp facsal facsec facsoc f
+> ptind indcode lfstat nedtp nocpr03 nocprng03 nocprmg03 nocprmg06 nocprmg08 nocprmg10 waprsm wascsm wapri wasec jobsatis{
   2.  gen `i'_n = real(`i')
   3.  drop `i'
   4.  rename `i'_n `i'
@@ -215,8 +214,8 @@
 . *emsize = employer size 
 . label var emsize "Employer Size"
 
-. label define emsize 1 "<10" 2 "10-24" 3 "25 - 99" 4 "100 - 499" 5 "500 - 999" 5 "500 - 999" 6 
-> "1000 - 4999" 7 "5000 - 24999" 8 ">25000"
+. label define emsize 1 "<10" 2 "10-24" 3 "25 - 99" 4 "100 - 499" 5 "500 - 999" 5 "500 - 999" 6 "1000 - 4999" 7 "5000 - 24999" 8
+>  ">25000"
 
 . label values emsize emsize
 
@@ -284,8 +283,8 @@
 . label values emsecdt emsecdt
 
 . 
-. //reshape values for fac* variables so that value 1 corresponds with "Not important at all" 4 
-> corresponds with "Very Important" --> for ordered logit
+. //reshape values for fac* variables so that value 1 corresponds with "Not important at all" 4 corresponds with "Very Important
+> " --> for ordered logit
 . foreach i in facadv facben facchal facind facloc facresp facsal facsec facsoc {
   2.         gen `i'_n = 1 if `i' == 4
   3.         replace `i'_n = 2 if `i' == 3
@@ -362,8 +361,7 @@
 . 
 . 
 . foreach i in facadv facben facchal facind facloc facresp facsal facsoc {
-  2.         label define `i' 4 "Very important" 3 "Somewhat important" 2 "Somewhat unimportant"
->  1 "Not important at all"
+  2.         label define `i' 4 "Very important" 3 "Somewhat important" 2 "Somewhat unimportant" 1 "Not important at all"
   3.         label values `i' `i'
   4. }
 
@@ -371,7 +369,10 @@
 . *fptind = Full-time/part-time status counting all jobs during reference week
 . label var fptind "Full/Part-time"
 
-. label define fptind 1 "Full-Time" 2 "Part-time"
+. replace fptind = 0 if fptind == 2
+(8,440 real changes made)
+
+. label define fptind 1 "Full-Time" 0 "Part-time"
 
 . label values fptind fptind
 
@@ -536,8 +537,7 @@
 
 . label define industry 3170 "Metalworking machinery manufacturing", add
 
-. label define industry 3180 "Engines, turbines, and power transmission equipment manufacturing"
-> , add
+. label define industry 3180 "Engines, turbines, and power transmission equipment manufacturing", add
 
 . label define industry 3190 "Machinery manufacturing, n.e.c.", add
 
@@ -589,18 +589,15 @@
 
 . label define industry 4080 "Furniture and home furnishing, merchant wholesalers", add
 
-. label define industry 4090 "Lumber and other construction materials, merchant wholesalers", ad
-> d
+. label define industry 4090 "Lumber and other construction materials, merchant wholesalers", add
 
-. label define industry 4170 "Professional and commercial equipment and supplies, merchant whole
-> salers", add
+. label define industry 4170 "Professional and commercial equipment and supplies, merchant wholesalers", add
 
 . label define industry 4180 "Metals and minerals, except petroleum, merchant wholesalers", add
 
 . label define industry 4190 "Electrical goods, merchant wholesalers", add
 
-. label define industry 4260 "Hardware, plumbing and heating equipment, and supplies merchants w
-> holesalers", add
+. label define industry 4260 "Hardware, plumbing and heating equipment, and supplies merchants wholesalers", add
 
 . label define industry 4270 "Machinery, equipment, and supplies, merchant wholesalers", add
 
@@ -610,8 +607,7 @@
 
 . label define industry 4370 "Paper and paper products, merchant wholesalers", add
 
-. label define industry 4380 "Drugs, sundries, and chemical and allied products, merchant wholes
-> alers", add
+. label define industry 4380 "Drugs, sundries, and chemical and allied products, merchant wholesalers", add
 
 . label define industry 4390 "Apparel, fabrics, and notions, merchant wholesalers", add
 
@@ -633,10 +629,9 @@
 
 . 
 . // gen var covering broad industry classes using NAICS 2002
-. recode industry (170/290=1) (370/490=2) (570/690=3) (770=4) (1070/3990=5) (4070/4590=6) (4670/
-> 5790=7) (6070/6390=8) (6470/6780=9) (6870/6990=10) (7070/7190=11) (7270/7490=12) (7570=13) (75
-> 80/7790=14) (7860/7890=15) (7970/8470=16) (8560/8590=17) (8660/8690=18) (8770/9290=19) (9300=2
-> 0) , gen(bindustry)
+. recode industry (170/290=1) (370/490=2) (570/690=3) (770=4) (1070/3990=5) (4070/4590=6) (4670/5790=7) (6070/6390=8) (6470/6780
+> =9) (6870/6990=10) (7070/7190=11) (7270/7490=12) (7570=13) (7580/7790=14) (7860/7890=15) (7970/8470=16) (8560/8590=17) (8660/8
+> 690=18) (8770/9290=19) (9300=20) , gen(bindustry)
 (82861 differences between industry and bindustry)
 
 . label var bindustry "Industry"
@@ -667,8 +662,7 @@
 
 . label define bindustry 13 "Management of Companies and Enterprises", add
 
-. label define bindustry 14 "Administrative and Support and Waste Management and Remediation Ser
-> vices", add
+. label define bindustry 14 "Administrative and Support and Waste Management and Remediation Services", add
 
 . label define bindustry 15 "Educational Services", add
 
@@ -884,16 +878,14 @@
 . gen workexp = 2003 - mrdacyr if mrdacyr <= 2003
 (300 missing values generated)
 
-. replace workexp = 0 if mrdacyr > 2003 // 400 graduates in 2004 (expected graduation in 2004, b
-> ut academic year 03-04)
+. replace workexp = 0 if mrdacyr > 2003 // 400 graduates in 2004 (expected graduation in 2004, but academic year 03-04)
 (300 real changes made)
 
 . label var workexp "Work experience (years)"
 
 . 
 . //generate dummies for work activities
-. foreach i in waacc waaprsh wabrsh wacom wadev wadsn waemrl wamgmt waot waprod waqm wasale wasv
-> c watea {
+. foreach i in waacc waaprsh wabrsh wacom wadev wadsn waemrl wamgmt waot waprod waqm wasale wasvc watea {
   2. gen `i'_dum = .
   3. replace `i'_dum = 1 if `i' == "Y"
   4. replace `i'_dum = 0 if `i' == "N"
@@ -992,8 +984,7 @@
 
 . 
 . //generate count of all work activities
-. gen wan = waacc + waaprsh + wabrsh + wacom + wadev + wadsn + waemrl + wamgmt + waot + waprod +
->  waqm + wasale + wasvc + watea
+. gen wan = waacc + waaprsh + wabrsh + wacom + wadev + wadsn + waemrl + wamgmt + waot + waprod + waqm + wasale + wasvc + watea
 (17,378 missing values generated)
 
 . label var wan "Number of Work Activities"
@@ -1018,8 +1009,7 @@
 . label var resn "Number of Research Activities"
 
 . 
-. //gen variable indicating the weight put on research tasks (cf. beta of Gathmann & Schönberg 2
-> 010 / Lazear 2009
+. //gen variable indicating the weight put on research tasks (cf. beta of Gathmann & Schönberg 2010 / Lazear 2009
 . gen wres = resn/(resn+cmrcn) // wres lies in the interval [0;1]
 (22,292 missing values generated)
 
@@ -1043,8 +1033,7 @@
 (22,292 missing values generated)
 
 . 
-. //create variable employer type: 1= startup, 2 = small established firm, 3 = large established
->  firms
+. //create variable employer type: 1= startup, 2 = small established firm, 3 = large established firms
 . gen emplr = .
 (100,402 missing values generated)
 
@@ -1120,38 +1109,67 @@ Large Established |     55,330       81.06      100.00
   3. }
 
 . 
-. //generate yearly wage growth [(wage_j - wage_i)/(j-i)]
-. gen dwage = (wage10 - wage03)/7 if wage10 != .
+. //generate yearly wage growth [(wage_t - wage03)/(t-3)]
+. gen dwage = (wage10 - wage03)/6 if wage10 != . & wage03 != .
 (84,071 missing values generated)
 
-. replace dwage = (wage08 - wage03)/5 if dwage == . & wage08 != .
+. replace dwage = (wage08 - wage03)/4 if dwage == . & wage08 != . & wage03 != .
 (19,212 real changes made)
 
-. replace dwage = (wage06 - wage03)/3 if dwage == . & wage06 != .
+. replace dwage = (wage06 - wage03)/2 if dwage == . & wage06 != . & wage03 != .
 (6,350 real changes made)
 
 . label var dwage "yearly growth wage"
 
 . 
-. //gen log yearly wage growth = e^log(wage_t/wage03)/t-3-1) - 1
-. 
-. gen e = 2.71828
-
-. gen dlnwage = e^(log(wage10/wage03)/6) - 1  if wage10 != .
+. //gen log yearly wage growth = e^log(wage_t/wage03)/t-3) - 1
+. gen dlnwage = (lnwage10-lnwage03)/7 if wage10 != . & wage03 != .
 (84,273 missing values generated)
 
-. replace dlnwage = e^(log(wage08/wage03)/4) - 1 if dlnwage == . & wage08 != .
+. gen y10 = 0 
+
+. replace y10 = 1 if dlnwage != .
+(16,129 real changes made)
+
+. *16 129 values created
+. gen y8 = 0 
+
+. replace y8 = 1 if lnwage08 != . & dlnwage == . & lnwage03 != .
 (19,113 real changes made)
 
-. replace dlnwage = e^(log(wage06/wage03)/2) - 1 if dlnwage == . & wage06 != .
+. replace dlnwage = (lnwage08-lnwage03)/5 if dlnwage == . & lnwage08 != .
+(19,113 real changes made)
+
+. * 19 113 values created
+. gen y6 = 0 
+
+. replace y6 = 1 if lnwage06 != . & dlnwage == . & lnwage03 != .
 (6,327 real changes made)
 
+. replace dlnwage = (lnwage06-lnwage03)/3 if dlnwage == . & lnwage06 != .
+(6,327 real changes made)
+
+. * 6 327 values created
 . label var dlnwage "yearly growth log wage"
 
 . 
+. egen test = rsum(y10 y8 y6)
+
+. tab test 
+
+       test |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |     58,833       58.60       58.60
+          1 |     41,569       41.40      100.00
+------------+-----------------------------------
+      Total |    100,402      100.00
+
+. drop test
+
+. 
 . /* occupation stayers */
-. *this coding allows that even those who are not observed in 2008 or 2010 but consecutively bet
-> ween '03-06 or '03-08 also are assigned a value
+. *this coding allows that even those who are not observed in 2008 or 2010 but consecutively between '03-06 or '03-08 also are a
+> ssigned a value
 . *those who consecutively don't change occupation are assigned a 1
 . *as wage is observed when occupation is observed, we can safely regress wage growth on stay 
 . gen stay = 1 if nocprmg03 == nocprmg06 | nocprmg03 == nocprmg08 | nocprmg03 == nocprmg10 
@@ -1187,3 +1205,4 @@ file joinersc.dta saved
 . 
 end of do-file
 
+. exit, clear

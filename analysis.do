@@ -109,7 +109,7 @@ sdtest lnwage03 = 1.685816 if emplr == `i'
 twoway kdensity lnwage03 if emplr == 1 || kdensity lnwage03 if emplr == 2 || kdensity lnwage03 if emplr == 3, legend(order( 1 "startup" 2 "small established firm" 3 "large established firm"))
 
 //negative binomial regression for number of work activities (wan), number of commercial activities (cmrcn), number of research activities (resn)
-nbreg wan b3.emplr i.degree i.major i.hdclas i.bindustry i.nocprmg i.fptind i.emsecdt age age2 tenure male i.race mar, vce(robust) nolog
+nbreg wan b3.emplr i.degree i.major i.hdclas i.bindustry i.nocprmg03 i.fptind i.emsecdt age age2 tenure male i.race mar, vce(robust) nolog
 outreg2 using experimentation, replace label ti(Work Activities) e(all) adec(3) bdec(3) rdec(3) word excel symbol(***, **, *) alpha(0.001, 0.01, 0.05)
 
 nbreg cmrcn b3.emplr i.degree i.major i.hdclas i.bindustry i.nocprmg i.fptind i.emsecdt age age2 tenure male i.race mar, vce(robust) nolog
@@ -167,6 +167,20 @@ ologit facsoc i.emplr i.degree i.major i.hdclas i.bindustry i.nocprng i.fptind i
 					REGRESSIONS ON SALARY (GROWTH)
 					
 ------------------------------------------------------------------------------*/
+foreach i in 1 2 3 {
+		sum lnwage03 if emplr == `i', d 
+}
+
+// t test of equal means of log wage in 2003 between startups - small est firms - large est firms
+ttesttable lnwage03 emplr, unequal
+
+sum dlnwage, d
+foreach i in 1 2 3{
+	sum dlnwage if emplr == `i', d
+}
+
+// t test of equal means of growth log wage 
+ttesttable dlnwage emplr, unequal
 
 //correlations for lnwage03 and independent vars
 pwcorr lnwage03 age age2 male mar race startup small large degree major hdclas tenure emsecdt bindustry nocprng wan, star(0.05)
@@ -183,11 +197,11 @@ ivreg2 lnwage03 i.degree i.major i.hdclas i.bindustry i.nocprmg wan i.fptind i.e
 *1st stage:  Kleibergen Paap underidentification rejects H0 = full rank and identification
 *Hansen J: strong rejection of H0 that all instruments are uncorrelated with the error term - doubt validity of the estimates
 
-reg dlnwage b3.emplr i.degree i.major i.hdclas i.bindustry i.nocprmg i.fptind i.emsecdt age age2 tenure male i.race mar, vce(robust)
-reg dlnwage b3.emplr i.wan i.degree i.major i.hdclas i.bindustry i.nocprmg i.fptind i.emsecdt age age2 tenure male i.race mar, vce(robust)
-reg dlnwage b3.emplr wan wan2 i.degree i.major i.hdclas i.bindustry i.nocprmg i.fptind i.emsecdt age age2 tenure male i.race mar, vce(robust)
+reg dlnwage b3.emplr i.degree i.major i.hdclas i.bindustry i.nocprmg03 i.emsecdt fptind age age2 tenure male i.race mar y8 y10, vce(robust)
+reg dlnwage b3.emplr i.wan i.degree i.major i.hdclas i.bindustry i.nocprmg03 i.fptind i.emsecdt age age2 tenure male i.race mar, vce(robust)
+reg dlnwage b3.emplr wan wan2 i.degree i.major i.hdclas i.bindustry i.nocprmg03 i.fptind i.emsecdt age age2 tenure male i.race mar y8 y10, vce(robust)
 
-ivreg2 dlnwage i.degree i.major i.hdclas i.bindustry i.nocprmg wan i.fptind i.emsecdt age age2 tenure male i.race mar (startup = i.facsec), robust first 
+ivreg2 dlnwage i.degree i.major i.hdclas i.bindustry i.nocprmg03 wan i.fptind i.emsecdt age age2 tenure male i.race mar y8 y10 (startup = i.facsec), robust first 
 
 ivreg2 dlnwage lnwage03 i.degree i.major i.hdclas i.bindustry i.nocprmg wan i.fptind i.emsecdt age age2 tenure male i.race mar (startup = i.facsec), robust first 
 * !! inconsistent estimator of lnwage03 - endogenous
