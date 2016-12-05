@@ -2,7 +2,7 @@
       name:  Cleaning
        log:  C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\joiners_cleaning.log
   log type:  text
- opened on:  25 Nov 2016, 16:24:56
+ opened on:  28 Nov 2016, 13:55:21
 
 . 
 . use joiners.dta
@@ -70,6 +70,53 @@
 
 . label var race6 "Multiple"
 
+. 
+. //count number of children living in the same household in 2003
+. foreach i in  ch1218 ch611 ch6 {
+  2.         replace `i' = 0 if `i' == 98
+  3. }
+(50,263 real changes made)
+(50,263 real changes made)
+(50,263 real changes made)
+
+. 
+. egen children03 = rsum(ch1218 ch611 ch6) 
+
+. label var children03 "Number of children in 2003"
+
+. 
+. //gen numerical values for # children in 2006-2010
+. foreach i in children06 children08 children10 {
+  2.         gen `i'_n = real(`i')
+  3.         drop `i'
+  4.         rename `i'_n `i'
+  5.         replace `i' = 0 if `i' == 98
+  6. }
+(49,746 missing values generated)
+(23,790 real changes made)
+(55,553 missing values generated)
+(22,131 real changes made)
+(78,535 missing values generated)
+(10,956 real changes made)
+
+. 
+. label var children06 "Number of children in 2006"
+
+. label define children 0 "0" 1 "1" 2 "2 or more"
+
+. label values children06 children
+
+. 
+. label var children08 "Number of children in 2008"
+
+. label values children08 children
+
+. 
+. label var children10 "Number of children in 2010"
+
+. label values children10 children
+
+. 
 . 
 . /*      EDUCATION */
 . 
@@ -180,7 +227,8 @@
 . 
 . //make numeric vars
 . foreach i in emsize emtp ndgmemg ndgmeng emsmi emrg emsecdt facadv facben facchal facind facloc facresp facsal facsec facsoc f
-> ptind indcode lfstat nedtp nocpr03 nocprng03 nocprmg03 nocprmg06 nocprmg08 nocprmg10 waprsm wascsm wapri wasec jobsatis{
+> ptind indcode lfstat03 lfstat06 lfstat08 lfstat10 nedtp nocpr03 nocprng03 nocprmg03 nocprmg06 nocprmg08 nocprmg10 waprsm wascs
+> m wapri wasec jobsatis{
   2.  gen `i'_n = real(`i')
   3.  drop `i'
   4.  rename `i'_n `i'
@@ -200,6 +248,9 @@
 (181 missing values generated)
 (181 missing values generated)
 (17,378 missing values generated)
+(49,746 missing values generated)
+(55,553 missing values generated)
+(78,535 missing values generated)
 (17,378 missing values generated)
 (49,746 missing values generated)
 (55,553 missing values generated)
@@ -367,14 +418,17 @@
 
 . 
 . *fptind = Full-time/part-time status counting all jobs during reference week
-. label var fptind "Full/Part-time"
+. label var fptind "Working full-time"
 
 . replace fptind = 0 if fptind == 2
 (8,440 real changes made)
 
-. label define fptind 1 "Full-Time" 0 "Part-time"
+. 
+. *wkswk = number of weeks yearly salary is based on
+. replace wkswk = 0 if wkswk == 98
+(17,378 real changes made)
 
-. label values fptind fptind
+. label var wkswk "Number of weeks worked"
 
 . 
 . *indcode = Census industry code for employer
@@ -680,11 +734,11 @@
 
 . 
 . *lfstat = Labor force status
-. label var lfstat "Labor force status"
-
-. label define lfstat 1 "Employed" 2 "Unemployed" 3 "Not in Labor Force"
-
-. label values lfstat lfstat
+. foreach i in lfstat03 lfstat06 lfstat08 lfstat10 {
+  2. label var `i' "Labor force status `i' "
+  3. label define `i' 1 "Employed" 2 "Unemployed" 3 "Not in Labor Force"
+  4. label values `i' `i'
+  5. }
 
 . 
 . *nocpr = Job code for principal job - best code 2003
@@ -1122,7 +1176,7 @@ Large Established |     55,330       81.06      100.00
 . label var dwage "yearly growth wage"
 
 . 
-. //gen log yearly wage growth = e^log(wage_t/wage03)/t-3) - 1
+. //generate growth log wage = (log(wage_t) - log(wage_3))/(t-3)
 . gen dlnwage = (lnwage10-lnwage03)/7 if wage10 != . & wage03 != .
 (84,273 missing values generated)
 
@@ -1137,7 +1191,7 @@ Large Established |     55,330       81.06      100.00
 . replace y8 = 1 if lnwage08 != . & dlnwage == . & lnwage03 != .
 (19,113 real changes made)
 
-. replace dlnwage = (lnwage08-lnwage03)/5 if dlnwage == . & lnwage08 != .
+. replace dlnwage = (lnwage08-lnwage03)/5 if dlnwage == . & lnwage08 != . & lnwage03 != .
 (19,113 real changes made)
 
 . * 19 113 values created
@@ -1146,7 +1200,7 @@ Large Established |     55,330       81.06      100.00
 . replace y6 = 1 if lnwage06 != . & dlnwage == . & lnwage03 != .
 (6,327 real changes made)
 
-. replace dlnwage = (lnwage06-lnwage03)/3 if dlnwage == . & lnwage06 != .
+. replace dlnwage = (lnwage06-lnwage03)/3 if dlnwage == . & lnwage06 != . & lnwage03 != .
 (6,327 real changes made)
 
 . * 6 327 values created
@@ -1165,6 +1219,18 @@ Large Established |     55,330       81.06      100.00
       Total |    100,402      100.00
 
 . drop test
+
+. 
+. //gen log yearly wage growth = e^log(wage_t/wage03)/t-3) - 1
+. * produces 'overestimations' compared to formula with exponential function
+. gen edlnwage = exp(log(wage10/wage03)/7) - 1 if wage10 != . & wage03 != .
+(84,273 missing values generated)
+
+. replace edlnwage = exp(log(wage08/wage03)/5) - 1 if edlnwage == . & lnwage08 != .
+(19,113 real changes made)
+
+. replace edlnwage = exp(log(wage06/wage03)/3) - 1 if edlnwage == . & lnwage06 != .
+(6,327 real changes made)
 
 . 
 . /* occupation stayers */

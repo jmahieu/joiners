@@ -38,20 +38,20 @@ qui tab nocprmg03, gen(dum_nocprmg03)
 
 eststo clear
 //full sample
-eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar /// 
-dum_degree* dum_hdclas* fptind tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
+eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar children03 /// 
+dum_degree* dum_hdclas* fptind wkswk tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
 dum_nocprmg03* stay wan cmrcn resn 
 //startup
-eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar /// 
-dum_degree* dum_hdclas* fptind tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
+eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar children03 /// 
+dum_degree* dum_hdclas* fptind wkswk tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
 dum_nocprmg03* stay wan cmrcn resn if emplr == 1
 //small established
-eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar /// 
-dum_degree* dum_hdclas* fptind tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
+eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar children03 /// 
+dum_degree* dum_hdclas* fptind wkswk tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
 dum_nocprmg03* stay wan cmrcn resn if emplr == 2
 //large established
-eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar /// 
-dum_degree* dum_hdclas* fptind tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
+eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar children03 /// 
+dum_degree* dum_hdclas* fptind wkswk tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
 dum_nocprmg03* stay wan cmrcn resn if emplr == 3
 
 esttab using summary, replace rtf main(mean %6.2f) aux(sd) label ///
@@ -63,20 +63,20 @@ nonotes addn(Standard deviations in parentheses.)
 /* only for employees in for-profit companies */
 eststo clear
 //full sample
-eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar /// 
-dum_degree* dum_hdclas* fptind tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
+eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar children03 /// 
+dum_degree* dum_hdclas* fptind wkswk tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
 dum_nocprmg03* stay wan cmrcn resn if emsecdt == 21
 //startup
-eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar /// 
-dum_degree* dum_hdclas* fptind tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
+eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar children03 /// 
+dum_degree* dum_hdclas* fptind wkswk tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
 dum_nocprmg03* stay wan cmrcn resn if emplr == 1 & emsecdt == 21
 //small established
-eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar /// 
-dum_degree* dum_hdclas* fptind tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
+eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar children03 /// 
+dum_degree* dum_hdclas* fptind wkswk tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
 dum_nocprmg03* stay wan cmrcn resn if emplr == 2 & emsecdt == 21
 //large established
-eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar /// 
-dum_degree* dum_hdclas* fptind tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
+eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar children03 /// 
+dum_degree* dum_hdclas* fptind wkswk tenure dum_emsize* dum_emsecdt* dum_bindustry* ///
 dum_nocprmg03* stay wan cmrcn resn if emplr == 3  &emsecdt == 21
 
 esttab using summary_forprofit, replace rtf main(mean %6.2f) aux(sd) label ///
@@ -164,7 +164,7 @@ ologit facsoc i.emplr i.degree i.major i.hdclas i.bindustry i.nocprng i.fptind i
 
 /*------------------------------------------------------------------------------
 
-					REGRESSIONS ON SALARY (GROWTH)
+					REGRESSIONS ON SALARY
 					
 ------------------------------------------------------------------------------*/
 foreach i in 1 2 3 {
@@ -197,10 +197,44 @@ ivreg2 lnwage03 i.degree i.major i.hdclas i.bindustry i.nocprmg wan i.fptind i.e
 *1st stage:  Kleibergen Paap underidentification rejects H0 = full rank and identification
 *Hansen J: strong rejection of H0 that all instruments are uncorrelated with the error term - doubt validity of the estimates
 
-reg dlnwage b3.emplr i.degree i.major i.hdclas i.bindustry i.nocprmg03 i.emsecdt fptind age age2 tenure male i.race mar y8 y10, vce(robust)
-reg dlnwage b3.emplr i.wan i.degree i.major i.hdclas i.bindustry i.nocprmg03 i.fptind i.emsecdt age age2 tenure male i.race mar, vce(robust)
-reg dlnwage b3.emplr wan wan2 i.degree i.major i.hdclas i.bindustry i.nocprmg03 i.fptind i.emsecdt age age2 tenure male i.race mar y8 y10, vce(robust)
+/*------------------------------------------------------------------------------
 
+					REGRESSIONS ON SALARY GROWTH
+					
+------------------------------------------------------------------------------*/
+
+*base model
+reg dlnwage startup small i.degree i.major i.hdclas i.bindustry i.nocprmg03 i.emsecdt fptind wkswk age age2 tenure male i.race mar children03 y8 y10, vce(robust)
+**model including number of activities (wan) and interaction effect - wan treated as continuous variable
+reg dlnwage startup small wan wan2 1.startup#c.wan i.degree i.major i.hdclas i.bindustry i.nocprmg03 fptind wkswk i.emsecdt age age2 tenure male i.race mar children03 y8 y10, vce(robust)
+**model including number of activities (wan) and interaction effect - wan treated as categorical variable
+reg dlnwage startup small i.wan 1.startup#i.wan i.degree i.major i.hdclas i.bindustry i.nocprmg03 fptind wkswk i.emsecdt age age2 tenure male i.race mar children03 y8 y10, vce(robust)
+***model including whether the employee stays in the same occupation over time - and interaction effects
+reg dlnwage startup small stay 0.stay#b3.emplr i.degree i.major i.hdclas i.bindustry i.nocprmg03 fptind wkswk i.emsecdt age age2 tenure male i.race mar children03 y8 y10, vce(robust)
+
+/* sample selection model - selection equation on working in 2006 yes/no) */
+gen working06 = 1 if lfstat06 == 1
+replace working06 = 0 if lfstat06 == 2 | lfstat06 == 3
+
+heckman dlnwage startup small i.degree i.major i.hdclas i.bindustry i.nocprmg03 i.emsecdt fptind wkswk age age2 tenure male i.race mar children03 y8 y10, /// 
+select(working06 = lnwage03 startup small i.degree i.major i.hdclas i.bindustry i.nocprmg03 i.emsecdt fptind wkswk age age2 tenure male i.race mar i.children06 y6) twostep 
+*compared to workers in large firms, startup employees in 2003 are significantly less likely to be working in 2006
+*lambda has a z statistic of -4.44
+
+*model with wan and interaction effects - wan is treated as a continuous variable
+heckman dlnwage startup small wan wan2 startup#c.wan i.degree i.major i.hdclas i.bindustry i.nocprmg03 i.emsecdt fptind wkswk age age2 tenure male i.race mar children03 y8 y10, /// 
+select(working06 = lnwage03 startup small i.degree i.major i.hdclas i.bindustry i.nocprmg03 i.emsecdt fptind wkswk age age2 tenure male i.race mar i.children06) twostep
+
+*model with wan and interaction effects - wan is treated as a categorical variable
+heckman dlnwage startup small i.wan startup#1.wan i.degree i.major i.hdclas i.bindustry i.nocprmg03 i.emsecdt fptind wkswk age age2 tenure male i.race mar children03 y8 y10, /// 
+select(working06 = lnwage03 startup small i.wan i.degree i.major i.hdclas i.bindustry i.nocprmg03 i.emsecdt fptind wkswk age age2 tenure male i.race mar i.children06) twostep  
+
+***model including whether the employee stays in the same occupation over time - and interaction effects
+heckman dlnwage startup small 1.stay 0.stay#b3.emplr  i.degree i.major i.hdclas i.bindustry i.nocprmg03 i.emsecdt fptind wkswk age age2 tenure male i.race mar children03 y8 y10, /// 
+select(working06 = lnwage03 startup small i.degree i.major i.hdclas i.bindustry i.nocprmg03 i.emsecdt fptind wkswk age age2 tenure male i.race mar i.children06) twostep  
+
+
+/* IV regressions */
 ivreg2 dlnwage i.degree i.major i.hdclas i.bindustry i.nocprmg03 wan i.fptind i.emsecdt age age2 tenure male i.race mar y8 y10 (startup = i.facsec), robust first 
 
 ivreg2 dlnwage lnwage03 i.degree i.major i.hdclas i.bindustry i.nocprmg wan i.fptind i.emsecdt age age2 tenure male i.race mar (startup = i.facsec), robust first 

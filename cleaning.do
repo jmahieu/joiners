@@ -48,6 +48,33 @@ label var race4 "White"
 label var race5 "Native Hawaiian/Other Pacific Islander"
 label var race6 "Multiple"
 
+//count number of children living in the same household in 2003
+foreach i in  ch1218 ch611 ch6 {
+	replace `i' = 0 if `i' == 98
+}
+
+egen children03 = rsum(ch1218 ch611 ch6) 
+label var children03 "Number of children in 2003"
+
+//gen numerical values for # children in 2006-2010
+foreach i in children06 children08 children10 {
+	gen `i'_n = real(`i')
+	drop `i'
+	rename `i'_n `i'
+	replace `i' = 0 if `i' == 98
+}
+
+label var children06 "Number of children in 2006"
+label define children 0 "0" 1 "1" 2 "2 or more"
+label values children06 children
+
+label var children08 "Number of children in 2008"
+label values children08 children
+
+label var children10 "Number of children in 2010"
+label values children10 children
+
+
 /*	EDUCATION */
 
 //Highest degree type
@@ -107,7 +134,7 @@ rename nb newbus
 label var newbus "Young Firm"
 
 //make numeric vars
-foreach i in emsize emtp ndgmemg ndgmeng emsmi emrg emsecdt facadv facben facchal facind facloc facresp facsal facsec facsoc fptind indcode lfstat nedtp nocpr03 nocprng03 nocprmg03 nocprmg06 nocprmg08 nocprmg10 waprsm wascsm wapri wasec jobsatis{
+foreach i in emsize emtp ndgmemg ndgmeng emsmi emrg emsecdt facadv facben facchal facind facloc facresp facsal facsec facsoc fptind indcode lfstat03 lfstat06 lfstat08 lfstat10 nedtp nocpr03 nocprng03 nocprmg03 nocprmg06 nocprmg08 nocprmg10 waprsm wascsm wapri wasec jobsatis{
  gen `i'_n = real(`i')
  drop `i'
  rename `i'_n `i'
@@ -189,10 +216,12 @@ foreach i in facadv facben facchal facind facloc facresp facsal facsoc {
 }
 
 *fptind = Full-time/part-time status counting all jobs during reference week
-label var fptind "Full/Part-time"
+label var fptind "Working full-time"
 replace fptind = 0 if fptind == 2
-label define fptind 1 "Full-Time" 0 "Part-time"
-label values fptind fptind
+
+*wkswk = number of weeks yearly salary is based on
+replace wkswk = 0 if wkswk == 98
+label var wkswk "Number of weeks worked"
 
 *indcode = Census industry code for employer
 rename indcode industry
@@ -346,9 +375,11 @@ label define bindustry 20 "Public Administration", add
 label values bindustry bindustry 
 
 *lfstat = Labor force status
-label var lfstat "Labor force status"
-label define lfstat 1 "Employed" 2 "Unemployed" 3 "Not in Labor Force"
-label values lfstat lfstat
+foreach i in lfstat03 lfstat06 lfstat08 lfstat10 {
+label var `i' "Labor force status `i' "
+label define `i' 1 "Employed" 2 "Unemployed" 3 "Not in Labor Force"
+label values `i' `i'
+}
 
 *nocpr = Job code for principal job - best code 2003
 label var nocpr03 "Principal Job"
@@ -570,24 +601,30 @@ replace dwage = (wage08 - wage03)/4 if dwage == . & wage08 != . & wage03 != .
 replace dwage = (wage06 - wage03)/2 if dwage == . & wage06 != . & wage03 != .
 label var dwage "yearly growth wage"
 
-//gen log yearly wage growth = e^log(wage_t/wage03)/t-3) - 1
+//generate growth log wage = (log(wage_t) - log(wage_3))/(t-3)
 gen dlnwage = (lnwage10-lnwage03)/7 if wage10 != . & wage03 != .
 gen y10 = 0 
 replace y10 = 1 if dlnwage != .
 *16 129 values created
 gen y8 = 0 
 replace y8 = 1 if lnwage08 != . & dlnwage == . & lnwage03 != .
-replace dlnwage = (lnwage08-lnwage03)/5 if dlnwage == . & lnwage08 != .
+replace dlnwage = (lnwage08-lnwage03)/5 if dlnwage == . & lnwage08 != . & lnwage03 != .
 * 19 113 values created
 gen y6 = 0 
 replace y6 = 1 if lnwage06 != . & dlnwage == . & lnwage03 != .
-replace dlnwage = (lnwage06-lnwage03)/3 if dlnwage == . & lnwage06 != .
+replace dlnwage = (lnwage06-lnwage03)/3 if dlnwage == . & lnwage06 != . & lnwage03 != .
 * 6 327 values created
 label var dlnwage "yearly growth log wage"
 
 egen test = rsum(y10 y8 y6)
 tab test 
 drop test
+
+//gen log yearly wage growth = e^log(wage_t/wage03)/t-3) - 1
+* produces 'overestimations' compared to formula with exponential function
+gen edlnwage = exp(log(wage10/wage03)/7) - 1 if wage10 != . & wage03 != .
+replace edlnwage = exp(log(wage08/wage03)/5) - 1 if edlnwage == . & lnwage08 != .
+replace edlnwage = exp(log(wage06/wage03)/3) - 1 if edlnwage == . & lnwage06 != .
 
 /* occupation stayers */
 *this coding allows that even those who are not observed in 2008 or 2010 but consecutively between '03-06 or '03-08 also are assigned a value
