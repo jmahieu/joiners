@@ -1,8 +1,9 @@
---------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
       name:  Cleaning
-       log:  C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\joiners_cleaning.log
+       log:  C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\joiners_cleaning
+> .log
   log type:  text
- opened on:  28 Nov 2016, 13:55:21
+ opened on:   8 Dec 2016, 12:09:01
 
 . 
 . use joiners.dta
@@ -51,8 +52,8 @@
 
 . label var race "Race"
 
-. label define race 1 "Asian" 2 "American Indian/Alaska Native" 3 "Black" 4 "White" 5 "Native Hawaiian/Other Pacific Islander" 6
->  "Multiple"
+. label define race 1 "Asian" 2 "American Indian/Alaska Native" 3 "Black" 4 "White" 5 "Nat
+> ive Hawaiian/Other Pacific Islander" 6 "Multiple"
 
 . label values race race
 
@@ -226,14 +227,18 @@
 
 . 
 . //make numeric vars
-. foreach i in emsize emtp ndgmemg ndgmeng emsmi emrg emsecdt facadv facben facchal facind facloc facresp facsal facsec facsoc f
-> ptind indcode lfstat03 lfstat06 lfstat08 lfstat10 nedtp nocpr03 nocprng03 nocprmg03 nocprmg06 nocprmg08 nocprmg10 waprsm wascs
-> m wapri wasec jobsatis{
+. foreach i in emsize emsize06 emsize08 emsize10 emtp ndgmemg ndgmeng emsmi emrg emsecdt f
+> acadv facben facchal facind facloc facresp facsal facsec facsoc fptind indcode lfstat03 
+> lfstat06 lfstat08 lfstat10 nedtp nocpr03 nocprng03 nocprpb06 nocprpb08 nocprpb10 nocprmg
+> 03 nocprmg06 nocprmg08 nocprmg10 waprsm wascsm wapri wasec jobsatis{
   2.  gen `i'_n = real(`i')
   3.  drop `i'
   4.  rename `i'_n `i'
   5. }
 (17,378 missing values generated)
+(57,548 missing values generated)
+(63,490 missing values generated)
+(83,142 missing values generated)
 (17,378 missing values generated)
 (22,379 missing values generated)
 (17,383 missing values generated)
@@ -252,6 +257,9 @@
 (55,553 missing values generated)
 (78,535 missing values generated)
 (17,378 missing values generated)
+(84,232 missing values generated)
+(85,134 missing values generated)
+(92,032 missing values generated)
 (49,746 missing values generated)
 (55,553 missing values generated)
 (78,535 missing values generated)
@@ -265,10 +273,16 @@
 . *emsize = employer size 
 . label var emsize "Employer Size"
 
-. label define emsize 1 "<10" 2 "10-24" 3 "25 - 99" 4 "100 - 499" 5 "500 - 999" 5 "500 - 999" 6 "1000 - 4999" 7 "5000 - 24999" 8
->  ">25000"
+. label define emsize 1 "<10" 2 "10-24" 3 "25 - 99" 4 "100 - 499" 5 "500 - 999" 5 "500 - 9
+> 99" 6 "1000 - 4999" 7 "5000 - 24999" 8 ">25000"
 
 . label values emsize emsize
+
+. 
+. foreach i in 06 08 10 {
+  2.         label var emsize`i' "Employer Size in 20`i'"
+  3.         label values emsize`i' emsize
+  4. }
 
 . 
 . *nedtp = Employer type [not taking into account if it was an educational institution]
@@ -334,8 +348,8 @@
 . label values emsecdt emsecdt
 
 . 
-. //reshape values for fac* variables so that value 1 corresponds with "Not important at all" 4 corresponds with "Very Important
-> " --> for ordered logit
+. //reshape values for fac* variables so that value 1 corresponds with "Not important at a
+> ll" 4 corresponds with "Very Important" --> for ordered logit
 . foreach i in facadv facben facchal facind facloc facresp facsal facsec facsoc {
   2.         gen `i'_n = 1 if `i' == 4
   3.         replace `i'_n = 2 if `i' == 3
@@ -412,7 +426,8 @@
 . 
 . 
 . foreach i in facadv facben facchal facind facloc facresp facsal facsoc {
-  2.         label define `i' 4 "Very important" 3 "Somewhat important" 2 "Somewhat unimportant" 1 "Not important at all"
+  2.         label define `i' 4 "Very important" 3 "Somewhat important" 2 "Somewhat unimpo
+> rtant" 1 "Not important at all"
   3.         label values `i' `i'
   4. }
 
@@ -555,7 +570,8 @@
 
 . label define industry 2490 "Glass and glass product manufacturing", add
 
-. label define industry 2570 "Cement, concrete, lime, and gypsum product manufacturing", add
+. label define industry 2570 "Cement, concrete, lime, and gypsum product manufacturing", a
+> dd
 
 . label define industry 2590 "Misc nonmetallic mineral product manufacturing", add
 
@@ -563,7 +579,8 @@
 
 . label define industry 2680 "Aluminum production and processing", add
 
-. label define industry 2690 "Nonferrous metal, except aluminum, production and processing", add
+. label define industry 2690 "Nonferrous metal, except aluminum, production and processing
+> ", add
 
 . label define industry 2770 "Foundries", add
 
@@ -575,7 +592,8 @@
 
 . label define industry 2880 "Machine shops", add
 
-. label define industry 2890 "Coating, engraving, heat treating and allied activities", add
+. label define industry 2890 "Coating, engraving, heat treating and allied activities", ad
+> d
 
 . label define industry 2970 "Ordnance", add
 
@@ -585,13 +603,16 @@
 
 . label define industry 3070 "Agricultural implement manufacturing", add
 
-. label define industry 3080 "Construction, mining and oil field machinery manufacturing", add
+. label define industry 3080 "Construction, mining and oil field machinery manufacturing",
+>  add
 
-. label define industry 3090 "Commercial and service industry machinery manufacturing", add
+. label define industry 3090 "Commercial and service industry machinery manufacturing", ad
+> d
 
 . label define industry 3170 "Metalworking machinery manufacturing", add
 
-. label define industry 3180 "Engines, turbines, and power transmission equipment manufacturing", add
+. label define industry 3180 "Engines, turbines, and power transmission equipment manufact
+> uring", add
 
 . label define industry 3190 "Machinery manufacturing, n.e.c.", add
 
@@ -599,7 +620,8 @@
 
 . label define industry 3360 "Computer and peripheral equipment manufacturing", add
 
-. label define industry 3370 "Communications, audio, and video equipment manufacturing", add
+. label define industry 3370 "Communications, audio, and video equipment manufacturing", a
+> dd
 
 . label define industry 3380 "Navigational, measuring, electromedical, and control", add
 
@@ -607,9 +629,11 @@
 
 . label define industry 3470 "Household appliance manufacturing", add
 
-. label define industry 3490 "Electrical lighting, equipment, and supplies manufacturing", add
+. label define industry 3490 "Electrical lighting, equipment, and supplies manufacturing",
+>  add
 
-. label define industry 3570 "Motor vehicles and motor vehicle equipment manufacturing", add
+. label define industry 3570 "Motor vehicles and motor vehicle equipment manufacturing", a
+> dd
 
 . label define industry 3580 "Aircraft and parts manufacturing", add
 
@@ -639,21 +663,27 @@
 
 . label define industry 3990 "Not specified manufacturing industries", add
 
-. label define industry 4070 "Motor vehicles, parts and supplies, merchant wholesalers", add
+. label define industry 4070 "Motor vehicles, parts and supplies, merchant wholesalers", a
+> dd
 
 . label define industry 4080 "Furniture and home furnishing, merchant wholesalers", add
 
-. label define industry 4090 "Lumber and other construction materials, merchant wholesalers", add
+. label define industry 4090 "Lumber and other construction materials, merchant wholesaler
+> s", add
 
-. label define industry 4170 "Professional and commercial equipment and supplies, merchant wholesalers", add
+. label define industry 4170 "Professional and commercial equipment and supplies, merchant
+>  wholesalers", add
 
-. label define industry 4180 "Metals and minerals, except petroleum, merchant wholesalers", add
+. label define industry 4180 "Metals and minerals, except petroleum, merchant wholesalers"
+> , add
 
 . label define industry 4190 "Electrical goods, merchant wholesalers", add
 
-. label define industry 4260 "Hardware, plumbing and heating equipment, and supplies merchants wholesalers", add
+. label define industry 4260 "Hardware, plumbing and heating equipment, and supplies merch
+> ants wholesalers", add
 
-. label define industry 4270 "Machinery, equipment, and supplies, merchant wholesalers", add
+. label define industry 4270 "Machinery, equipment, and supplies, merchant wholesalers", a
+> dd
 
 . label define industry 4280 "Recyclable material, merchant wholesalers", add
 
@@ -661,7 +691,8 @@
 
 . label define industry 4370 "Paper and paper products, merchant wholesalers", add
 
-. label define industry 4380 "Drugs, sundries, and chemical and allied products, merchant wholesalers", add
+. label define industry 4380 "Drugs, sundries, and chemical and allied products, merchant 
+> wholesalers", add
 
 . label define industry 4390 "Apparel, fabrics, and notions, merchant wholesalers", add
 
@@ -683,9 +714,10 @@
 
 . 
 . // gen var covering broad industry classes using NAICS 2002
-. recode industry (170/290=1) (370/490=2) (570/690=3) (770=4) (1070/3990=5) (4070/4590=6) (4670/5790=7) (6070/6390=8) (6470/6780
-> =9) (6870/6990=10) (7070/7190=11) (7270/7490=12) (7570=13) (7580/7790=14) (7860/7890=15) (7970/8470=16) (8560/8590=17) (8660/8
-> 690=18) (8770/9290=19) (9300=20) , gen(bindustry)
+. recode industry (170/290=1) (370/490=2) (570/690=3) (770=4) (1070/3990=5) (4070/4590=6) 
+> (4670/5790=7) (6070/6390=8) (6470/6780=9) (6870/6990=10) (7070/7190=11) (7270/7490=12) (
+> 7570=13) (7580/7790=14) (7860/7890=15) (7970/8470=16) (8560/8590=17) (8660/8690=18) (877
+> 0/9290=19) (9300=20) , gen(bindustry)
 (82861 differences between industry and bindustry)
 
 . label var bindustry "Industry"
@@ -716,7 +748,8 @@
 
 . label define bindustry 13 "Management of Companies and Enterprises", add
 
-. label define bindustry 14 "Administrative and Support and Waste Management and Remediation Services", add
+. label define bindustry 14 "Administrative and Support and Waste Management and Remediati
+> on Services", add
 
 . label define bindustry 15 "Educational Services", add
 
@@ -932,14 +965,16 @@
 . gen workexp = 2003 - mrdacyr if mrdacyr <= 2003
 (300 missing values generated)
 
-. replace workexp = 0 if mrdacyr > 2003 // 400 graduates in 2004 (expected graduation in 2004, but academic year 03-04)
+. replace workexp = 0 if mrdacyr > 2003 // 400 graduates in 2004 (expected graduation in 2
+> 004, but academic year 03-04)
 (300 real changes made)
 
 . label var workexp "Work experience (years)"
 
 . 
 . //generate dummies for work activities
-. foreach i in waacc waaprsh wabrsh wacom wadev wadsn waemrl wamgmt waot waprod waqm wasale wasvc watea {
+. foreach i in waacc waaprsh wabrsh wacom wadev wadsn waemrl wamgmt waot waprod waqm wasal
+> e wasvc watea {
   2. gen `i'_dum = .
   3. replace `i'_dum = 1 if `i' == "Y"
   4. replace `i'_dum = 0 if `i' == "N"
@@ -1038,7 +1073,8 @@
 
 . 
 . //generate count of all work activities
-. gen wan = waacc + waaprsh + wabrsh + wacom + wadev + wadsn + waemrl + wamgmt + waot + waprod + waqm + wasale + wasvc + watea
+. gen wan = waacc + waaprsh + wabrsh + wacom + wadev + wadsn + waemrl + wamgmt + waot + wa
+> prod + waqm + wasale + wasvc + watea
 (17,378 missing values generated)
 
 . label var wan "Number of Work Activities"
@@ -1063,7 +1099,8 @@
 . label var resn "Number of Research Activities"
 
 . 
-. //gen variable indicating the weight put on research tasks (cf. beta of Gathmann & Schönberg 2010 / Lazear 2009
+. //gen variable indicating the weight put on research tasks (cf. beta of Gathmann & Schön
+> berg 2010 / Lazear 2009
 . gen wres = resn/(resn+cmrcn) // wres lies in the interval [0;1]
 (22,292 missing values generated)
 
@@ -1087,7 +1124,8 @@
 (22,292 missing values generated)
 
 . 
-. //create variable employer type: 1= startup, 2 = small established firm, 3 = large established firms
+. //create variable employer type: 1= startup, 2 = small established firm, 3 = large estab
+> lished firms
 . gen emplr = .
 (100,402 missing values generated)
 
@@ -1157,6 +1195,7 @@ Large Established |     55,330       81.06      100.00
 (63,662 missing values generated)
 (83,276 missing values generated)
 
+. 
 . 
 . foreach i in 03 06 08 10 {
   2.         label var lnwage`i' "log 20`i' wage"
@@ -1234,11 +1273,13 @@ Large Established |     55,330       81.06      100.00
 
 . 
 . /* occupation stayers */
-. *this coding allows that even those who are not observed in 2008 or 2010 but consecutively between '03-06 or '03-08 also are a
-> ssigned a value
+. *this coding allows that even those who are not observed in 2008 or 2010 but consecutive
+> ly between '03-06 or '03-08 also are assigned a value
 . *those who consecutively don't change occupation are assigned a 1
-. *as wage is observed when occupation is observed, we can safely regress wage growth on stay 
-. gen stay = 1 if nocprmg03 == nocprmg06 | nocprmg03 == nocprmg08 | nocprmg03 == nocprmg10 
+. *as wage is observed when occupation is observed, we can safely regress wage growth on s
+> tay 
+. gen stay = 1 if nocprmg03 == nocprmg06 | nocprmg03 == nocprmg08 | nocprmg03 == nocprmg10
+>  
 (47,140 missing values generated)
 
 . replace stay = . if nocprmg03 == .
@@ -1259,6 +1300,67 @@ Large Established |     55,330       81.06      100.00
 . label var stay "No change of occupation"
 
 . 
+. /* indicator for top-level managers or executives */
+. gen toplevel03 = 1 if nocpr03 == 711410
+(98,116 missing values generated)
+
+. replace toplevel03 = 0 if nocpr03 != 711410 & nocpr03 != .
+(80,738 real changes made)
+
+. 
+. foreach i in 06 08 10 {
+  2. gen toplevel`i' = 1 if nocprpb`i' == 711410
+  3. replace toplevel`i' = 0 if nocprpb`i' != 711410 & nocprpb`i' != .
+  4. }
+(98,171 missing values generated)
+(13,939 real changes made)
+(98,104 missing values generated)
+(12,970 real changes made)
+(98,719 missing values generated)
+(6,687 real changes made)
+
+. 
+. gen toplevel = 1 if toplevel06 == 1 | toplevel08 == 1 | toplevel10 == 1
+(96,344 missing values generated)
+
+. replace toplevel = 0 if toplevel == . & toplevel06 == 0 | toplevel08 == 0 | toplevel10 =
+> = 0
+(18,024 real changes made)
+
+. 
+. foreach i in 03 06 08 10 {
+  2.         label var toplevel`i' "Top-level Management Function in 20`i'"
+  3. }
+
+. 
+. label var toplevel "Top-level Management Function"
+
+. 
+. 
+. /* only keep early career and for-profit employees */
+. drop if age > 35
+(80,290 observations deleted)
+
+. drop if mryr < 1992
+(1,408 observations deleted)
+
+. drop if emsecdt != 21
+(8,885 observations deleted)
+
+. drop if fptind != 1
+(497 observations deleted)
+
+. drop if bindustry == 1
+(27 observations deleted)
+
+. drop if emplr == .
+(1,509 observations deleted)
+
+. drop if wan == .
+(0 observations deleted)
+
+. 
+. 
 . save joinersc.dta, replace
 file joinersc.dta saved
 
@@ -1270,5 +1372,28 @@ file joinersc.dta saved
 . 
 . 
 end of do-file
+
+. tab wan
+
+  Number of |
+       Work |
+ Activities |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        706        9.07        9.07
+          2 |      1,039       13.34       22.41
+          3 |      1,294       16.62       39.03
+          4 |      1,317       16.91       55.95
+          5 |      1,143       14.68       70.63
+          6 |        864       11.10       81.72
+          7 |        641        8.23       89.96
+          8 |        407        5.23       95.18
+          9 |        194        2.49       97.68
+         10 |        119        1.53       99.20
+         11 |         40        0.51       99.72
+         12 |         15        0.19       99.91
+         13 |          6        0.08       99.99
+         14 |          1        0.01      100.00
+------------+-----------------------------------
+      Total |      7,786      100.00
 
 . exit, clear

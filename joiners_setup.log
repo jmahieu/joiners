@@ -1,8 +1,8 @@
---------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
       name:  SESTAT_2003_2013_Joiners_setup
        log:  C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\joiners_setup.log
   log type:  text
- opened on:  28 Nov 2016, 12:05:46
+ opened on:   8 Dec 2016, 11:31:27
 
 . 
 . use "C:\Users\u0091183\Desktop\Phd\Datasets\SESTAT\sestat06.dta"
@@ -16,6 +16,8 @@
 . rename lfstat lfstat06
 
 . rename chtotpb children06
+
+. rename emsize emsize06
 
 . save sestat06, replace
 file sestat06.dta saved
@@ -33,6 +35,8 @@ file sestat06.dta saved
 
 . rename chtotpb children08
 
+. rename emsize emsize08
+
 . save sestat08, replace
 file sestat08.dta saved
 
@@ -48,6 +52,8 @@ file sestat08.dta saved
 . rename lfstat lfstat10
 
 . rename chtotpb children10
+
+. rename emsize emsize10
 
 . save sestat10, replace
 file sestat10.dta saved
@@ -70,7 +76,7 @@ file sestat10.dta saved
 . rename lfstat lfstat03
 
 . 
-. merge 1:1 refid using sestat06.dta, keepus(wage06 nocprmg06 nocprpb06 lfstat06 children06)
+. merge 1:1 refid using sestat06.dta, keepus(wage06 emsize06 nocprmg06 nocprpb06 lfstat06 children06)
 
     Result                           # of obs.
     -----------------------------------------
@@ -86,7 +92,7 @@ file sestat10.dta saved
 
 . drop _merge
 
-. merge 1:1 refid using sestat08.dta, keepus(wage08 nocprmg08 nocprpb08 lfstat08 children08)
+. merge 1:1 refid using sestat08.dta, keepus(wage08 emsize08 nocprmg08 nocprpb08 lfstat08 children08)
 
     Result                           # of obs.
     -----------------------------------------
@@ -102,7 +108,7 @@ file sestat10.dta saved
 
 . drop _merge
 
-. merge 1:1 refid using sestat10.dta, keepus(wage10 nocprmg10 nocprpb10 lfstat10 children10)
+. merge 1:1 refid using sestat10.dta, keepus(wage10 emsize10 nocprmg10 nocprpb10 lfstat10 children10)
 
     Result                           # of obs.
     -----------------------------------------

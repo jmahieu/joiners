@@ -1,174 +1,126 @@
-Work Activities							
-		(1)	(2)	(3)	(4)	(5)	(6)
-VARIABLES	LABELS	wan	lnalpha	cmrcn	lnalpha	resn	lnalpha
-							
-1.emplr	Employer Type = 1, Startup	0.121***		0.103***		0.153***	
-		(0.014)		(0.017)		(0.021)	
-2.emplr	Employer Type = 2, Small Established	0.025***		0.039***		0.002	
-		(0.007)		(0.008)		(0.012)	
-2.degree	Highest degree = 2, Master's	0.023***		-0.008		0.064***	
-		(0.005)		(0.007)		(0.009)	
-3.degree	Highest degree = 3, Doctorate	0.029**		-0.193***		0.187***	
-		(0.009)		(0.015)		(0.014)	
-4.degree	Highest degree = 4, Professional	-0.170***		-0.094***		-0.440***	
-		(0.013)		(0.014)		(0.030)	
-2.major	Major Field = 2, Life and related sciences	0.052***		0.196***		-0.074***	
-		(0.014)		(0.020)		(0.020)	
-3.major	Major Field = 3, Physical and related sciences	0.022		0.115***		-0.031	
-		(0.016)		(0.024)		(0.021)	
-4.major	Major Field = 4, Social and related sciences	0.038**		0.194***		-0.123***	
-		(0.012)		(0.017)		(0.019)	
-5.major	Major Field = 5, Engineering	0.069***		0.159***		0.013	
-		(0.011)		(0.017)		(0.014)	
-6.major	Major Field = 6, S and E-Related Fields	0.084***		0.244***		-0.104***	
-		(0.012)		(0.018)		(0.018)	
-7.major	Major Field = 7, Non-S and E Fields	0.042***		0.194***		-0.122***	
-		(0.010)		(0.015)		(0.014)	
-12.hdclas	Carnegie Classification = 12, Research University II	0.025**		0.031**		0.018	
-		(0.008)		(0.011)		(0.013)	
-13.hdclas	Carnegie Classification = 13, Doctorate Granting I	0.017		0.022		0.007	
-		(0.009)		(0.011)		(0.015)	
-14.hdclas	Carnegie Classification = 14, Doctorate Granting II	0.005		0.006		0.008	
-		(0.009)		(0.012)		(0.015)	
-21.hdclas	Carnegie Classification = 21, Comprehensive I	0.021**		0.017*		0.019	
-		(0.006)		(0.008)		(0.010)	
-22.hdclas	Carnegie Classification = 22, Comprehensive II	0.019		0.009		0.033	
-		(0.018)		(0.022)		(0.030)	
-31.hdclas	Carnegie Classification = 31, Liberal Arts I	0.007		0.006		-0.007	
-		(0.016)		(0.019)		(0.028)	
-32.hdclas	Carnegie Classification = 32, Liberal Arts II	0.010		-0.015		0.031	
-		(0.012)		(0.014)		(0.020)	
-40.hdclas	Carnegie Classification = 40, Two-year institutions	0.067		0.054		0.055	
-		(0.046)		(0.055)		(0.071)	
-51.hdclas	Carnegie Classification = 51, Theological seminaries, bible colleges	0.001		-0.043		-0.245***	
-		(0.028)		(0.034)		(0.070)	
-52.hdclas	Carnegie Classification = 52, Medical schools and medical centers	-0.031		-0.022		-0.070	
-		(0.023)		(0.025)		(0.041)	
-53.hdclas	Carnegie Classification = 53, Other separate health professional schools	0.121*		0.130*		0.114	
-		(0.056)		(0.055)		(0.108)	
-54.hdclas	Carnegie Classification = 54, Schools of engineering and technology	0.040		0.013		0.059	
-		(0.026)		(0.037)		(0.034)	
-56.hdclas	Carnegie Classification = 56, Schools of art, music, and design	0.085*		-0.056		0.257***	
-		(0.041)		(0.052)		(0.065)	
-57.hdclas	Carnegie Classification = 57, Schools of law	0.015		0.004		0.062	
-		(0.054)		(0.051)		(0.117)	
-59.hdclas	Carnegie Classification = 59, Other specialized institutions	0.024		0.059**		-0.027	
-		(0.019)		(0.022)		(0.033)	
-60.hdclas	Carnegie Classification = 60, Indian Tribal Institutions	0.597		0.725		0.878	
-		(0.501)		(0.665)		(0.481)	
-2.bindustry	Industry = 2, Mining	-0.144*		-0.192**		-0.039	
-		(0.062)		(0.070)		(0.113)	
-3.bindustry	Industry = 3, Utilities	-0.183**		-0.186**		-0.125	
-		(0.058)		(0.063)		(0.109)	
-4.bindustry	Industry = 4, Construction	-0.032		0.051		-0.164	
-		(0.058)		(0.061)		(0.111)	
-5.bindustry	Industry = 5, Manufacturing	-0.059		-0.149**		0.115	
-		(0.055)		(0.058)		(0.104)	
-6.bindustry	Industry = 6, Wholesale Trade	-0.075		-0.094		-0.027	
-		(0.056)		(0.059)		(0.107)	
-7.bindustry	Industry = 7, Retail Trade	-0.112*		-0.031		-0.276**	
-		(0.056)		(0.059)		(0.107)	
-8.bindustry	Industry = 8, Transportation and Warehousing	-0.186**		-0.178**		-0.216	
-		(0.059)		(0.062)		(0.112)	
-9.bindustry	Industry = 9, Information	-0.128*		-0.207***		0.018	
-		(0.056)		(0.059)		(0.105)	
-10.bindustry	Industry = 10, Finance and Insurance	-0.072		-0.021		-0.115	
-		(0.055)		(0.058)		(0.105)	
-11.bindustry	Industry = 11, Real Estate and Rental and Leasing	-0.085		-0.023		-0.178	
-		(0.060)		(0.062)		(0.120)	
-12.bindustry	Industry = 12, Professional, Scientific, and Technical Services	-0.079		-0.105		0.025	
-		(0.055)		(0.058)		(0.104)	
-13.bindustry	Industry = 13, Management of Companies and Enterprises	-0.168*		-0.133		-0.142	
-		(0.084)		(0.099)		(0.148)	
-14.bindustry	Industry = 14, Administrative and Support and Waste Management and Remediation Services	-0.194***		-0.209***		-0.193	
-		(0.059)		(0.063)		(0.111)	
-15.bindustry	Industry = 15, Educational Services	-0.196***		-0.389***		-0.193	
-		(0.058)		(0.062)		(0.110)	
-16.bindustry	Industry = 16, Health Care and Social Assistance	-0.160**		-0.078		-0.445***	
-		(0.056)		(0.059)		(0.106)	
-17.bindustry	Industry = 17, Arts, Entertainment, and Recreation	-0.170**		-0.220**		-0.226	
-		(0.064)		(0.068)		(0.124)	
-18.bindustry	Industry = 18, Accommodation and Food Services	0.014		0.094		-0.365**	
-		(0.061)		(0.063)		(0.126)	
-19.bindustry	Industry = 19, Other Services (except Public Administration)	-0.069		-0.103		-0.187	
-		(0.057)		(0.060)		(0.110)	
-20.bindustry	Industry = 20, Public Administration	-0.084		-0.128		-0.029	
-		(0.070)		(0.079)		(0.130)	
-2.nocprmg	Occupation (Major Group) = 2, Biological, agricultural and other life scientists	0.079***		0.255***		-0.067**	
-		(0.016)		(0.025)		(0.021)	
-3.nocprmg	Occupation (Major Group) = 3, Physical and related scientists	0.098***		0.235***		-0.047*	
-		(0.017)		(0.027)		(0.022)	
-4.nocprmg	Occupation (Major Group) = 4, Social and related scientists	-0.028		0.284***		-0.325***	
-		(0.016)		(0.024)		(0.025)	
-5.nocprmg	Occupation (Major Group) = 5, Engineers	0.094***		0.271***		-0.056***	
-		(0.010)		(0.015)		(0.012)	
-6.nocprmg	Occupation (Major Group) = 6, S and E related occupations	0.060***		0.395***		-0.301***	
-		(0.010)		(0.015)		(0.015)	
-7.nocprmg	Occupation (Major Group) = 7, Non-S and E Occupations	0.047***		0.528***		-0.606***	
-		(0.008)		(0.013)		(0.012)	
-2.fptind	Full/Part-time = 2, Part-time	-0.343***		-0.459***		-0.386***	
-		(0.010)		(0.014)		(0.020)	
-12.emsecdt	Employer Sector = 12, 2-yr coll/pre-college institutions	-0.188***		-0.336***		-0.244***	
-		(0.010)		(0.016)		(0.018)	
-21.emsecdt	Employer Sector = 21, Bus/Ind, for-profit	-0.083***		0.045*		-0.210***	
-		(0.019)		(0.023)		(0.035)	
-23.emsecdt	Employer Sector = 23, Bus/Ind, non-profit	-0.030		0.070**		-0.149***	
-		(0.019)		(0.023)		(0.036)	
-31.emsecdt	Employer Sector = 31, Federal government	-0.140**		-0.070		-0.202*	
-		(0.049)		(0.059)		(0.085)	
-32.emsecdt	Employer Sector = 32, State/Local government	-0.172***		-0.032		-0.377***	
-		(0.048)		(0.059)		(0.086)	
-age	Age	0.014***		0.034***		-0.005	
-		(0.002)		(0.002)		(0.003)	
-age2	Age²	-0.000***		-0.000***		-0.000	
-		(0.000)		(0.000)		(0.000)	
-tenure	Tenure (years)	0.000		-0.001		0.001	
-		(0.000)		(0.000)		(0.001)	
-male	Male	0.060***		0.053***		0.097***	
-		(0.005)		(0.006)		(0.009)	
-2.race	Race = 2, American Indian/Alaska Native	0.135***		0.189***		0.098*	
-		(0.029)		(0.034)		(0.050)	
-3.race	Race = 3, Black	0.056***		0.088***		0.030	
-		(0.012)		(0.015)		(0.018)	
-4.race	Race = 4, White	-0.019*		0.039***		-0.090***	
-		(0.008)		(0.011)		(0.011)	
-5.race	Race = 5, Native Hawaiian/Other Pacific Islander	0.089*		0.153***		0.037	
-		(0.038)		(0.044)		(0.063)	
-6.race	Race = 6, Multiple	0.062***		0.098***		0.021	
-		(0.017)		(0.022)		(0.028)	
-mar	Married	0.022***		0.054***		-0.007	
-		(0.005)		(0.007)		(0.009)	
-Constant	Constant	1.230***	-2.886***	-0.426***	-4.305***	1.368***	-2.380***
-		(0.070)	(0.029)	(0.081)	(0.205)	(0.127)	(0.057)
-							
-Observations		60,713	60,713	60,713	60,713	60,713	60,713
-alpha		0.056	0.056	0.014	0.014	0.093	0.093
-k_aux		1.000	1.000	1.000	1.000	1.000	1.000
-r2_p		0.018	0.018	0.054	0.054	0.071	0.071
-p		0.000	0.000	0.000	0.000	0.000	0.000
-chi2		4	4	11	11	16	16
-553.751		df_m	df_m				
-68.000		rank0	rank0	rank0	rank0	rank0	rank0
-2.000		ll_0	ll_0	k	ll_0	ll_0	k
--133		303.866	303.866				
-k_eq_model		1.000	1.000	1.000	1.000	1.000	1.000
-ll		-130	-130	-105	-105	-91	-91
-934.588		k_autoCns	k_autoCns				
-9.000		rc	rc	rc	rc	rc	rc
-0.000		converged	converged	converged	converged	converged	converged
-1.000		k_dv	k_eq	k_dv	k_dv	k_eq	k_eq
-1.000		k_eq	k_dv	k_eq	k_eq	k_dv	k_dv
-2.000		k	k	ll_0	k	k	ll_0
-79.000		ic	ic	ic	ic	ic	ic
-3.000		rank	rank				
-70.000							
-374.798						df_m	df_m
--98						537.596	537.596
-548.924						k_autoCns	k_autoCns
-5.000						rank	rank
-879.062				df_m	df_m		
--112				084.724	084.724		
-988.819				k_autoCns	k_autoCns		
-6.000				rank	rank		
-Robust standard errors in parentheses							
-*** p<0.001, ** p<0.01, * p<0.05							
+Work Activities					
+		(1)	(2)	(3)	(4)
+VARIABLES	LABELS	wan	lnalpha	wan	lnalpha
+					
+startup	Startup	0.123***			
+		(0.024)			
+small	Small Established	-0.002			
+		(0.021)			
+2.degree	Highest degree = 2, Master's	-0.015		-0.016	
+		(0.012)		(0.013)	
+3.degree	Highest degree = 3, Doctorate	-0.033		-0.034	
+		(0.030)		(0.030)	
+4.degree	Highest degree = 4, Professional	-0.234***		-0.233***	
+		(0.047)		(0.046)	
+2.major	Major Field = 2, Life and related sciences	0.075***		0.076***	
+		(0.021)		(0.021)	
+3.major	Major Field = 3, Physical and related sciences	-0.068*		-0.067*	
+		(0.030)		(0.030)	
+4.major	Major Field = 4, Social and related sciences	0.054*		0.055*	
+		(0.027)		(0.027)	
+5.major	Major Field = 5, Engineering	0.006		0.006	
+		(0.036)		(0.036)	
+6.major	Major Field = 6, S and E-Related Fields	0.088***		0.089***	
+		(0.022)		(0.022)	
+7.major	Major Field = 7, Non-S and E Fields	0.051**		0.051**	
+		(0.016)		(0.016)	
+3.bindustry	Industry = 3, Utilities	0.061***		0.062***	
+		(0.008)		(0.008)	
+4.bindustry	Industry = 4, Construction	0.168***		0.173***	
+		(0.011)		(0.014)	
+5.bindustry	Industry = 5, Manufacturing	0.141***		0.141***	
+		(0.009)		(0.009)	
+6.bindustry	Industry = 6, Wholesale Trade	0.144***		0.146***	
+		(0.017)		(0.016)	
+7.bindustry	Industry = 7, Retail Trade	0.151***		0.152***	
+		(0.024)		(0.024)	
+8.bindustry	Industry = 8, Transportation and Warehousing	0.108***		0.108***	
+		(0.016)		(0.016)	
+9.bindustry	Industry = 9, Information	0.097***		0.097***	
+		(0.021)		(0.021)	
+10.bindustry	Industry = 10, Finance and Insurance	0.149***		0.149***	
+		(0.023)		(0.023)	
+11.bindustry	Industry = 11, Real Estate and Rental and Leasing	0.160***		0.164***	
+		(0.021)		(0.020)	
+12.bindustry	Industry = 12, Professional, Scientific, and Technical Services	0.113***		0.117***	
+		(0.017)		(0.017)	
+13.bindustry	Industry = 13, Management of Companies and Enterprises	0.075***		0.076***	
+		(0.015)		(0.014)	
+14.bindustry	Industry = 14, Administrative and Support and Waste Management and Remediation Services	0.063**		0.065***	
+		(0.020)		(0.019)	
+15.bindustry	Industry = 15, Educational Services	0.373***		0.379***	
+		(0.028)		(0.028)	
+16.bindustry	Industry = 16, Health Care and Social Assistance	0.016		0.019	
+		(0.034)		(0.034)	
+17.bindustry	Industry = 17, Arts, Entertainment, and Recreation	0.208***		0.211***	
+		(0.028)		(0.028)	
+18.bindustry	Industry = 18, Accommodation and Food Services	0.224***		0.225***	
+		(0.018)		(0.017)	
+19.bindustry	Industry = 19, Other Services (except Public Administration)	0.098***		0.103***	
+		(0.022)		(0.022)	
+20.bindustry	Industry = 20, Public Administration	-0.007		-0.005	
+		(0.019)		(0.018)	
+2.nocprmg03	Occupation (Major Group) = 2, Biological, agricultural and other life scientists	0.058		0.059	
+		(0.033)		(0.033)	
+3.nocprmg03	Occupation (Major Group) = 3, Physical and related scientists	0.157**		0.158**	
+		(0.053)		(0.052)	
+4.nocprmg03	Occupation (Major Group) = 4, Social and related scientists	0.025		0.028	
+		(0.034)		(0.032)	
+5.nocprmg03	Occupation (Major Group) = 5, Engineers	0.111***		0.112***	
+		(0.024)		(0.024)	
+6.nocprmg03	Occupation (Major Group) = 6, S and E related occupations	0.048*		0.049*	
+		(0.024)		(0.024)	
+7.nocprmg03	Occupation (Major Group) = 7, Non-S and E Occupations	0.025		0.027	
+		(0.026)		(0.026)	
+toplevel03	Top-level Management Function in 2003	0.289***		0.291***	
+		(0.042)		(0.042)	
+wkswk	Number of weeks worked	0.001		0.001	
+		(0.001)		(0.001)	
+age	Age	0.002		0.002	
+		(0.002)		(0.002)	
+tenure	Tenure (years)	0.008*		0.008*	
+		(0.003)		(0.003)	
+2.race	Race = 2, American Indian/Alaska Native	0.283***		0.281***	
+		(0.064)		(0.066)	
+3.race	Race = 3, Black	0.109***		0.107***	
+		(0.025)		(0.026)	
+4.race	Race = 4, White	0.031		0.031	
+		(0.019)		(0.019)	
+5.race	Race = 5, Native Hawaiian/Other Pacific Islander	0.087		0.087	
+		(0.059)		(0.059)	
+6.race	Race = 6, Multiple	0.062		0.062	
+		(0.050)		(0.050)	
+male	Male	0.096***		0.096***	
+		(0.014)		(0.014)	
+mar	Married	-0.002		-0.002	
+		(0.008)		(0.008)	
+emsize	Employer Size			0.003	
+				(0.005)	
+newbus	Young Firm			0.132***	
+				(0.026)	
+Constant	Constant	1.077***	-3.623***	1.058***	-3.623***
+		(0.052)	(0.414)	(0.083)	(0.412)
+					
+Observations		7,761	7,761	7,761	7,761
+alpha		0.027	0.027	0.027	0.027
+k_aux		1.000	1.000	1.000	1.000
+r2_p		0.010	0.010	0.010	0.010
+p		e(p)	e(p)	e(p)	e(p)
+chi2		e(chi2)	e(chi2)	e(chi2)	e(chi2)
+df_m		16.000	16.000	16.000	16.000
+rank0		2.000	2.000	2.000	2.000
+ll_0		-17	-17	-17	-17
+044.862		k_eq_model	k_eq_model	k_eq_model	k_eq_model
+1.000		ll	ll	ll	ll
+-16		869.425	869.425	869.051	869.051
+N_clust		19.000	19.000	19.000	19.000
+k_autoCns		5.000	5.000	5.000	5.000
+rc		0.000	0.000	0.000	0.000
+converged		1.000	1.000	1.000	1.000
+k_dv		1.000	1.000	1.000	1.000
+k_eq		2.000	2.000	2.000	2.000
+k		53.000	53.000	53.000	53.000
+ic		3.000	3.000	3.000	3.000
+rank		18.000	18.000	18.000	18.000
+Robust standard errors in parentheses					
+*** p<0.001, ** p<0.01, * p<0.05					

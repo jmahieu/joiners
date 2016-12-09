@@ -134,7 +134,7 @@ rename nb newbus
 label var newbus "Young Firm"
 
 //make numeric vars
-foreach i in emsize emtp ndgmemg ndgmeng emsmi emrg emsecdt facadv facben facchal facind facloc facresp facsal facsec facsoc fptind indcode lfstat03 lfstat06 lfstat08 lfstat10 nedtp nocpr03 nocprng03 nocprmg03 nocprmg06 nocprmg08 nocprmg10 waprsm wascsm wapri wasec jobsatis{
+foreach i in emsize emsize06 emsize08 emsize10 emtp ndgmemg ndgmeng emsmi emrg emsecdt facadv facben facchal facind facloc facresp facsal facsec facsoc fptind indcode lfstat03 lfstat06 lfstat08 lfstat10 nedtp nocpr03 nocprng03 nocprpb06 nocprpb08 nocprpb10 nocprmg03 nocprmg06 nocprmg08 nocprmg10 waprsm wascsm wapri wasec jobsatis{
  gen `i'_n = real(`i')
  drop `i'
  rename `i'_n `i'
@@ -144,6 +144,11 @@ foreach i in emsize emtp ndgmemg ndgmeng emsmi emrg emsecdt facadv facben faccha
 label var emsize "Employer Size"
 label define emsize 1 "<10" 2 "10-24" 3 "25 - 99" 4 "100 - 499" 5 "500 - 999" 5 "500 - 999" 6 "1000 - 4999" 7 "5000 - 24999" 8 ">25000"
 label values emsize emsize
+
+foreach i in 06 08 10 {
+	label var emsize`i' "Employer Size in 20`i'"
+	label values emsize`i' emsize
+}
 
 *nedtp = Employer type [not taking into account if it was an educational institution]
 *emtp = Employer type [taking into account educational institutions]
@@ -591,6 +596,7 @@ foreach i in wage03 wage06 wage08 wage10 {
 	gen ln`i' = log(`i') 
 }
 
+
 foreach i in 03 06 08 10 {
 	label var lnwage`i' "log 20`i' wage"
 }
@@ -638,6 +644,35 @@ replace stay = . if nocprmg03 == .
 }
 
 label var stay "No change of occupation"
+
+/* indicator for top-level managers or executives */
+gen toplevel03 = 1 if nocpr03 == 711410
+replace toplevel03 = 0 if nocpr03 != 711410 & nocpr03 != .
+
+foreach i in 06 08 10 {
+gen toplevel`i' = 1 if nocprpb`i' == 711410
+replace toplevel`i' = 0 if nocprpb`i' != 711410 & nocprpb`i' != .
+}
+
+gen toplevel = 1 if toplevel06 == 1 | toplevel08 == 1 | toplevel10 == 1
+replace toplevel = 0 if toplevel == . & toplevel06 == 0 | toplevel08 == 0 | toplevel10 == 0
+
+foreach i in 03 06 08 10 {
+	label var toplevel`i' "Top-level Management Function in 20`i'"
+}
+
+label var toplevel "Top-level Management Function"
+
+
+/* only keep early career and for-profit employees */
+drop if age > 35
+drop if mryr < 1992
+drop if emsecdt != 21
+drop if fptind != 1
+drop if bindustry == 1
+drop if emplr == .
+drop if wan == .
+
 
 save joinersc.dta, replace
 
