@@ -15,6 +15,8 @@ rename nocprmg nocprmg06
 rename lfstat lfstat06
 rename chtotpb children06
 rename emsize emsize06
+rename wkswkp wkswkp06
+rename hrswkp hrswkp06
 save sestat06, replace
 
 use "C:\Users\u0091183\Desktop\Phd\Datasets\SESTAT\sestat08.dta"
@@ -24,6 +26,8 @@ rename nocprmg nocprmg08
 rename lfstat lfstat08
 rename chtotpb children08
 rename emsize emsize08
+rename wkswkp wkswkp08
+rename hrswkp hrswkp08
 save sestat08, replace
 
 use "C:\Users\u0091183\Desktop\Phd\Datasets\SESTAT\sestat10.dta"
@@ -33,6 +37,8 @@ rename n2ocprpb nocprpb10
 rename lfstat lfstat10
 rename chtotpb children10
 rename emsize emsize10
+rename wkswkp wkswkp10
+rename hrswkp hrswkp10
 save sestat10, replace
 
 clear all 
@@ -45,13 +51,13 @@ rename nocprng nocprng03
 rename nocprmg nocprmg03
 rename lfstat lfstat03
 
-merge 1:1 refid using sestat06.dta, keepus(wage06 emsize06 nocprmg06 nocprpb06 lfstat06 children06)
+merge 1:1 refid using sestat06.dta, keepus(wage06 emsize06 nocprmg06 nocprpb06 lfstat06 children06 wkswkp06 hrswkp06)
 drop if refyr == .
 drop _merge
-merge 1:1 refid using sestat08.dta, keepus(wage08 emsize08 nocprmg08 nocprpb08 lfstat08 children08)
+merge 1:1 refid using sestat08.dta, keepus(wage08 emsize08 nocprmg08 nocprpb08 lfstat08 children08 wkswkp08 hrswkp08)
 drop if refyr == .
 drop _merge
-merge 1:1 refid using sestat10.dta, keepus(wage10 emsize10 nocprmg10 nocprpb10 lfstat10 children10)
+merge 1:1 refid using sestat10.dta, keepus(wage10 emsize10 nocprmg10 nocprpb10 lfstat10 children10 wkswkp10 hrswkp10)
 drop if refyr == .
 drop _merge
 

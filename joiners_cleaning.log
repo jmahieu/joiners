@@ -3,7 +3,7 @@
        log:  C:\Users\u0091183\Desktop\Phd\Papers\startup joiners\joiners\joiners_cleaning
 > .log
   log type:  text
- opened on:   8 Dec 2016, 12:09:01
+ opened on:  18 Dec 2016, 17:38:19
 
 . 
 . use joiners.dta
@@ -444,6 +444,35 @@
 (17,378 real changes made)
 
 . label var wkswk "Number of weeks worked"
+
+. 
+. foreach i in 06 08 10 {
+  2.         gen wkswkp`i'_n = real(wkswkp`i')
+  3.         drop wkswkp`i'
+  4.         rename wkswkp`i'_n wkswkp`i'
+  5.         replace wkswkp`i' = . if wkswkp`i' == 98
+  6. }
+(57,548 missing values generated)
+(0 real changes made)
+(63,490 missing values generated)
+(0 real changes made)
+(83,142 missing values generated)
+(0 real changes made)
+
+. 
+. *principal job: hours per week typically worked
+. replace hrswk = 0  if hrswk == 98
+(17,378 real changes made)
+
+. label var hrswk "Number of hours per week worked"
+
+. 
+. foreach i in 06 08 10 {
+  2.         replace hrswkp`i' = . if hrswkp`i' == 98
+  3. }
+(7,802 real changes made, 7,802 to missing)
+(7,937 real changes made, 7,937 to missing)
+(4,607 real changes made, 4,607 to missing)
 
 . 
 . *indcode = Census industry code for employer
@@ -1189,7 +1218,8 @@ Large Established |     55,330       81.06      100.00
 . //generate lnwage
 . foreach i in wage03 wage06 wage08 wage10 {
   2.         gen ln`i' = log(`i') 
-  3. }
+  3.         *replace ln`i' = 0 if `i' == 0 
+. }
 (18,095 missing values generated)
 (57,725 missing values generated)
 (63,662 missing values generated)
@@ -1337,28 +1367,61 @@ Large Established |     55,330       81.06      100.00
 
 . 
 . 
-. /* only keep early career and for-profit employees */
+. /* only keep early career, for-profit, full-time (more than 30 weeks per year) employees
+>  */
 . drop if age > 35
 (80,290 observations deleted)
 
-. drop if mryr < 1992
-(1,408 observations deleted)
+. drop if dgryr < 1992
+(1,415 observations deleted)
 
 . drop if emsecdt != 21
-(8,885 observations deleted)
+(8,882 observations deleted)
 
-. drop if fptind != 1
-(497 observations deleted)
+. *drop if fptind != 1
+. 
+. drop if wkswk < 40
+(296 observations deleted)
 
-. drop if bindustry == 1
-(27 observations deleted)
+. drop if wkswkp06 != 4 & lnwage06 != .
+(42 observations deleted)
 
+. drop if wkswkp08 != 4 & lnwage08 != .
+(41 observations deleted)
+
+. drop if wkswkp10 != 4 & lnwage10 != .
+(15 observations deleted)
+
+. 
+. drop if hrswk < 36
+(726 observations deleted)
+
+. drop if hrswkp06 < 3 & lnwage06 != .
+(185 observations deleted)
+
+. drop if hrswkp08 < 3 & lnwage08 != .
+(127 observations deleted)
+
+. drop if hrswkp10 < 3 & lnwage10 != .
+(60 observations deleted)
+
+. 
+. *drop if wage03 == 0
+. *drop if wage10 == 0 & wage08 == . & wage06 == .
+. *drop if wage08 == 0 & wage06 == .
+. *drop if wage06 == 0 
 . drop if emplr == .
-(1,509 observations deleted)
+(1,301 observations deleted)
 
-. drop if wan == .
-(0 observations deleted)
+. drop if bindustry == .  //manual checks show that for some (< 30) observations industry 
+> is missing
+(20 observations deleted)
 
+. 
+. /* drop observations not in the labor force in 2006, 2008, or 2010 
+> drop if lfstat10 != 1 & lfstat08 != 1 & lfstat06 != 1
+> drop if lfstat08 != 1 & lfstat06 != 1
+> drop if lfstat06 != 1 */
 . 
 . 
 . save joinersc.dta, replace
@@ -1372,28 +1435,5 @@ file joinersc.dta saved
 . 
 . 
 end of do-file
-
-. tab wan
-
-  Number of |
-       Work |
- Activities |      Freq.     Percent        Cum.
-------------+-----------------------------------
-          1 |        706        9.07        9.07
-          2 |      1,039       13.34       22.41
-          3 |      1,294       16.62       39.03
-          4 |      1,317       16.91       55.95
-          5 |      1,143       14.68       70.63
-          6 |        864       11.10       81.72
-          7 |        641        8.23       89.96
-          8 |        407        5.23       95.18
-          9 |        194        2.49       97.68
-         10 |        119        1.53       99.20
-         11 |         40        0.51       99.72
-         12 |         15        0.19       99.91
-         13 |          6        0.08       99.99
-         14 |          1        0.01      100.00
-------------+-----------------------------------
-      Total |      7,786      100.00
 
 . exit, clear

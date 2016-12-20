@@ -38,29 +38,36 @@ qui tab nocprmg03, gen(dum_nocprmg03)
 
 eststo clear
 //full sample
-eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar children03 /// 
-dum_degree* wkswk tenure dum_emsize*  dum_bindustry* ///
-dum_nocprmg03* toplevel stay wan cmrcn resn 
-//startup
-eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar children03 /// 
-dum_degree* wkswk tenure dum_emsize* dum_bindustry* ///
-dum_nocprmg03* toplevel stay wan cmrcn resn if emplr == 1
-//small established
-eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar children03 /// 
-dum_degree*  wkswk tenure dum_emsize*  dum_bindustry* ///
-dum_nocprmg03* toplevel stay wan cmrcn resn if emplr == 2
-//large established
-eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar children03 /// 
-dum_degree* wkswk tenure dum_emsize*  dum_bindustry* ///
-dum_nocprmg03* toplevel stay wan cmrcn resn if emplr == 3
+eststo: qui estpost sum wage* lnwage* dlnwage age male dum_race* mar children03 /// 
+dum_degree* tenure dum_emsize*  dum_bindustry* ///
+dum_nocprmg03* stay wan cmrcn resn 
 
-esttab using summary, replace rtf main(mean %6.2f) aux(sd) label ///
-ti("summary statistics") mtitles("Full Sample" "Startup" "Small Established Firms" "Large Established Firms") ///
+esttab using summary_full, replace rtf cells("count(fmt(0)) mean(fmt(2)) sd(fmt(2)) min(fmt(0)) max(fmt(0))") label ///
+ti("summary statistics") ///
 refcat(dum_race1 "Race" dum_degree1 "Highest Degree" dum_emsize1 "Employer Size"  dum_bindustry1 "Employer Industry" dum_nocprmg031 "Occupation") ///
-nonotes addn(Standard deviations in parentheses.)
+nonotes addn(Note:)
+
+eststo clear 
+//startup
+eststo: qui estpost sum wage* lnwage* dlnwage age male dum_race* mar children03 /// 
+dum_degree*  tenure dum_emsize* dum_bindustry* ///
+dum_nocprmg03*  stay wan cmrcn resn if emplr == 1
+//small established
+eststo: qui estpost sum wage* lnwage* dlnwage age male dum_race* mar children03 /// 
+dum_degree*  tenure dum_emsize*  dum_bindustry* ///
+dum_nocprmg03*  stay wan cmrcn resn if emplr == 2
+//large established
+eststo: qui estpost sum wage* lnwage* dlnwage age male dum_race* mar children03 /// 
+dum_degree*  tenure dum_emsize*  dum_bindustry* ///
+dum_nocprmg03* stay wan cmrcn resn if emplr == 3
+
+esttab using summary_firmtype, replace rtf cells("mean(fmt(2)) sd(fmt(2))") label ///
+ti("Descriptive Statistics for Scientists and Engineers Working in For-Profit Enterprise by Firm Type") mtitles("Startup" "Small Established Firms" "Large Established Firms") ///
+refcat(dum_race1 "Race" dum_degree1 "Highest Degree" dum_emsize1 "Employer Size"  dum_bindustry1 "Employer Industry" dum_nocprmg031 "Occupation") ///
+nonotes addn(The sample consists of individuals whose responses are included in the SESTAT 2003 public NSCG file, and who were not older than 35 in 2003)
 
 
-/* only for employees in for-profit companies */
+/* only for employees in for-profit companies 
 eststo clear
 //full sample
 eststo: qui estpost sum wage* lnwage* dlnwage age age2 male dum_race* mar children03 /// 
@@ -83,6 +90,7 @@ esttab using summary_forprofit, replace rtf main(mean %6.2f) aux(sd) label ///
 ti("summary statistics") mtitles("Full Sample" "Startup" "Small Established Firms" "Large Established Firms") ///
 refcat(dum_race1 "Race" dum_degree1 "Highest Degree" dum_hdclas1 "Carnegie Classification" dum_emsize1 "Employer Size" dum_emsecdt1 "Employer Sector" dum_bindustry1 "Employer Industry" dum_nocprmg031 "Occupation") ///
 nonotes addn(Standard deviations in parentheses.)
+*/
 
 
 /*------------------------------------------------------------------------------
@@ -98,19 +106,39 @@ foreach i in 1 2 3 {
 tabstat wan if emplr == `i' & nedtp == 3, by(nocprng) stat(n mean sem) labelwidth(32) longstub
 }
 
+ranksum wan, by(startup) 
+
+//poisson regression for number of work activities on firm type and control variables - check for overdispersion (so nb is more appropriate)
+qui poisson wan startup small i.degree i.major i.bindustry i.nocprmg03 wkswk age tenure i.race male mar, cluster(bindustry) 
+predict muhat, n 
+qui gen ystar = ((wan-muhat)^2 - wan)/muhat
+reg ystar muhat, noconstant noheader	// outcome indicates presence of overdispersion for wan
+
+drop ystar muhat
+
+qui poisson cmrcn startup small i.degree i.major i.bindustry i.nocprmg03 wkswk age tenure i.race male mar, cluster(bindustry) 
+predict muhat, n 
+qui gen ystar = ((cmrcn-muhat)^2 - cmrcn)/muhat
+reg ystar muhat, noconstant noheader	//outcome indicates presence of overdispersion for cmrcn
+
+drop ystar muhat
+
+qui poisson resn startup small i.degree i.major i.bindustry i.nocprmg03 wkswk age tenure i.race male mar, cluster(bindustry) 
+predict muhat, n 
+qui gen ystar = ((resn-muhat)^2 - resn)/muhat
+reg ystar muhat, noconstant noheader	//outcome indicates presence of overdispersion for resn
+
 
 //negative binomial regression for number of work activities (wan), number of commercial activities (cmrcn), number of research activities (resn)
-nbreg wan startup small i.degree i.major i.bindustry i.nocprmg03 toplevel03 wkswk age tenure i.race male mar, cluster(bindustry) 
-outreg2 using experimentation, replace label ti(Work Activities) e(all) adec(3) bdec(3) rdec(3) word excel symbol(***, **, *) alpha(0.001, 0.01, 0.05)
+nbreg wan startup small lnwage03 i.degree i.major i.bindustry i.nocprmg03 age age2 tenure i.race male mar, cluster(bindustry)
+outreg2 using activities, replace label ti(Work Activities) e(all) adec(3) bdec(3) rdec(3) word excel symbol(***, **, *) alpha(0.001, 0.01, 0.05)
 
-nbreg wan emsize newbus i.degree i.major i.bindustry i.nocprmg03 toplevel03 wkswk age tenure i.race male mar, cluster(bindustry) 
-outreg2 using experimentation, label e(all) adec(3) bdec(3) rdec(3) word excel symbol(***, **, *) alpha(0.001, 0.01, 0.05) append
+//!! problem with these regressions - STATA does not find a fit (likely due to inclusion of nocprmg03 and/or bindustry) - use of poisson with robust errors is ok? 
+poisson cmrcn startup small lnwage03 i.degree  i.major i.bindustry i.nocprmg03 age age2 tenure i.race male  mar, cluster(bindustry)  
+outreg2 using activities, label e(all) adec(3) bdec(3) rdec(3) word excel symbol(***, **, *) alpha(0.001, 0.01, 0.05) append
 
-nbreg cmrcn startup small i.degree  i.major age i.bindustry i.nocprmg03  wkswk age tenure i.race male  mar, cluster(bindustry)  
-outreg2 using experimentation, label e(all) adec(3) bdec(3) rdec(3) word excel symbol(***, **, *) alpha(0.001, 0.01, 0.05) append
-
-nbreg resn startup small i.degree i.major i.bindustry i.nocprmg03 toplevel03 wkswk age tenure i.race male mar, cluster(bindustry) 
-outreg2 using experimentation, label e(all) adec(3) bdec(3) rdec(3) word excel symbol(***, **, *) alpha(0.001, 0.01, 0.05) append
+poisson resn startup small lnwage03 i.degree i.major i.bindustry i.nocprmg03 age age2 tenure i.race male mar, cluster(bindustry) 
+outreg2 using activities, label e(all) adec(3) bdec(3) rdec(3) word excel symbol(***, **, *) alpha(0.001, 0.01, 0.05) append
 
 //test whether startup employees are more likely to engage both in at least 1 research and 1 commercial activity
 gen multi = 1 if resn >= 1 & cmrcn >= 1
@@ -132,7 +160,7 @@ foreach i in 1 2 3 4 5 6 7 {
 */
 
 //relationship between # activities and Pr(staying in the same occupation)
-probit stay startup small wan wan2 i.degree i.major i.bindustry i.nocprmg03 age age2 tenure male i.race mar y6 y8 y10, nolog
+probit stay startup small wan lnwage03 i.degree i.major i.bindustry i.nocprmg03 age age2 tenure male i.race mar children03 y6 y8 y10, nolog 
 outreg2 using stayersswitchers, replace label ti(Occupational Switching) e(all) adec(3) bdec(3) rdec(3) word excel symbol(***, **, *) alpha(0.001, 0.01, 0.05)
 * model w/o # activities
 probit stay startup small i.degree i.major i.bindustry i.nocprmg03 age age2 tenure male i.race mar y6 y8 y10, nolog
@@ -248,23 +276,23 @@ foreach i in 1 2 3{
 ttesttable dlnwage emplr, unequal
 
 *base model
-reg dlnwage startup small i.degree i.major  i.bindustry i.nocprmg03 wkswk age age2 tenure male i.race mar children03 y8 y10, cluster(bindustry)
-outreg2 using wagegrowth, replace label ti(Wage Growth) e(all) adec(3) bdec(3) rdec(3) word excel symbol(***, **, *) alpha(0.01, 0.05, 0.10)
+reg dlnwage startup small i.degree i.major  i.bindustry i.nocprmg03  age age2 tenure male i.race mar children03 y8 y10, cluster(bindustry)
+outreg2 using wagegrowth, replace label ti(Wage Growth) e(all) adec(3) bdec(3) rdec(3) word excel symbol(***, **, *, +) alpha(0.001, 0.01, 0.05, 0.10)
 **model including number of activities (wan) and interaction effect - wan treated as continuous variable
-reg dlnwage startup small wan wan2 i.degree i.major i.bindustry i.nocprmg03 wkswk age age2 tenure male i.race mar children03 y8 y10, cluster(bindustry)
-outreg2 using wagegrowth, label e(all) adec(3) bdec(3) rdec(3) word excel symbol(***, **, *) alpha(0.01, 0.05, 0.10) append
+reg dlnwage startup small wan wan2 i.degree i.major i.bindustry i.nocprmg03 age age2 tenure male i.race mar children03 y8 y10, cluster(bindustry)
+outreg2 using wagegrowth, label e(all) adec(3) bdec(3) rdec(3) word excel symbol(***, **, *, +) alpha(0.001, 0.01, 0.05, 0.10) append
 ***base model - stayers
-reg dlnwage startup small i.degree i.major  i.bindustry i.nocprmg03 wkswk age age2 tenure male i.race mar children03 y8 y10 if stay == 1, cluster(bindustry)
-outreg2 using wagegrowth, label e(all) adec(3) bdec(3) rdec(3) word excel symbol(***, **, *) alpha(0.01, 0.05, 0.10) append
+reg dlnwage startup small i.degree i.major  i.bindustry i.nocprmg03 age age2 tenure male i.race mar children03 y8 y10 if stay == 1, cluster(bindustry)
+outreg2 using wagegrowth, label e(all) adec(3) bdec(3) rdec(3) word excel symbol(***, **, *, +) alpha(0.001, 0.01, 0.05, 0.10) append
 ****model including number of activities (wan) - stayers
-reg dlnwage startup small wan wan2 i.degree i.major i.bindustry i.nocprmg03 wkswk age age2 tenure male i.race mar children03 y8 y10 if stay == 1, cluster(bindustry)
-outreg2 using wagegrowth, label e(all) adec(3) bdec(3) rdec(3) word excel symbol(***, **, *) alpha(0.01, 0.05, 0.10) append
+reg dlnwage startup small wan wan2 i.degree i.major i.bindustry i.nocprmg03 age age2 tenure male i.race mar children03 y8 y10 if stay == 1, cluster(bindustry)
+outreg2 using wagegrowth, label e(all) adec(3) bdec(3) rdec(3) word excel symbol(***, **, *, +) alpha(0.001, 0.01, 0.05, 0.10) append
 ***base model - switchers
-reg dlnwage startup small i.degree i.major i.bindustry i.nocprmg03 wkswk age age2 tenure male i.race mar children03 y8 y10 if stay == 0, cluster(bindustry)
-outreg2 using wagegrowth, label e(all) adec(3) bdec(3) rdec(3) word excel symbol(***, **, *) alpha(0.01, 0.05, 0.10) append
+reg dlnwage startup small i.degree i.major i.bindustry i.nocprmg03 age age2 tenure male i.race mar children03 y8 y10 if stay == 0, cluster(bindustry)
+outreg2 using wagegrowth, label e(all) adec(3) bdec(3) rdec(3) word excel symbol(***, **, *, +) alpha(0.001, 0.01, 0.05, 0.10) append
 ****model including number of activities (wan) - switchers
-reg dlnwage startup small wan wan2 i.degree i.major i.bindustry i.nocprmg03 wkswk age age2 tenure male i.race mar children03 y8 y10 if stay == 0, cluster(bindustry)
-outreg2 using wagegrowth, label e(all) adec(3) bdec(3) rdec(3) word excel symbol(***, **, *) alpha(0.01, 0.05, 0.10) append
+reg dlnwage startup small wan wan2 i.degree i.major i.bindustry i.nocprmg03 age age2 tenure male i.race mar children03 y8 y10 if stay == 0, cluster(bindustry)
+outreg2 using wagegrowth, label e(all) adec(3) bdec(3) rdec(3) word excel symbol(***, **, *, +) alpha(0.001, 0.01, 0.05, 0.10) append
 
 
 **model including number of activities (wan) and interaction effect - wan treated as categorical variable
@@ -299,7 +327,7 @@ select(working06 = lnwage03 startup small i.degree i.major i.hdclas i.bindustry 
 /* IV regressions */
 
 *base model: startup vs non-startup
-ivreg2 dlnwage i.degree i.major i.hdclas i.bindustry i.nocprmg03 wan age age2 tenure male i.race mar y8 y10 (startup = i.facsec) if stay == 0, robust first 
+ivreg2 dlnwage i.degree i.major  i.bindustry i.nocprmg03  age age2 tenure male i.race mar children03 y8 y10 (startup = 4.facsec) if stay == 0, robust first 
 
-probit stay startup small lnwage03 i.degree i.major i.hdclas i.bindustry i.nocprmg03 i.fptind i.emsecdt age age2 tenure male i.race mar
+
 

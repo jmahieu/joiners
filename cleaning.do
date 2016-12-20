@@ -228,6 +228,21 @@ replace fptind = 0 if fptind == 2
 replace wkswk = 0 if wkswk == 98
 label var wkswk "Number of weeks worked"
 
+foreach i in 06 08 10 {
+	gen wkswkp`i'_n = real(wkswkp`i')
+	drop wkswkp`i'
+	rename wkswkp`i'_n wkswkp`i'
+	replace wkswkp`i' = . if wkswkp`i' == 98
+}
+
+*principal job: hours per week typically worked
+replace hrswk = 0  if hrswk == 98
+label var hrswk "Number of hours per week worked"
+
+foreach i in 06 08 10 {
+	replace hrswkp`i' = . if hrswkp`i' == 98
+}
+
 *indcode = Census industry code for employer
 rename indcode industry
 replace industry = . if industry >= 9990 //put missing and skipped to missing values
@@ -594,6 +609,7 @@ foreach i in 03 06 08 10 {
 //generate lnwage
 foreach i in wage03 wage06 wage08 wage10 {
 	gen ln`i' = log(`i') 
+	*replace ln`i' = 0 if `i' == 0 
 }
 
 
@@ -664,14 +680,33 @@ foreach i in 03 06 08 10 {
 label var toplevel "Top-level Management Function"
 
 
-/* only keep early career and for-profit employees */
+/* only keep early career, for-profit, full-time (more than 30 weeks per year) employees */
 drop if age > 35
-drop if mryr < 1992
+drop if dgryr < 1992
 drop if emsecdt != 21
-drop if fptind != 1
-drop if bindustry == 1
+*drop if fptind != 1
+
+drop if wkswk < 40
+drop if wkswkp06 != 4 & lnwage06 != .
+drop if wkswkp08 != 4 & lnwage08 != .
+drop if wkswkp10 != 4 & lnwage10 != .
+
+drop if hrswk < 36
+drop if hrswkp06 < 3 & lnwage06 != .
+drop if hrswkp08 < 3 & lnwage08 != .
+drop if hrswkp10 < 3 & lnwage10 != .
+
+*drop if wage03 == 0
+*drop if wage10 == 0 & wage08 == . & wage06 == .
+*drop if wage08 == 0 & wage06 == .
+*drop if wage06 == 0 
 drop if emplr == .
-drop if wan == .
+drop if bindustry == .	//manual checks show that for some (< 30) observations industry is missing
+
+/* drop observations not in the labor force in 2006, 2008, or 2010 
+drop if lfstat10 != 1 & lfstat08 != 1 & lfstat06 != 1
+drop if lfstat08 != 1 & lfstat06 != 1
+drop if lfstat06 != 1 */
 
 
 save joinersc.dta, replace
