@@ -130,14 +130,14 @@ reg ystar muhat, noconstant noheader	//outcome indicates presence of overdispers
 
 
 //negative binomial regression for number of work activities (wan), number of commercial activities (cmrcn), number of research activities (resn)
-nbreg wan startup small lnwage03 i.degree i.major i.bindustry i.nocprmg03 age age2 tenure i.race male mar, cluster(bindustry)
+nbreg wan startup small lnwage03 i.degree i.major i.bindustry i.nocprmg03 age age2 tenure i.race male mar children03, cluster(bindustry)
 outreg2 using activities, replace label ti(Work Activities) e(all) adec(3) bdec(3) rdec(3) word excel symbol(***, **, *) alpha(0.001, 0.01, 0.05)
 
 //!! problem with these regressions - STATA does not find a fit (likely due to inclusion of nocprmg03 and/or bindustry) - use of poisson with robust errors is ok? 
-poisson cmrcn startup small lnwage03 i.degree  i.major i.bindustry i.nocprmg03 age age2 tenure i.race male  mar, cluster(bindustry)  
+poisson cmrcn startup small lnwage03 i.degree  i.major i.bindustry i.nocprmg03 age age2 tenure i.race male mar children03, cluster(bindustry)  
 outreg2 using activities, label e(all) adec(3) bdec(3) rdec(3) word excel symbol(***, **, *) alpha(0.001, 0.01, 0.05) append
 
-poisson resn startup small lnwage03 i.degree i.major i.bindustry i.nocprmg03 age age2 tenure i.race male mar, cluster(bindustry) 
+poisson resn startup small lnwage03 i.degree i.major i.bindustry i.nocprmg03 age age2 tenure i.race male mar children03, cluster(bindustry) 
 outreg2 using activities, label e(all) adec(3) bdec(3) rdec(3) word excel symbol(***, **, *) alpha(0.001, 0.01, 0.05) append
 
 //test whether startup employees are more likely to engage both in at least 1 research and 1 commercial activity
